@@ -1,0 +1,34 @@
+#!/usr/bin/env zsh
+
+# environments
+load-session() {
+    id=$(md5sum <<< "$ZSH_SETUP" | cut -b-10 | tr -cd '0-9a-z')
+    already_loaded_variable="ZSH_LOADED_$id"
+    if ! [ -z "$ZSH_SETUP" ] && [ -z "${(P)already_loaded_variable}" ]; then
+        export $already_loaded_variable=true
+        eval "$ZSH_SETUP"
+    fi
+}
+
+load-session
+
+enter-session() {
+    name="$(tr -cd 'a-z0-9\-' <<< "$1")"
+    file="$HOME/bin/environments/$name"
+    if [ -e "$file" ]; then
+        # this is a inlined function application
+        tmux set-environment ZSH_SETUP "eval \$($file)"
+        export ZSH_SETUP="eval \$($file)"
+        eval $($file)
+        exec zsh
+    else
+        ls "$file"
+        return $?
+    fi
+}
+
+session-cd() {
+    goesto="$(realpath "$1")"
+    cd "$1"
+    tmux set-environment ZSH_SETUP "cd '$goesto'"
+}

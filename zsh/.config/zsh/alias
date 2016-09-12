@@ -1,0 +1,53 @@
+#!/usr/bin/env zsh
+
+if [ "$(id -u)" = "0" ]; then
+    alias m=mount
+    alias um=umount
+else
+    alias m=mpv
+fi
+
+# Aliases.
+alias '...'='../..'
+alias '....'='../../..'
+alias '.....'='../../../..'
+alias '......'='../../../../..'
+alias '.......'='../../../../../..'
+alias '........'='../../../../../../..'
+# vim macro to make another, longer one: yyp^f'lvypf=llvf/yP
+# Doubt I'll ever need this much, but it was easy to make them with vim's macros, so... I made *some*. ;-D
+
+alias ls='ls --color=auto -hb'
+alias l='ls'
+alias p='ping google.lv' # tired of writing this over and over again.
+
+alias cal='cal -m'
+alias fack='find . | ack'
+alias grep='grep --colour'
+alias pwgen='pwgen -n 10'
+alias secgen='/usr/bin/pwgen -c -n -s -y -v 16 72'
+alias watch="watch -n.5"
+alias hexdump="hexdump -C"
+
+alias pS='pacman -S'
+alias pSs='pacman -Ss'
+alias pS='pacman -S'
+alias pSy='pacman -Sy'
+alias pSu='pacman -Su'
+alias pSyu='pacman -Syu'
+alias pSyuw='pacman -Syuw'
+alias pQ='pacman -Q'
+alias pQi='pacman -Qi'
+alias pQl='pacman -Ql'
+alias pQo='pacman -Qo'
+alias pQs='pacman -Qs'
+
+alias g=git
+alias gst='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gd='git diff'
+alias gk='git checkout'
+alias gr='git rebase'
+
+alias tmux-alt-shell='tmux bind-key v new-window'

@@ -1,0 +1,23 @@
+[alias]
+	br = branch
+	b = rebase
+	ch = cherry-pick
+	cl = clone
+	k  = checkout
+	l  = log
+	m  = merge
+	pick = cherry-pick
+	pl = pull
+	ps = push
+	rb = rebase
+	s  = stash
+	t = reset
+[push]
+	default = matching
+[core]
+	excludesfile = ~/.gitignore
+[pull]
+	rebase = true
+# [user]
+#	email = I SET THESE MANUALLY DEPENDING ON WORK/PERSONAL PROJECT
+#	name = I SET THESE MANUALLY DEPENDING ON WORK/PERSONAL PROJECT

@@ -1,0 +1,44 @@
+# vim: ft=zsh
+# Opts and history
+DIRSTACKSIZE=8
+setopt autocd autopushd pushdminus pushdsilent pushdtohome
+setopt interactivecomments extendedglob
+bindkey -e
+HISTFILE=~/.histfile
+HISTSIZE=1000000000
+SAVEHIST=1000000000
+
+# Completion:
+# /^zstyle/: lets you complete `cd photos/2-party' into `photos/2015-party'.
+autoload -Uz compinit; compinit
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# Fuzzy completion:
+if [ -f /etc/profile.d/fzf.zsh ]; then
+  . /etc/profile.d/fzf.zsh
+  bindkey -r '^G'
+  bindkey '^G^J' fzf-history-widget
+  bindkey '^R' history-incremental-search-backward
+
+  fzf-map-widget() {
+    LBUFFER="$(eval "${LBUFFER}" | $(__fzfcmd))"
+    hash xclip 2> /dev/null && xclip -se c <<< "${LBUFFER}"
+    local ret=$?
+    zle redisplay
+    typeset -f zle-line-init >/dev/null && zle zle-line-init
+    return $ret
+  }
+  zle     -N   fzf-map-widget
+  bindkey '^G^K' fzf-map-widget
+fi
+
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^xe' edit-command-line
+bindkey '^x^e' edit-command-line
+
+if [ -e "$ZSH" ]; then
+    source $ZSH/oh-my-zsh.sh
+    plugins=(knife)
+    unsetopt EXTENDED_HISTORY
+fi
