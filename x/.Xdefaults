@@ -1,0 +1,62 @@
+urxvt.font:     xft:Monaco:size=7:antialias=false
+urxvt.boldFont: xft:Monaco:size=7:antialias=false
+#urxvt.font: xft:DejaVu Sans Mono:size=7
+#urxvt.font: xft:DejaVu Sans Mono:size=7
+#urxvt.font: xft:Gohufont-8
+
+# I don't like the bold fonts.
+#urxvt.boldFont: xft:Monaco:size=7.5:weight=bold
+#urxvt.boldFont: xft:DejaVu Sans Mono:size=9
+
+urxvt.scrollBar:false
+urxvt.scrollstyle:rxvt
+urxvt.title:Terminal
+urxvt.depth: 32
+urxvt*background: [80]#1e1e1e
+
+urxvt.perl-lib: /home/s/.config/urxvt
+urxvt.perl-ext-common: resize-font
+urxvt.matcher.button: 1
+urxvt.urlLauncher: chromium
+urxvt.iso14755: false
+urxvt.iso14755_52: false
+#urxvt.perl-ext:
+
+# black: 0, 8; red: 1, 9; green: 2, 10; yellow: 3, 11; blue: 4, 12; magenta: 5, 13; cyan: 6, 14; white: 7, 15
+*foreground:    #cccccf
+*background:    #252525
+*color0:  #222222
+*color1:  #cd5c5c
+*color3:  #ffd200
+*color4:  #577db5
+*color5:  #ff69fd
+*color5:  #9933ff
+*color6:  #778798
+*color7:  #eeeeee
+*color8:  #555555
+*color9:  #ee6363
+*color11: #ffcd30
+*color12: #6b7b8a
+*color13: #ff69fd
+*color14: #7ab2ae
+*color15: #cacaca
+
+# invert cols
+# *foreground: #333330
+# *background: #dadada
+# *background: #e1e1e1
+# *color0:     #dddddd
+# *color1:     #32a3a3
+# *color3:     #002dff
+# *color4:     #a8824a
+# *color5:     #009602
+# *color5:     #66cc00
+# *color6:     #887867
+# *color7:     #111111
+# *color8:     #aaaaaa
+# *color9:     #119c9c
+# *color11:    #0032cf
+# *color12:    #948475
+# *color13:    #009602
+# *color14:    #854d51
+# *color15:    #353535

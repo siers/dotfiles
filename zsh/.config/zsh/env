@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+
+# ENV
+export MANPAGER=vimpager
+export PAGER=vimpager
+export EDITOR=vim
+alias less=$PAGER
+
+# PATH
+if [ -z "$(echo $PATH | grep $HOME/bin)" ]
+then
+    export GOPATH="$HOME/code/go/pkgs"
+    [ -e $HOME/code/go/pkgs/bin ] && export PATH="$HOME/code/go/pkgs/bin:$PATH"
+    [ -e $HOME/bin ] && export PATH="$(find ~/bin -type d | tr '\n' :):$PATH"
+    hash rbenv 2> /dev/null && eval "$(rbenv init -)"
+fi
+# find ~/bin \! -perm -a+x -print | grep -v environments | xargs chmod +x

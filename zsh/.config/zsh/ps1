@@ -1,0 +1,47 @@
+#!/usr/bin/env zsh
+
+precmd-color() {
+    local -a colors
+    (cat ~/.config/zsh/colors 2> /dev/null; echo 'root white white white' ) |
+        grep -Em1 "^($USER|$(hostname)) " | sed 's/^[a-z]* //'
+}
+precmdcolorcache="$(precmd-color)"
+precmd-color() { echo "${precmdcolorcache}" }
+
+precmd-realm() {
+    local merightnow realm depth
+    merightnow="$(pwd | sed "s:$HOME::")"
+    realm="$(echo $merightnow | grep -Eo '^/[^/]+($|/[^/]+)' | cut -b2-)"
+    depth="$(tr -cd '/' <<< "$merightnow" | wc -c)"
+
+    if (( $depth < 2 )); then
+        realm="%."
+    elif (( $depth == 3 )); then
+        realm="$realm/%."
+    elif (( $depth > 3 )); then
+        realm="$realm %."
+    fi
+
+    echo "$realm"
+}
+
+# PS1
+precmd() {
+    local fst snd thd git ruby
+    git="$(git branch 2> /dev/null | grep '^*' | tr -cd "a-zA-Z0-9\\-/")"
+    ruby="$(rbenv version 2> /dev/null | ack -o '^\d\S+')"
+
+    [ "$(id -u)" = "0" ] && sep=')' || sep='|'
+    read fst snd thd <<< "$(precmd-color)"
+    PS1="%F{${thd:-105}}%n$sep%F{$fst}%B$(precmd-realm)%b "
+
+    if [ -n "$git" ]; then
+        PS1="$PS1%F{$snd}$git%F{default} "
+    fi
+
+    if [ -n "$ruby" ]; then
+        PS1="$PS1$ruby "
+    fi
+
+    PS1="$PS1%#%F{default} "
+}

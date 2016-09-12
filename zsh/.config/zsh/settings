@@ -1,0 +1,13 @@
+# Opts and history
+DIRSTACKSIZE=8
+setopt autocd autopushd pushdminus pushdsilent pushdtohome
+setopt interactivecomments extendedglob
+bindkey -e
+HISTFILE=~/.histfile
+HISTSIZE=1000000000
+SAVEHIST=1000000000
+
+# Completion:
+# /^zstyle/: lets you complete `cd photos/2-party' into `photos/2015-party'.
+autoload -Uz compinit; compinit
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
