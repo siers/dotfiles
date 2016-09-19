@@ -10,5 +10,4 @@
 
     Amongs the things I use are vim, zsh, xbindkeys, git, tmux.
 
-    The vimconfig is a little messy — so, I included only vimrc. I'll fix it
-    one day and include it here.
+    Vim's plugins can be installed with :PlugInstall.
