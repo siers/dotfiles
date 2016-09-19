@@ -25,6 +25,7 @@ set ignorecase
 set smartcase
 set statusline=%f%m%r%h%w\ [%n:%{&ff}/%Y]%=[0x\%04.4B][%03v][%p%%\ line\ %l]
 set ffs=unix,dos,mac
+set clipboard=unnamedplus
 set history=10000
 filetype plugin indent on
 syntax on
@@ -84,20 +85,20 @@ map <Leader>q :wq<CR>
 
 map [o O<ESC>
 map ]o o<ESC>
-map <Esc>h <C-w>h
-map <Esc>j <C-w>j
-map <Esc>k <C-w>k
-map <Esc>l <C-w>l
-map <Esc>q <C-w>s
-map <Esc>w <C-w>v
+map <M-h> <C-w>h
+map <M-j> <C-w>j
+map <M-k> <C-w>k
+map <M-l> <C-w>l
+map <M-q> <C-w>s
+map <M-w> <C-w>v
 map <F12> :make all<CR>
 map <F11> :!make &<CR><CR>
 map <F10> :!make clean &<CR><CR>
-map <Esc>a gT
-map <Esc>s gt
-map <Esc>z :q<CR>
-map <Esc>Z :Bclose!<CR><Esc>z
-map <Esc>t :tabnew<CR>
+map <M-a> gT
+map <M-s> gt
+map <M-z> :q<CR>
+map <M-Z> :Bclose!<CR><M-z>
+map <M-t> :tabnew<CR>
 map <silent> <F1> :NERDTreeToggle<CR>
 map <silent> <F3> :Tlist<CR>
 map <C-j> :noh<CR>:<ESC>
@@ -141,8 +142,8 @@ fu! Chr_delta(delta)
     call setreg('"', c)
     normal! ""vP
 endf
-map <Esc>x :call Chr_delta(1)<CR>
-map <Esc>c :call Chr_delta(-1)<CR>
+map <M-x> :call Chr_delta(1)<CR>
+map <M-c> :call Chr_delta(-1)<CR>
 
 let g:ctrlp_user_command = [
             \ '.git/',

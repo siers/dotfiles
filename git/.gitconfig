@@ -1,16 +1,17 @@
 [alias]
-	s  = stash
 	br = branch
-	m  = merge
-	ps = push
-	pl = pull
-	l  = log
-	k  = checkout
-	pick = cherry-pick
-	ch = cherry-pick
-	t = reset
-	rb = rebase
 	b = rebase
+	ch = cherry-pick
+	cl = clone
+	k  = checkout
+	l  = log
+	m  = merge
+	pick = cherry-pick
+	pl = pull
+	ps = push
+	rb = rebase
+	s  = stash
+	t = reset
 [push]
 	default = matching
 [core]

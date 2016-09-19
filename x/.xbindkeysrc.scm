@@ -4,7 +4,7 @@
 ;; ;; ;;
 
 (xbindkey '(Mod4 Control Shift f)   "sudo /root/iptables.sh")
-(xbindkey '(Mod4 Control Shift x)   "sleep 0.5; pkill xbindkeys; xbindkeys && alert")
+(xbindkey '(Mod4 Control Shift x)   "sleep 0.5; pkill xbindkeys; xbindkeys; ok success:\\ $?")
 
 (xbindkey '(Mod4 Return)            "term")
 (xbindkey '(Mod4 Shift Return)      "term in-tag")
@@ -15,14 +15,20 @@
 (xbindkey '(Shift KP_Add)               "chromium hide")
 (xbindkey '(Control KP_Add)             "chromium hide random")
 (xbindkey '(Shift Control KP_Add)       "chromium hide random proxy")
+(xbindkey '(Alt KP_Add)                 "chromium clean | xargs ok")
 
 (xbindkey '(Mod4 z)                 "xcalib -a -i")
 (xbindkey '(XF86Sleep)              "sudo pm-suspend")
 (xbindkey '(Shift XF86Sleep)        "lock & sudo pm-suspend")
-(xbindkey '(Mod4 Shift F1)          "lock & sleep 2; sudo pm-suspend")
+(xbindkey '(XF86MonBrightnessUp)    "xbacklight + 5")
+(xbindkey '(XF86MonBrightnessDown)  "xbacklight - 5")
+
 (xbindkey '(Mod4 F12)               "lock")
+(xbindkey '(Mod4 Shift F12)         "lock; xset dpms force off")
+(xbindkey '(Mod4 Control F12)       "lock; sudo pm-suspend")
+
 (xbindkey '(Mod4 Alt F12)           "lock --stealth")
-(xbindkey '(Mod4 Shift F12)         "touch /tmp/nolock")
+(xbindkey '(Mod4 Alt Shift F12)     "touch /tmp/nolock")
 
 ; window manager
 
@@ -90,6 +96,7 @@
 
 ; /sound
 
+(xbindkey '(Mod4 alt     grave)     "oneliners")
 (xbindkey '(Mod4         space)     "runner")
 (xbindkey '(Mod4 shift   space)     "url-opener")
 (xbindkey '(Mod4 control space)     "clip-pipe vipe")

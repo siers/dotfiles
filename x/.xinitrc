@@ -13,22 +13,23 @@ fi
 
 autocutsel -fork                      &
 autocutsel -selection PRIMARY -fork   &
-xbindkeys                             &
 unclutter -jitter 2 -noevents -idle 2 &
 xsetroot -cursor_name left_prt        &
+xdg-user-dirs-update                  &
+
+xbindkeys                             &
 dunst                                 &
 urxvtd                                &
-udiskie &
-
-urxvt &
+udiskie                               &
+term in-tag                           &
 
 make -C $HOME/code/desktop/symbols &> /dev/null  &
 
 (
     sleep 3
-    #panel &
+    panel &
     #skype &
-    #on-tag status term in-tag &
+    on-tag status term in-tag &
 ) &
 
 #exec dbus-launch sh -c 'strace herbstluftwm 2> /tmp/herbitrace'
