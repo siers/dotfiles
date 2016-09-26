@@ -48,7 +48,7 @@ Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/tpope/vim-sleuth' " Local tabs/spaces.
 Plug 'https://github.com/tpope/vim-abolish' " Subvert, crs.
 Plug 'https://github.com/ervandew/supertab'
-Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
+"Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
 Plug 'https://github.com/junegunn/vim-easy-align'
 "Plug 'https://github.com/Raimondi/delimitMate'
 Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
@@ -64,6 +64,13 @@ call plug#end()
 
 nnoremap <silent> <leader>a :ArgWrap<CR>
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+
+" Keeps s/S original functionality.
+" https://github.com/justinmk/vim-sneak/issues/87
+"nmap <Plug>(Go_away_Sneak_s) <Plug>Sneak_s
+"nmap <Plug>(Go_away_Sneak_S) <Plug>Sneak_S
+
+xmap ga <Plug>(EasyAlign) | nmap ga <Plug>(EasyAlign)
 
 " ==============================================================================
 

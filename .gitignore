@@ -1,2 +1,2 @@
-/vim/.config/nvim/autoload/
-/vim/.config/nvim/plugged/
+/vim/.config/nvim/*
+# manually added if needed
