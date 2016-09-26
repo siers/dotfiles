@@ -1,3 +1,4 @@
+# vim: ft=zsh
 # Opts and history
 DIRSTACKSIZE=8
 setopt autocd autopushd pushdminus pushdsilent pushdtohome
@@ -14,3 +15,17 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 
 # Fuzzy completion:
 . /etc/profile.d/fzf.zsh
+bindkey -r '^G'
+bindkey '^G^J' fzf-history-widget
+bindkey '^R' history-incremental-search-backward
+
+fzf-map-widget() {
+  LBUFFER="$(eval "${LBUFFER}" | $(__fzfcmd))"
+  hash xclip 2> /dev/null && xclip -se c <<< "${LBUFFER}"
+  local ret=$?
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
+}
+zle     -N   fzf-map-widget
+bindkey '^G^K' fzf-map-widget
