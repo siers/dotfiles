@@ -69,8 +69,8 @@
 
 ; sound
 
-(xbindkey '(XF86AudioLowerVolume)   "amixer set Master 3%-")
-(xbindkey '(XF86AudioRaiseVolume)   "amixer set Master 3%+")
+(xbindkey '(XF86AudioLowerVolume)   "amixer set Master 3%-; click")
+(xbindkey '(XF86AudioRaiseVolume)   "amixer set Master 3%+; click")
 (xbindkey '(XF86AudioMute)          "amixer set Master toggle")
 
 (xbindkey '(KP_Divide)              "echo G3 > /tmp/pitch; user-daemon-toggle la.service")
