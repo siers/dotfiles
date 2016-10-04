@@ -29,7 +29,7 @@ precmd-realm() {
 precmd() {
     local fst snd thd git ruby
     git="$(git branch 2> /dev/null | grep '^*' | tr -cd "a-zA-Z0-9\\-/")"
-    ruby="$(rbenv version 2> /dev/null | ack -o '^\d\S+')"
+    ruby="$(rbenv version 2> /dev/null | grep -Po '^\d\S+')"
 
     [ "$(id -u)" = "0" ] && sep=')' || sep='|'
     read fst snd thd <<< "$(precmd-color)"

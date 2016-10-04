@@ -121,8 +121,8 @@ map <M-z> :q<CR>
 map <M-Z> :Bclose!<CR><M-z>
 map <M-t> :tabnew<CR>
 
-nnoremap J ^
-nnorema K $
+nnoremap <M-J> ^
+nnoremap <M-K> $
 map [o O<ESC>
 map ]o o<ESC>
 map <M-h> <C-w>h

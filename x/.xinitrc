@@ -7,7 +7,8 @@ xset -b                 &
 xset r rate 200 25      &
 
 if [ "$(hostname)" == 'spiral' ]; then
-    xrandr -s 1600x900 || exit
+    #xrandr -s 1600x900 || exit
+    xrandr -s 3840x2160 || exit
     xrdb -merge ~/.Xresources
 fi
 

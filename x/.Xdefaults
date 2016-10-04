@@ -1,8 +1,8 @@
 #urxvt.font:     xft:Monaco:size=7:antialias=false
-#urxvt.font:     xft:DejaVu Sans Mono:size=7:antialias=true
+urxvt.font:     xft:DejaVu Sans Mono:size=7:antialias=true
 #urxvt.font:     xft:Gohu:size=7:antialias=false
 #xterm.faceName:     xft:Gohu:size=7:antialias=false
-#urxvt.letterSpace: -2
+urxvt.letterSpace: -2
 
 urxvt.scrollBar: false
 urxvt.scrollstyle: rxvt
