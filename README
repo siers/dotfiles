@@ -6,8 +6,15 @@
 
     I use them on two seperate machines as of right now. There is some
     `hostname'(1) dependent code inside. Use with `stow' — the software
-    package installation manager.
+    package installation manager; e.g. to install vim files:
 
-    Amongs the things I use are vim, zsh, xbindkeys, git, tmux.
+        % stow -t ~ vim
+        % l -l ~/.config/nvim
+        lrwxrwxrwx 1 s s 41 Sep 19 16:41 ~/.config/nvim -> ../code/desktop/dotfiles/vim/.config/nvim
 
-    Vim's plugins can be installed with :PlugInstall.
+    Amongs the things I use are vim, zsh, xbindkeys, git, tmux. Vim's
+    plugins can be installed with :PlugInstall.
+
+- cron
+    15 11 * * 1 ~/bin/dev/auto-commit ~/code/desktop/dotfiles
+    30 12 * * 1 expr `date +\%s` / 604800 \% 2 >/dev/null || (cd ~/code/desktop/dotfiles; git push origin master)

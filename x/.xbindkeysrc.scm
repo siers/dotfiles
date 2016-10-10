@@ -23,8 +23,8 @@
 (xbindkey '(XF86MonBrightnessUp)    "xbacklight + 5")
 (xbindkey '(XF86MonBrightnessDown)  "xbacklight - 5")
 
-(xbindkey '(Mod4 F12)               "lock")
-(xbindkey '(Mod4 Shift F12)         "lock; xset dpms force off")
+(xbindkey '(Mod4 F12)               "lock; xset dpms force off")
+(xbindkey '(Mod4 Shift F12)         "lock")
 (xbindkey '(Mod4 Control F12)       "lock; sudo pm-suspend")
 
 (xbindkey '(Mod4 Alt F12)           "lock --stealth")

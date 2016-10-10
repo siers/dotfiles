@@ -1,3 +1,5 @@
 cdl() {
     cd $(dirlast "$1")
 }
+
+[ -e "$HOME/.config/zsh/tempoary" ] && source ~/.config/zsh/tempoary

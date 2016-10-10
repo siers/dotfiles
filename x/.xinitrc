@@ -30,7 +30,6 @@ make -C $HOME/code/desktop/symbols &> /dev/null  &
     sleep 3
     panel &
     #skype &
-    on-tag status term in-tag &
 ) &
 
 #exec dbus-launch sh -c 'strace herbstluftwm 2> /tmp/herbitrace'

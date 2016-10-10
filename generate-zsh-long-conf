@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# purpose:
 # sh /home/s/code/desktop/dotfiles/generate-zsh-long-conf > ~root/.zshrc; exec zsh
 
 if [ "$(id -u)" = "0" ]; then

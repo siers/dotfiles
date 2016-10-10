@@ -48,15 +48,16 @@ Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/tpope/vim-sleuth' " Local tabs/spaces.
 Plug 'https://github.com/tpope/vim-abolish' " Subvert, crs.
 Plug 'https://github.com/ervandew/supertab'
-"Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
 Plug 'https://github.com/junegunn/vim-easy-align'
-"Plug 'https://github.com/Raimondi/delimitMate'
 Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
 Plug 'https://github.com/kshenoy/vim-signature' " Marks of all kind.
 Plug 'https://github.com/chrisbra/Colorizer'
 Plug 'https://github.com/Yggdroot/indentLine'
 Plug 'https://github.com/FooSoft/vim-argwrap'
 Plug 'https://github.com/guns/jellyx.vim'
+Plug 'https://github.com/AndrewRadev/sideways.vim' " argument swapping
+"Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
+"Plug 'https://github.com/Raimondi/delimitMate'
 
 call plug#end()
 
@@ -71,6 +72,9 @@ let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclu
 "nmap <Plug>(Go_away_Sneak_S) <Plug>Sneak_S
 
 xmap ga <Plug>(EasyAlign) | nmap ga <Plug>(EasyAlign)
+
+nnoremap <BS> :SidewaysLeft<CR>
+nnoremap <C-l> :SidewaysRight<CR>
 
 " ==============================================================================
 
@@ -88,8 +92,6 @@ endif
 
 " When reading a file, jump to the last cursor position.
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-au FileType ruby   setlocal sw=4
-au FileType ruby   setlocal ts=4
 au FileType ruby   setlocal sw=2
 au FileType ruby   setlocal ts=2
 au FileType go     setlocal noet
@@ -121,8 +123,8 @@ map <M-z> :q<CR>
 map <M-Z> :Bclose!<CR><M-z>
 map <M-t> :tabnew<CR>
 
-nnoremap <M-J> ^
-nnoremap <M-K> $
+nnoremap <M-n> ^
+nnoremap <M-m> $
 map [o O<ESC>
 map ]o o<ESC>
 map <M-h> <C-w>h

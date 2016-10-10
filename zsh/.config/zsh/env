@@ -7,11 +7,19 @@ export EDITOR=vim
 alias less=$PAGER
 
 # PATH
-if [ -z "$(echo $PATH | grep $HOME/bin)" ]
+if [ -z "$(echo $PATH | grep ~/bin)" ]
 then
-    export GOPATH="$HOME/code/go/pkgs"
-    [ -e $HOME/code/go/pkgs/bin ] && export PATH="$HOME/code/go/pkgs/bin:$PATH"
-    [ -e $HOME/bin ] && export PATH="$(find ~/bin -type d | tr '\n' :)$PATH"
-    hash rbenv 2> /dev/null && eval "$(rbenv init -)"
+    [ -e ~/bin ] &&
+        export PATH="$(find ~/bin -type d | tr '\n' :)$PATH"
+
+    if [ -e ~/.rbenv/bin ]; then
+        export PATH="$HOME/.rbenv/bin:$PATH"
+        eval "$(rbenv init -)"
+    fi
+
+    if [ -e ~/code/go/pkgs/bin ]; then
+        export PATH="$PATH:$HOME/code/go/pkgs/bin"
+        export GOPATH="$HOME/code/go/pkgs"
+    fi
 fi
 # find ~/bin \! -perm -a+x -print | grep -v environments | xargs chmod +x
