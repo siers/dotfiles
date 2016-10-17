@@ -12,6 +12,7 @@ if [ "$(hostname)" == 'spiral' ]; then
     xrdb -merge ~/.Xresources
 fi
 
+anamnesis --start                     &
 autocutsel -fork                      &
 autocutsel -selection PRIMARY -fork   &
 unclutter -jitter 2 -noevents -idle 2 &

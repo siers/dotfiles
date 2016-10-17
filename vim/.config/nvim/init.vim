@@ -45,7 +45,6 @@ Plug 'https://github.com/tpope/vim-fugitive' " Git.
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/tpope/vim-repeat'
-Plug 'https://github.com/tpope/vim-sleuth' " Local tabs/spaces.
 Plug 'https://github.com/tpope/vim-abolish' " Subvert, crs.
 Plug 'https://github.com/ervandew/supertab'
 Plug 'https://github.com/junegunn/vim-easy-align'
@@ -58,6 +57,7 @@ Plug 'https://github.com/guns/jellyx.vim'
 Plug 'https://github.com/AndrewRadev/sideways.vim' " argument swapping
 "Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
 "Plug 'https://github.com/Raimondi/delimitMate'
+"Plug 'https://github.com/tpope/vim-sleuth' " Local tabs/spaces.
 
 call plug#end()
 
@@ -73,8 +73,8 @@ let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclu
 
 xmap ga <Plug>(EasyAlign) | nmap ga <Plug>(EasyAlign)
 
-nnoremap <BS> :SidewaysLeft<CR>
-nnoremap <C-l> :SidewaysRight<CR>
+nnoremap <M-H> :SidewaysLeft<CR>
+nnoremap <M-L> :SidewaysRight<CR>
 
 " ==============================================================================
 
@@ -101,6 +101,8 @@ ca W w
 ca E e
 ca Q q
 
+"   <Leader>standard filenames
+map <Leader>sf :s/_/-/g<CR>^gu$
 "   <Leader>shell expand; to apply on lines in format 'PS1 % some cmd'
 map <Leader>se yypdf%x!!sh>GkyyGGpOj
 map <Leader>s :%s/\s\+$//<CR>
