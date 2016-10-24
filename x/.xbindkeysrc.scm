@@ -28,7 +28,7 @@
 (xbindkey '(Mod4 Control F12)       "lock; sudo pm-suspend")
 
 (xbindkey '(Mod4 Alt F12)           "lock --stealth")
-(xbindkey '(Mod4 Alt Shift F12)     "touch /tmp/nolock")
+(xbindkey '(Mod4 Alt Shift F12)     "touch /tmp/nolock; notify-send -t 1 ' '")
 
 ; window manager
 
@@ -65,7 +65,7 @@
 (xbindkey '(Alt Control Print)      "prtscr -s | xargs -I% share % $(mktemp -up . prtscr/XXX.png)")
 
 (xbindkey '(Shift Print)            "cloud-prtscr")
-(xbindkey '(Shift Control Print)    "cloud-prtscr -s")
+(xbindkey '(Shift Control Print)    "sleep 1; cloud-prtscr -s")
 
 ; sound
 

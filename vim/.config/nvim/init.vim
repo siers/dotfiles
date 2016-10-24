@@ -26,6 +26,7 @@ set ignorecase smartcase
 set incsearch hlsearch
 set wildmenu wildmode=longest,full completeopt=menu,menuone,preview
 
+set showcmd
 set bs=indent,eol,start
 set clipboard=unnamedplus
 set cursorline number
@@ -100,6 +101,8 @@ ca te tabedit
 ca W w
 ca E e
 ca Q q
+
+let g:mapleader = "\<Space>"
 
 "   <Leader>standard filenames
 map <Leader>sf :s/_/-/g<CR>^gu$

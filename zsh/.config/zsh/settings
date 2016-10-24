@@ -40,4 +40,5 @@ bindkey '^x^e' edit-command-line
 if [ -e "$ZSH" ]; then
     source $ZSH/oh-my-zsh.sh
     plugins=(knife)
+    unsetopt EXTENDED_HISTORY
 fi
