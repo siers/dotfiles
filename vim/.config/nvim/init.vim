@@ -49,7 +49,6 @@ Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/tpope/vim-abolish' " Subvert, crs.
 Plug 'https://github.com/ervandew/supertab'
 Plug 'https://github.com/junegunn/vim-easy-align'
-Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
 Plug 'https://github.com/kshenoy/vim-signature' " Marks of all kind.
 Plug 'https://github.com/chrisbra/Colorizer'
 Plug 'https://github.com/Yggdroot/indentLine'
@@ -60,6 +59,9 @@ Plug 'https://github.com/evanmiller/nginx-vim-syntax'
 "Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
 "Plug 'https://github.com/Raimondi/delimitMate'
 "Plug 'https://github.com/tpope/vim-sleuth' " Local tabs/spaces.
+if system("hostname") == "spiral\n"
+    Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
+endif
 
 call plug#end()
 
@@ -116,7 +118,7 @@ map <Leader>p :!realpath % \| tr -d '\n' \| xclip<CR><CR>
 map <Leader>v vip!hs-import-sort<CR>:w<CR>
 map <Leader>i ?^import <CR>:noh<CR>
 map <Leader>r :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-
+map <Leader>x :%s/>/>\r/g<CR>gg=G
 map <Leader>gd :Gdiff<CR>
 map <Leader>gb :Gblame<CR>
 map <Leader>gs yiw:!git show <C-r>0<CR>
