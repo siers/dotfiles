@@ -56,6 +56,9 @@ Plug 'https://github.com/FooSoft/vim-argwrap'
 Plug 'https://github.com/guns/jellyx.vim'
 Plug 'https://github.com/AndrewRadev/sideways.vim' " argument swapping
 Plug 'https://github.com/evanmiller/nginx-vim-syntax'
+Plug 'https://github.com/vim-airline/vim-airline'
+Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'https://github.com/junegunn/fzf.vim'
 "Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
 "Plug 'https://github.com/Raimondi/delimitMate'
 "Plug 'https://github.com/tpope/vim-sleuth' " Local tabs/spaces.
