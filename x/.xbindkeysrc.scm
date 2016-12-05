@@ -20,8 +20,8 @@
 (xbindkey '(Mod4 z)                 "xcalib -a -i")
 (xbindkey '(XF86Sleep)              "sudo pm-suspend")
 (xbindkey '(Shift XF86Sleep)        "lock & sudo pm-suspend")
-(xbindkey '(XF86MonBrightnessUp)    "xbacklight + 5")
-(xbindkey '(XF86MonBrightnessDown)  "xbacklight - 5")
+(xbindkey '(XF86MonBrightnessUp)    "xbacklight + 10")
+(xbindkey '(XF86MonBrightnessDown)  "xbacklight - 10")
 
 (xbindkey '(Mod4 F12)               "lock; xset dpms force off")
 (xbindkey '(Mod4 Shift F12)         "lock")
