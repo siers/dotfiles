@@ -42,3 +42,5 @@ if [ -e "$ZSH" ]; then
     plugins=(knife)
     unsetopt EXTENDED_HISTORY
 fi
+
+[ -e /etc/profile.d/autojump.zsh ] && . /etc/profile.d/autojump.zsh

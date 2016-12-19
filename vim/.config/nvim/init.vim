@@ -154,6 +154,7 @@ map <silent> <F1> :NERDTreeToggle<CR>
 nnoremap <F5> "=strftime("%c")<CR>P
 inoremap <F5> <C-R>=strftime("%c")<CR>
 nnoremap <F6> "=strftime("%F-%T")<CR>P
+inoremap <F6> <C-R>=strftime("%F.%T")<CR>
 nmap <F9> :!./%<CR>
 map <F10> :!make clean &<CR><CR>
 map <F11> :!make &<CR><CR>
@@ -162,7 +163,7 @@ inoremap <F6> <C-R>=strftime("%F-%T")<CR>
 
 " :Share to sprunge.us
 let s:cmd = system("uname -s | tr -d '\n'") == "Darwin" ? "pbcopy" : "xclip"
-exec 'command! -range=% Share :<line1>,<line2>write !curl -sF "sprunge=<-" http://sprunge.us|'.s:cmd
+exec 'command! -range=% Share :<line1>,<line2>write !paste|'.s:cmd
 
 function! s:MoveLine(direction) " Move line <count> lines higher/lower.
     if a:direction == 'k'
