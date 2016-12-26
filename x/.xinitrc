@@ -7,6 +7,8 @@ xset -b                 &
 xset r rate 200 25      &
 
 if [ "$(hostname)" == 'spiral' ]; then
+    export GDK_SCALE=2
+    export GDK_DPI_SCALE=0.5
     #xrandr -s 1600x900 || exit
     xrandr -s 3840x2160 || exit
     xrdb -merge ~/.Xresources

@@ -1,5 +1,5 @@
 [global]
-    font = Andale Mono 16
+    font = Andale Mono 20
 
     # Allow a small subset of html markup:
     #   <b>bold</b>
@@ -21,7 +21,8 @@
     #   %I  iconname (without its path)
     #   %p  progress value if set ([  0%] to [100%]) or nothing
     # Markup is allowed
-    format = "<b>%s</b>\n%b"
+    format = "<b>%s %i</b>\n%b"
+    show_icons = yes
 
     # Sort messages by urgency.
     sort = yes
@@ -67,7 +68,7 @@
     # the top and down respectevly.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "600x5-10-10"
+    geometry = "750x5-10-10"
 
     # Shrink window if it's smaller than the width.  Will be ignored if
     # width is 0.
@@ -120,10 +121,10 @@
     separator_height = 2
 
     # Padding between text and separator.
-        padding = 8
+    padding = 10
 
     # Horizontal padding.
-    horizontal_padding = 8
+    horizontal_padding = 20
 
     # Define a color for the separator.
     # possible values are:
@@ -145,10 +146,10 @@
     browser = /usr/bin/firefox -new-tab
 
     # Align icons left/right/off
-    icon_position = off
+    icon_position = left
 
     # Paths to default icons.
-    icon_folders = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+    icon_folders = /usr/share/icons/gnome/64x64/status/:/usr/share/icons/gnome/64x64/devices/:/usr/share/icons/Adwaita/64x64/actions/:/usr/share/icons/Adwaita/64x64/apps/:/usr/share/icons/Adwaita/64x64/categories/:/usr/share/icons/Adwaita/64x64/devices/:/usr/share/icons/Adwaita/64x64/emblems/:/usr/share/icons/Adwaita/64x64/emotes/:/usr/share/icons/Adwaita/64x64/mimetypes/:/usr/share/icons/Adwaita/64x64/places/:/usr/share/icons/Adwaita/64x64/status/:/usr/share/icons/hicolor/64x64/apps/:/usr/share/icons/oxygen/base/64x64/actions/
 
 [frame]
     width = 2

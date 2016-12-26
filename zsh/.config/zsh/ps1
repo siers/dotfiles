@@ -33,15 +33,15 @@ precmd() {
 
     [ "$(id -u)" = "0" ] && sep=')' || sep='|'
     read fst snd thd <<< "$(precmd-color)"
-    PS1="%F{${thd:-105}}%n$sep%F{$fst}%B$(precmd-realm)%b "
+    PS1="%F{${thd:-105}}%n$sep%F{$fst}%B$(precmd-realm)%b%F{default} "
 
     if [ -n "$git" ]; then
-        PS1="$PS1%F{$snd}$git%F{default} "
+        PS1="$PS1%F{$snd}$git "
     fi
 
     if [ -n "$ruby" ]; then
         PS1="$PS1$ruby "
     fi
 
-    PS1="$PS1%#%F{default} "
+    PS1="$PS1%F{default}%# "
 }
