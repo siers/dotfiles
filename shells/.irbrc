@@ -17,3 +17,5 @@ class Array
     end
   end
 end
+
+def lines(fn); File.read(fn).each_line.to_a; end

@@ -16,5 +16,4 @@
     plugins can be installed with :PlugInstall.
 
 - cron
-    15 11 * * 1 ~/bin/dev/auto-commit ~/code/desktop/dotfiles
-    30 12 * * 1 expr `date +\%s` / 604800 \% 2 >/dev/null || (cd ~/code/desktop/dotfiles; git push origin master)
+    0 13 * * * ruby -e 'n = Time.now; exit (5 + n.wday + (n.to_i/(3600*24*7))).modulo(7) == 0' && (cd ~/code/desktop/dotfiles; ~/bin/dev/auto-commit .; git push)

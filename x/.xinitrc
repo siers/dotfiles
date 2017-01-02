@@ -1,17 +1,19 @@
 #!/bin/sh
 
-exec &> /var/tmp/xlog
+echo -e "\n\n$(date):\n$(date | sed 's/./-/g')" >> /var/tmp/xlog
+exec &>> /var/tmp/xlog
 
-cat $HOME/.fehbg | zsh  &
+cat ~/.fehbg | zsh  &
 xset -b                 &
 xset r rate 200 25      &
 
 if [ "$(hostname)" == 'spiral' ]; then
     export GDK_SCALE=2
     export GDK_DPI_SCALE=0.5
+    xrdb -merge ~/.Xresources
+
     #xrandr -s 1600x900 || exit
     xrandr -s 3840x2160 || exit
-    xrdb -merge ~/.Xresources
 fi
 
 anamnesis --start                     &
@@ -21,19 +23,14 @@ unclutter -jitter 2 -noevents -idle 2 &
 xsetroot -cursor_name left_prt        &
 xdg-user-dirs-update                  &
 
+xss-lock lock                         &
 xbindkeys                             &
 dunst                                 &
 urxvtd                                &
 udiskie                               &
 term in-tag                           &
 
-make -C $HOME/code/desktop/symbols &> /dev/null  &
-
-(
-    sleep 3
-    panel &
-    #skype &
-) &
+~/code/desktop/symbols/make
 
 #exec dbus-launch sh -c 'strace herbstluftwm 2> /tmp/herbitrace'
 #exec dbus-launch strace herbstluftwm 2> /tmp/herbitrace

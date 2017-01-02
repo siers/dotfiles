@@ -4,53 +4,69 @@
 ;; ;; ;;
 
 (xbindkey '(Mod4 Control Shift f)   "sudo /root/iptables.sh")
-(xbindkey '(Mod4 Control Shift x)   "sleep 0.5; pkill xbindkeys; xbindkeys; ok success:\\ $?")
+(xbindkey '(Mod4 Control Shift x)   "sleep 0.5; pkill xbindkeys; xbindkeys; notify-send success:\\ $?")
 
-(xbindkey '(Mod4 Return)            "term")
+(xbindkey '(Mod4 Return)            "term || urxvt")
 (xbindkey '(Mod4 Shift Return)      "term in-tag")
-(xbindkey '(Mod4 Control Return)    "term one")
+(xbindkey '(Mod4 Control Return)    "term one || urxvt")
 (xbindkey '(Mod4 Alt Return)        "alert")
 
-(xbindkey '(KP_Add)                     "chromium")
-(xbindkey '(Shift KP_Add)               "chromium hide")
-(xbindkey '(Control KP_Add)             "chromium hide random")
-(xbindkey '(Shift Control KP_Add)       "chromium hide random proxy")
-(xbindkey '(Alt KP_Add)                 "chromium clean | xargs ok")
+(xbindkey '(KP_Home)                    "chromium")
+(xbindkey '(Shift KP_Home)              "chromium hide")
+(xbindkey '(Control KP_Home)            "chromium hide random")
+(xbindkey '(Shift Control KP_Home)      "chromium hide random proxy")
+(xbindkey '(Alt KP_Home)                "chromium clean | xargs ok")
 
-(xbindkey '(Mod4 z)                 "xcalib -a -i")
 (xbindkey '(XF86Sleep)              "sudo pm-suspend")
 (xbindkey '(Shift XF86Sleep)        "lock & sudo pm-suspend")
+
+(xbindkey '(Control F4)             "xdotool click 1")
+(xbindkey '(Mod4 z)                 "xcalib -a -i")
 (xbindkey '(XF86MonBrightnessUp)    "xbacklight + 10")
 (xbindkey '(XF86MonBrightnessDown)  "xbacklight - 10")
 
 (xbindkey '(Mod4 F12)               "lock; xset dpms force off")
 (xbindkey '(Mod4 Shift F12)         "lock")
-(xbindkey '(Mod4 Control F12)       "lock; sudo pm-suspend")
+(xbindkey '(Mod4 Control F12)       "sudo pm-suspend")
 
 (xbindkey '(Mod4 Alt F12)           "lock --stealth")
 (xbindkey '(Mod4 Alt Shift F12)     "touch /tmp/nolock; notify-send -t 1 ' '")
 
 ; window manager
 
-(xbindkey '(Mod4 e) "herbstclient use $(select-workspace primary   e)")
-(xbindkey '(Mod4 r) "herbstclient use $(select-workspace primary   r)")
-(xbindkey '(Mod4 d) "herbstclient use $(select-workspace primary   d)")
-(xbindkey '(Mod4 f) "herbstclient use $(select-workspace primary   f)")
+(xbindkey '(Mod4 q) "herbstclient use q")
+(xbindkey '(Mod4 w) "herbstclient use w")
+(xbindkey '(Mod4 a) "herbstclient use a")
+(xbindkey '(Mod4 s) "herbstclient use s")
+(xbindkey '(Mod4 e) "herbstclient use e")
+(xbindkey '(Mod4 d) "herbstclient use d")
 
-(xbindkey '(Mod4 q) "herbstclient use $(select-workspace secondary q)")
-(xbindkey '(Mod4 w) "herbstclient use $(select-workspace secondary w)")
-(xbindkey '(Mod4 a) "herbstclient use $(select-workspace secondary a)")
-(xbindkey '(Mod4 s) "herbstclient use $(select-workspace secondary s)")
+(xbindkey '(Mod4 Shift q) "herbstclient move q)")
+(xbindkey '(Mod4 Shift w) "herbstclient move w)")
+(xbindkey '(Mod4 Shift a) "herbstclient move a)")
+(xbindkey '(Mod4 Shift s) "herbstclient move s)")
+(xbindkey '(Mod4 Shift e) "herbstclient move e)")
+(xbindkey '(Mod4 Shift d) "herbstclient move d)")
 
-(xbindkey '(Mod4 Shift e) "herbstclient move $(select-workspace move primary   e)")
-(xbindkey '(Mod4 Shift r) "herbstclient move $(select-workspace move primary   r)")
-(xbindkey '(Mod4 Shift d) "herbstclient move $(select-workspace move primary   d)")
-(xbindkey '(Mod4 Shift f) "herbstclient move $(select-workspace move primary   f)")
+;(xbindkey '(Mod4 e) "herbstclient use $(select-workspace primary   e)")
+;(xbindkey '(Mod4 r) "herbstclient use $(select-workspace primary   r)")
+;(xbindkey '(Mod4 d) "herbstclient use $(select-workspace primary   d)")
+;(xbindkey '(Mod4 f) "herbstclient use $(select-workspace primary   f)")
 
-(xbindkey '(Mod4 Shift q) "herbstclient move $(select-workspace move secondary q)")
-(xbindkey '(Mod4 Shift w) "herbstclient move $(select-workspace move secondary w)")
-(xbindkey '(Mod4 Shift a) "herbstclient move $(select-workspace move secondary a)")
-(xbindkey '(Mod4 Shift s) "herbstclient move $(select-workspace move secondary s)")
+;(xbindkey '(Mod4 q) "herbstclient use $(select-workspace secondary q)")
+;(xbindkey '(Mod4 w) "herbstclient use $(select-workspace secondary w)")
+;(xbindkey '(Mod4 a) "herbstclient use $(select-workspace secondary a)")
+;(xbindkey '(Mod4 s) "herbstclient use $(select-workspace secondary s)")
+
+;(xbindkey '(Mod4 Shift e) "herbstclient move $(select-workspace move primary   e)")
+;(xbindkey '(Mod4 Shift r) "herbstclient move $(select-workspace move primary   r)")
+;(xbindkey '(Mod4 Shift d) "herbstclient move $(select-workspace move primary   d)")
+;(xbindkey '(Mod4 Shift f) "herbstclient move $(select-workspace move primary   f)")
+
+;(xbindkey '(Mod4 Shift q) "herbstclient move $(select-workspace move secondary q)")
+;(xbindkey '(Mod4 Shift w) "herbstclient move $(select-workspace move secondary w)")
+;(xbindkey '(Mod4 Shift a) "herbstclient move $(select-workspace move secondary a)")
+;(xbindkey '(Mod4 Shift s) "herbstclient move $(select-workspace move secondary s)")
 
 (xbindkey '(Mod4 Tab)     "herbstclient use_previous; select-workspace store")
 (xbindkey '(Mod4 Shift c) "xdotool windowkill $(xdotool getactivewindow)")
@@ -77,8 +93,8 @@
 (xbindkey '(KP_Multiply)            "echo D4 > /tmp/pitch; user-daemon-toggle la.service")
 (xbindkey '(KP_Subtract)            "echo A4 > /tmp/pitch; user-daemon-toggle la.service")
 (xbindkey '(KP_Add)                 "echo E5 > /tmp/pitch; user-daemon-toggle la.service")
-(xbindkey '(KP_Begin)               "sw-audio-outputs | sh")
-(xbindkey '(KP_Right)               "~/code/ruby/util/apklust.rb")
+;(xbindkey '(KP_Begin)               "false && sw-audio-outputs | sh")
+(xbindkey '(KP_Right)               "false && ~/code/ruby/util/apklust.rb")
 
 (xbindkey '(KP_Enter)               "mpc toggle")
 (xbindkey '(KP_Down)                "mpc prev")
@@ -86,6 +102,7 @@
 
 (xbindkey '(KP_Left)                "amixer set Master 3%+")
 (xbindkey '(KP_End)                 "amixer set Master toggle")
+(xbindkey '(KP_Down)                "temporary-sound-off")
 (xbindkey '(shift KP_End)           "amixer set Master off")
 (xbindkey '(KP_Insert)              "amixer set Master 3%-")
 
@@ -98,10 +115,11 @@
 
 (xbindkey '(Mod4 alt     grave)     "oneliners")
 (xbindkey '(Mod4         space)     "runner")
-(xbindkey '(Mod4 shift   space)     "url-opener")
+(xbindkey '(Mod4 shift   space)     "chromium-runner")
 (xbindkey '(Mod4 control space)     "clip-pipe vipe")
 (xbindkey '(Mod4 alt     space)     "clip-pipe sh")
 (xbindkey '(Mod4 shift   grave)     "mapclip paste && alert || alert 0.4 c")
+(xbindkey '(Mod4 F1)                "surf -- \"$(c -o)\"")
 
 ; arbitrary, quick to change shell commands
 

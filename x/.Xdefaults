@@ -1,6 +1,7 @@
 #urxvt.font:     xft:Monaco:size=7:antialias=false
-urxvt.font:     xft:DejaVu Sans Mono:size=8:antialias=true
-#urxvt.font:     xft:Iosevka:size=7:antialias=true
+#urxvt.font:     xft:DejaVu Sans Mono:size=8:antialias=true,xft:Noto Sans Mono CJK SC:size=8:antialias=true
+urxvt.font:     xft:DejaVu Sans Mono:size=9:antialias=true
+#urxvt.font:     xft:Iosevka:size=10:antialias=true
 #urxvt.font:     xft:Gohu:size=7:antialias=false
 #xterm.faceName:     xft:Gohu:size=7:antialias=false
 urxvt.letterSpace: -2
@@ -27,7 +28,7 @@ urxvt.iso14755_52: false
 *color5:  #9933ff
 *color6:  #778798
 *color7:  #eeeeee
-*color8:  #555555
+*color8:  #888888
 *color9:  #ee6363
 *color11: #ffcd30
 *color12: #6b7b8a

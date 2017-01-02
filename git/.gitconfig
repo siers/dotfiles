@@ -1,10 +1,12 @@
 [alias]
+	desc = show -s --format=oneline
+	descs = log --format=oneline
 	br = branch
 	b = rebase
 	ch = cherry-pick
 	cl = clone
 	k  = checkout
-	l  = log
+	l  = log --decorate --graph
 	m  = merge
 	pick = cherry-pick
 	pl = pull
@@ -12,8 +14,9 @@
 	rb = rebase
 	s  = stash
 	t = reset
+	rh = reset --hard
 [push]
-	default = matching
+	default = current
 [core]
 	excludesfile = ~/.gitignore
 [pull]
