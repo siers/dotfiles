@@ -1,5 +1,6 @@
 [alias]
-	this = show -s --format=oneline
+	desc = show -s --format=oneline
+	descs = log --format=oneline
 	br = branch
 	b = rebase
 	ch = cherry-pick
@@ -13,6 +14,7 @@
 	rb = rebase
 	s  = stash
 	t = reset
+	rh = reset --hard
 [push]
 	default = matching
 [core]

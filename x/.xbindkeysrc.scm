@@ -102,6 +102,7 @@
 (xbindkey '(Mod4 control space)     "clip-pipe vipe")
 (xbindkey '(Mod4 alt     space)     "clip-pipe sh")
 (xbindkey '(Mod4 shift   grave)     "mapclip paste && alert || alert 0.4 c")
+(xbindkey '(Mod4 F1)                "surf -- \"$(c -o)\"")
 
 ; arbitrary, quick to change shell commands
 
