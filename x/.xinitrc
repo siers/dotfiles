@@ -2,7 +2,7 @@
 
 exec &> /var/tmp/xlog
 
-cat $HOME/.fehbg | zsh  &
+cat ~/.fehbg | zsh  &
 xset -b                 &
 xset r rate 200 25      &
 
@@ -27,7 +27,7 @@ urxvtd                                &
 udiskie                               &
 term in-tag                           &
 
-make -C $HOME/code/desktop/symbols &> /dev/null  &
+~/code/desktop/symbols/make
 
 (
     sleep 3
