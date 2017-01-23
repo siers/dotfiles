@@ -125,7 +125,7 @@ map <Leader>r :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 map <Leader>x :%s/>/>\r/g<CR>gg=G
 map <Leader>gd :Gdiff<CR>
 map <Leader>gb :Gblame<CR>
-map <Leader>gs yiw:!git show <C-r>0<CR>
+map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show <C-r>0 \| vim -" &<CR>
 
 map <Leader>w :w<CR>
 map <Leader>q :wq<CR>

@@ -11,11 +11,11 @@
 (xbindkey '(Mod4 Control Return)    "term one")
 (xbindkey '(Mod4 Alt Return)        "alert")
 
-(xbindkey '(KP_Add)                     "chromium")
-(xbindkey '(Shift KP_Add)               "chromium hide")
-(xbindkey '(Control KP_Add)             "chromium hide random")
-(xbindkey '(Shift Control KP_Add)       "chromium hide random proxy")
-(xbindkey '(Alt KP_Add)                 "chromium clean | xargs ok")
+(xbindkey '(KP_Home)                    "chromium")
+(xbindkey '(Shift KP_Home)              "chromium hide")
+(xbindkey '(Control KP_Home)            "chromium hide random")
+(xbindkey '(Shift Control KP_Home)      "chromium hide random proxy")
+(xbindkey '(Alt KP_Home)                "chromium clean | xargs ok")
 
 (xbindkey '(Mod4 z)                 "xcalib -a -i")
 (xbindkey '(XF86Sleep)              "sudo pm-suspend")

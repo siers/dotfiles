@@ -14,7 +14,7 @@ autoload -Uz compinit; compinit
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 # Fuzzy completion:
-if [ -f /etc/profile.d/fzf.zsh ]; then
+if [ -f /etc/profile.d/fzf.zsh ] && false; then
   . /etc/profile.d/fzf.zsh
   bindkey -r '^G'
   bindkey '^G^J' fzf-history-widget
@@ -37,7 +37,7 @@ zle -N edit-command-line
 bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
 
-if [ -e "$ZSH" ]; then
+if false && [ -e "$ZSH" ]; then
     source $ZSH/oh-my-zsh.sh
     plugins=(knife)
     unsetopt EXTENDED_HISTORY
