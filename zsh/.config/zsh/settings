@@ -37,7 +37,7 @@ zle -N edit-command-line
 bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
 
-if false && [ -e "$ZSH" ]; then
+if [ -e "$ZSH" ]; then
     source $ZSH/oh-my-zsh.sh
     plugins=(knife)
     unsetopt EXTENDED_HISTORY

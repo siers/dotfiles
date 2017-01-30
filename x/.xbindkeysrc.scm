@@ -98,7 +98,7 @@
 
 (xbindkey '(Mod4 alt     grave)     "oneliners")
 (xbindkey '(Mod4         space)     "runner")
-(xbindkey '(Mod4 shift   space)     "url-opener")
+(xbindkey '(Mod4 shift   space)     "chromium-runner")
 (xbindkey '(Mod4 control space)     "clip-pipe vipe")
 (xbindkey '(Mod4 alt     space)     "clip-pipe sh")
 (xbindkey '(Mod4 shift   grave)     "mapclip paste && alert || alert 0.4 c")
