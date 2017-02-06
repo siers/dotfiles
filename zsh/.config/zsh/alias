@@ -20,12 +20,12 @@ alias '........'='../../../../../../..'
 alias ls='ls --color=auto -hb'
 alias l='ls'
 alias p='ping google.lv' # tired of writing this over and over again.
+alias mv='mv -i'
 
 alias cal='cal -m'
 alias fack='find . | ack'
 alias grep='grep --colour'
 alias pwgen='pwgen -n 10'
-alias secgen='/usr/bin/pwgen -c -n -s -y -v 16 72'
 alias watch="watch -n.5"
 alias hexdump="hexdump -C"
 

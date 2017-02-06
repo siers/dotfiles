@@ -100,9 +100,9 @@ endif
 
 " When reading a file, jump to the last cursor position.
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-au FileType ruby   setlocal sw=2
-au FileType ruby   setlocal ts=2
-au FileType go     setlocal noet
+au FileType ruby      setlocal sw=2 ts=2
+au FileType go        setlocal noet
+au FileType terraform setlocal sw=2 ts=2
 
 ca te tabedit
 ca W w
