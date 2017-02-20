@@ -6,7 +6,7 @@
 	ch = cherry-pick
 	cl = clone
 	k  = checkout
-	l  = log
+	l  = log --decorate
 	m  = merge
 	pick = cherry-pick
 	pl = pull

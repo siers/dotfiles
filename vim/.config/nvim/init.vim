@@ -47,7 +47,7 @@ Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/tpope/vim-abolish' " Subvert, crs.
-Plug 'https://github.com/ervandew/supertab'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'https://github.com/junegunn/vim-easy-align'
 Plug 'https://github.com/kshenoy/vim-signature' " Marks of all kind.
 Plug 'https://github.com/chrisbra/Colorizer'
