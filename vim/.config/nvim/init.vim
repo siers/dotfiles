@@ -72,7 +72,7 @@ call plug#end()
 " ==============================================================================
 
 nnoremap <silent> <leader>a :ArgWrap<CR>
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_user_command = ['.git/', 'touch .git/CTRLP-ALL && git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null || find -type f']
 
 " Keeps s/S original functionality.
 " https://github.com/justinmk/vim-sneak/issues/87
@@ -103,6 +103,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 au FileType ruby      setlocal sw=2 ts=2
 au FileType go        setlocal noet
 au FileType terraform setlocal sw=2 ts=2
+au FileType yaml      setlocal sw=2 ts=2
 
 ca te tabedit
 ca W w
