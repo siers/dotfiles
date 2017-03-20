@@ -41,4 +41,6 @@ if false && [ -e "$ZSH" ]; then
     source $ZSH/oh-my-zsh.sh
     plugins=(knife)
     unsetopt EXTENDED_HISTORY
+else
+    setopt INC_APPEND_HISTORY
 fi

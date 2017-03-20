@@ -27,7 +27,10 @@ precmd-realm() {
 
 # PS1
 precmd() {
-    local fst snd thd git ruby
+    __ps1_succ="$?"
+
+    local fst snd thd git ruby succ
+
     git="$(git branch 2> /dev/null | grep '^*' | tr -cd "a-zA-Z0-9\\-/")"
     ruby="$(rbenv version 2> /dev/null | grep -Po '^\d\S+')"
 
@@ -43,5 +46,11 @@ precmd() {
         PS1="$PS1$ruby "
     fi
 
-    PS1="$PS1%F{default}%# "
+    if [ "$__ps1_succ" = "0" ]; then
+        succ="default"
+    else
+        succ="red"
+    fi
+
+    PS1="$PS1%F{$succ}%#%F{default} "
 }
