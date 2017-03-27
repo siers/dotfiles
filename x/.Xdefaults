@@ -1,7 +1,7 @@
 #urxvt.font:     xft:Monaco:size=7:antialias=false
 #urxvt.font:     xft:DejaVu Sans Mono:size=8:antialias=true,xft:Noto Sans Mono CJK SC:size=8:antialias=true
-urxvt.font:     xft:DejaVu Sans Mono:size=9:antialias=true
-#urxvt.font:     xft:Iosevka:size=7:antialias=true
+urxvt.font:     xft:DejaVu Sans Mono:size=10:antialias=true
+#urxvt.font:     xft:Iosevka:size=10:antialias=true
 #urxvt.font:     xft:Gohu:size=7:antialias=false
 #xterm.faceName:     xft:Gohu:size=7:antialias=false
 urxvt.letterSpace: -2
