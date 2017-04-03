@@ -17,9 +17,11 @@
 (xbindkey '(Shift Control KP_Home)      "chromium hide random proxy")
 (xbindkey '(Alt KP_Home)                "chromium clean | xargs ok")
 
-(xbindkey '(Mod4 z)                 "xcalib -a -i")
 (xbindkey '(XF86Sleep)              "sudo pm-suspend")
 (xbindkey '(Shift XF86Sleep)        "lock & sudo pm-suspend")
+
+(xbindkey '(Control F4)             "xdotool click 1")
+(xbindkey '(Mod4 z)                 "xcalib -a -i")
 (xbindkey '(XF86MonBrightnessUp)    "xbacklight + 10")
 (xbindkey '(XF86MonBrightnessDown)  "xbacklight - 10")
 
