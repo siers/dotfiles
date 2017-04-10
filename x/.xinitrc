@@ -26,6 +26,7 @@ unclutter -jitter 2 -noevents -idle 2 &
 xsetroot -cursor_name left_prt        &
 xdg-user-dirs-update                  &
 
+xss-lock lock                         &
 xbindkeys                             &
 dunst                                 &
 urxvtd                                &

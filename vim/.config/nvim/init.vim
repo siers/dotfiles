@@ -51,7 +51,6 @@ Plug 'https://github.com/tpope/vim-abolish' " Subvert, crs.
 Plug 'https://github.com/ervandew/supertab'
 Plug 'https://github.com/junegunn/vim-easy-align'
 Plug 'https://github.com/kshenoy/vim-signature' " Marks of all kind.
-Plug 'https://github.com/chrisbra/Colorizer'
 Plug 'https://github.com/Yggdroot/indentLine'
 Plug 'https://github.com/FooSoft/vim-argwrap'
 Plug 'https://github.com/guns/jellyx.vim'
@@ -59,7 +58,7 @@ Plug 'https://github.com/AndrewRadev/sideways.vim' " argument swapping
 Plug 'https://github.com/evanmiller/nginx-vim-syntax'
 Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/hashivim/vim-terraform'
-Plug 'https://github.com/freitass/todo.txt-vim'
+Plug 'https://github.com/AndrewRadev/splitjoin.vim'
 "Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
 "Plug 'https://github.com/Raimondi/delimitMate'

@@ -27,7 +27,7 @@
 
 (xbindkey '(Mod4 F12)               "lock; xset dpms force off")
 (xbindkey '(Mod4 Shift F12)         "lock")
-(xbindkey '(Mod4 Control F12)       "lock; sudo pm-suspend")
+(xbindkey '(Mod4 Control F12)       "sudo pm-suspend")
 
 (xbindkey '(Mod4 Alt F12)           "lock --stealth")
 (xbindkey '(Mod4 Alt Shift F12)     "touch /tmp/nolock; notify-send -t 1 ' '")
