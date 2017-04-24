@@ -16,7 +16,7 @@
 	t = reset
 	rh = reset --hard
 [push]
-	default = matching
+	default = current
 [core]
 	excludesfile = ~/.gitignore
 [pull]
