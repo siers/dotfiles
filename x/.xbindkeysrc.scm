@@ -79,8 +79,8 @@
 (xbindkey '(KP_Multiply)            "echo D4 > /tmp/pitch; user-daemon-toggle la.service")
 (xbindkey '(KP_Subtract)            "echo A4 > /tmp/pitch; user-daemon-toggle la.service")
 (xbindkey '(KP_Add)                 "echo E5 > /tmp/pitch; user-daemon-toggle la.service")
-(xbindkey '(KP_Begin)               "sw-audio-outputs | sh")
-(xbindkey '(KP_Right)               "~/code/ruby/util/apklust.rb")
+(xbindkey '(KP_Begin)               "false && sw-audio-outputs | sh")
+(xbindkey '(KP_Right)               "false && ~/code/ruby/util/apklust.rb")
 
 (xbindkey '(KP_Enter)               "mpc toggle")
 (xbindkey '(KP_Down)                "mpc prev")
