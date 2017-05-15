@@ -13,6 +13,9 @@ then
     [ -e ~/bin ] &&
         export PATH="$(find ~/bin -type d | tr '\n' :)$PATH"
 
+    [ -e ~/.tfenv/bin ] &&
+        export PATH="$(echo ~/.tfenv/bin):$PATH"
+
     if [ -e ~/.rbenv/bin ]; then
         # git clone https://github.com/rbenv/rbenv.git ~/.rbenv
         # git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
