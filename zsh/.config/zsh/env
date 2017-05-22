@@ -16,6 +16,10 @@ then
     [ -e ~/.tfenv/bin ] &&
         export PATH="$(echo ~/.tfenv/bin):$PATH"
 
+    [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ] &&
+        . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+
+
     if [ -e ~/.rbenv/bin ]; then
         # git clone https://github.com/rbenv/rbenv.git ~/.rbenv
         # git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
