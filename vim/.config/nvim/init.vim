@@ -133,7 +133,6 @@ map <Leader>q :wq<CR>
 map <M-a> gT
 map <M-s> gt
 map <M-z> :q<CR>
-map <M-Z> :Bclose!<CR><M-z>
 map <M-t> :tabnew<CR>
 
 nnoremap <M-n> ^
