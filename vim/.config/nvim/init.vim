@@ -114,8 +114,6 @@ let g:mapleader = "\<Space>"
 
 "   <Leader>standard filenames
 map <Leader>sf :s/_/-/g<CR>^gu$
-"   <Leader>shell expand; to apply on lines in format 'PS1 % some cmd'
-map <Leader>se yypdf%x!!sh>GkyyGGpOj
 map <Leader>s :%s/\s\+$//<CR>
 map <Leader>y mtggVG"+y`tzz
 map <Leader>b :ls<CR>:b
