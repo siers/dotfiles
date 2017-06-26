@@ -43,6 +43,8 @@ call plug#begin('~/.config/nvim/plugged')
 
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 Plug 'https://github.com/tpope/vim-fugitive' " Git.
+Plug 'https://github.com/tpope/vim-rhubarb'
+Plug 'https://github.com/tommcdo/vim-fubitive'
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/tpope/vim-repeat'
