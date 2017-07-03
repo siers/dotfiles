@@ -61,8 +61,9 @@ Plug 'https://github.com/evanmiller/nginx-vim-syntax'
 Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/hashivim/vim-terraform'
 Plug 'https://github.com/AndrewRadev/splitjoin.vim'
-"Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
+Plug 'https://github.com/ekalinin/Dockerfile.vim'
+"Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "Plug 'https://github.com/Raimondi/delimitMate'
 "Plug 'https://github.com/tpope/vim-sleuth' " Local tabs/spaces.
 if system("hostname") == "spiral\n"
@@ -74,7 +75,7 @@ call plug#end()
 " ==============================================================================
 
 nnoremap <silent> <leader>a :ArgWrap<CR>
-let g:ctrlp_user_command = ['.git/', 'touch .git/CTRLP-ALL && git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null || find -type f']
+let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null']
 
 " Keeps s/S original functionality.
 " https://github.com/justinmk/vim-sneak/issues/87
