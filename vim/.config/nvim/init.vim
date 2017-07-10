@@ -117,6 +117,7 @@ let g:mapleader = "\<Space>"
 
 "   <Leader>standard filenames
 map <Leader>sf :s/_/-/g<CR>^gu$
+
 map <Leader>s :%s/\s\+$//<CR>
 map <Leader>y mtggVG"+y`tzz
 map <Leader>b :ls<CR>:b
@@ -127,6 +128,7 @@ map <Leader>r :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 map <Leader>x :%s/>/>\r/g<CR>gg=G
 map <Leader>gd :Gdiff<CR>
 map <Leader>gb :Gblame<CR>
+map <Leader>gu :Gbrowse!<CR>
 map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR>
 
 map <Leader>w :w<CR>
