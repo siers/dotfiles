@@ -49,7 +49,6 @@ Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/tpope/vim-abolish' " Subvert, crs.
-"Plug 'https://github.com/Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'https://github.com/ervandew/supertab'
 Plug 'https://github.com/junegunn/vim-easy-align'
 Plug 'https://github.com/kshenoy/vim-signature' " Marks of all kind.
@@ -61,11 +60,15 @@ Plug 'https://github.com/evanmiller/nginx-vim-syntax'
 Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/hashivim/vim-terraform'
 Plug 'https://github.com/AndrewRadev/splitjoin.vim'
-"Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
 Plug 'https://github.com/ekalinin/Dockerfile.vim'
+
+Plug 'https://github.com/severin-lemaignan/vim-minimap'
+"Plug 'https://github.com/Valloric/YouCompleteMe', { 'do': './install.py' }
+"Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
 "Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "Plug 'https://github.com/Raimondi/delimitMate'
 "Plug 'https://github.com/tpope/vim-sleuth' " Local tabs/spaces.
+
 if system("hostname") == "spiral\n"
     Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
 endif
