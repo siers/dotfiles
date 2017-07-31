@@ -61,6 +61,7 @@ Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/hashivim/vim-terraform'
 Plug 'https://github.com/AndrewRadev/splitjoin.vim'
 Plug 'https://github.com/ekalinin/Dockerfile.vim'
+Plug 'https://github.com/LnL7/vim-nix'
 
 Plug 'https://github.com/severin-lemaignan/vim-minimap'
 "Plug 'https://github.com/Valloric/YouCompleteMe', { 'do': './install.py' }

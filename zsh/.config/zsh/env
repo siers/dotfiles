@@ -13,6 +13,9 @@ then
     [ -e ~/bin ] &&
         export PATH="$(find ~/bin -type d | tr '\n' :)$PATH"
 
+    [ -e ~/.local/bin ] &&
+        export PATH="$HOME/.local/bin:$PATH"
+
     [ -e ~/.tfenv/bin ] &&
         export PATH="$(echo ~/.tfenv/bin):$PATH"
 
