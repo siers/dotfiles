@@ -54,6 +54,12 @@ done
 hc use eq
 hc merge_tag default eq
 
+for tag in {q,w,a,s,e,d}; do
+    hc add $tag
+done
+hc use q
+hc merge_tag default q
+
 # cycle through tags
 hc keybind Mod4-period  use_index +1 --skip-visible
 hc keybind Mod4-comma   use_index -1 --skip-visible

@@ -1,16 +1,17 @@
 #!/bin/sh
 
-exec &> /var/tmp/xlog
+echo -e "\n\n$(date):\n$(date | sed 's/./-/g')" >> /var/tmp/xlog
+exec &>> /var/tmp/xlog
 
 cat ~/.fehbg | zsh  &
 xset -b                 &
 xset r rate 200 25      &
 
-export GDK_SCALE=2
-export GDK_DPI_SCALE=0.5
-xrdb -merge ~/.Xresources
-
 if [ "$(hostname)" == 'spiral' ]; then
+    export GDK_SCALE=2
+    export GDK_DPI_SCALE=0.5
+    xrdb -merge ~/.Xresources
+
     #xrandr -s 1600x900 || exit
     xrandr -s 3840x2160 || exit
 fi
@@ -30,12 +31,6 @@ udiskie                               &
 term in-tag                           &
 
 ~/code/desktop/symbols/make
-
-(
-    sleep 3
-    panel &
-    #skype &
-) &
 
 #exec dbus-launch sh -c 'strace herbstluftwm 2> /tmp/herbitrace'
 #exec dbus-launch strace herbstluftwm 2> /tmp/herbitrace

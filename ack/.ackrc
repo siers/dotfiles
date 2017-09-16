@@ -5,6 +5,7 @@
 --ignore-dir=_site/
 --ignore-dir=cache/
 --ignore-dir=vendor/
+--ignore-dir=node_modules/
 
 --type-add
 css=.sass,.scss

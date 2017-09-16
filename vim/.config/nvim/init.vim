@@ -46,12 +46,10 @@ Plug 'https://github.com/tpope/vim-fugitive' " Git.
 Plug 'https://github.com/tpope/vim-rhubarb'
 Plug 'https://github.com/tommcdo/vim-fubitive'
 Plug 'https://github.com/tpope/vim-commentary'
-Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/tpope/vim-abolish' " Subvert, crs.
 Plug 'https://github.com/ervandew/supertab'
 Plug 'https://github.com/junegunn/vim-easy-align'
-Plug 'https://github.com/kshenoy/vim-signature' " Marks of all kind.
 Plug 'https://github.com/Yggdroot/indentLine'
 Plug 'https://github.com/FooSoft/vim-argwrap'
 Plug 'https://github.com/guns/jellyx.vim'
@@ -63,7 +61,12 @@ Plug 'https://github.com/AndrewRadev/splitjoin.vim'
 Plug 'https://github.com/ekalinin/Dockerfile.vim'
 Plug 'https://github.com/LnL7/vim-nix'
 
-Plug 'https://github.com/severin-lemaignan/vim-minimap'
+if ! exists("vimpager")
+    " No commands below this comment will be executed in vimpager,
+    Plug 'https://github.com/tpope/vim-surround'
+    Plug 'https://github.com/kshenoy/vim-signature' " Marks of all kind.
+endif
+
 "Plug 'https://github.com/Valloric/YouCompleteMe', { 'do': './install.py' }
 "Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
 "Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -107,10 +110,11 @@ endif
 
 " When reading a file, jump to the last cursor position.
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-au FileType ruby      setlocal sw=2 ts=2
-au FileType go        setlocal noet
-au FileType terraform setlocal sw=2 ts=2
-au FileType yaml      setlocal sw=2 ts=2
+au FileType ruby       setlocal sw=2 ts=2
+au FileType go         setlocal noet
+au FileType terraform  setlocal sw=2 ts=2
+au FileType yaml       setlocal sw=2 ts=2
+au FileType javascript setlocal sw=2 ts=2
 
 ca te tabedit
 ca W w

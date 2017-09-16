@@ -3,7 +3,7 @@
 precmd-color() {
     local -a colors
     (cat ~/.config/zsh/colors 2> /dev/null; echo '0 white white white' ) |
-        grep -Em1 "^($(id -u)|$USER|$(hostname)) " | sed 's/^[^ ]* //'
+        grep -Em1 "^($(id -u)|$USER|$(hostname)|fallback) " | sed 's/^[^ ]* //'
 }
 precmdcolorcache="$(precmd-color)"
 precmd-color() { echo "${precmdcolorcache}" }
@@ -36,7 +36,8 @@ precmd() {
 
     [ "$(id -u)" = "0" ] && sep=')' || sep='|'
     read fst snd thd <<< "$(precmd-color)"
-    PS1="%F{${thd:-105}}%n$sep%F{$fst}%B$(precmd-realm)%b%F{default} "
+    fst="${fst:-105}"; snd="${snd:-105}"; thd="${thd:-105}"
+    PS1="%F{$thd}%n$sep%F{$fst}%B$(precmd-realm)%b%F{default} "
 
     if [ -n "$git" ]; then
         PS1="$PS1%F{$snd}$git "
