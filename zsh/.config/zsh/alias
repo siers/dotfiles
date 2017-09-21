@@ -16,12 +16,21 @@ alias '.......'='../../../../../..'
 alias '........'='../../../../../../..'
 # vim macro to make another, longer one: yyp^f'lvypf=llvf/yP
 
+v() {
+    if [ -e .session.vim ] && [ $# -eq 0 ]; then
+        nvim -S .session.vim
+    else
+        nvim -p "$@"
+    fi
+}
+
+alias vim=v
+
 alias ls='ls --color=auto -hb'
 alias l='ls'
 alias p='ping google.lv' # tired of writing this over and over again.
 alias p1='ping google.lv -c1'
 alias mv='mv -i'
-alias v='vim'
 
 alias cal='cal -m'
 alias fack='find . | ack'

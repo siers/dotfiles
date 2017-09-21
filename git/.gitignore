@@ -9,3 +9,4 @@ gnore-*
 *-gign
 /core*
 .tf-version
+.session.vim

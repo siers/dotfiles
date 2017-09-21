@@ -17,6 +17,7 @@ set dir=/var/tmp nobackup
 set encoding=utf-8
 set ffs=unix,dos,mac
 set history=10000
+set undofile
 
 set expandtab shiftround smarttab autoindent
 set nofoldenable foldmethod=indent
@@ -35,36 +36,47 @@ set shortmess+=I
 set splitbelow splitright
 set statusline=%f%m%r%h%w\ [%n:%{&ff}/%Y]%=[0x\%04.4B][%03v][%p%%\ line\ %l]
 
+let g:mapleader = "\<Space>"
+
 " ==============================================================================
 
 " curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
 "    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 call plug#begin('~/.config/nvim/plugged')
 
+Plug 'https://github.com/guns/jellyx.vim'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
-Plug 'https://github.com/tpope/vim-fugitive' " Git.
-Plug 'https://github.com/tpope/vim-rhubarb'
-Plug 'https://github.com/tommcdo/vim-fubitive'
+Plug 'https://github.com/vim-airline/vim-airline'
+Plug 'https://github.com/ervandew/supertab'
+Plug 'https://github.com/Yggdroot/indentLine'
+Plug 'https://github.com/junegunn/vim-easy-align'
+Plug 'https://github.com/AndrewRadev/splitjoin.vim'
+Plug 'https://github.com/AndrewRadev/sideways.vim' " argument swapping
+
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/tpope/vim-abolish' " Subvert, crs.
-Plug 'https://github.com/ervandew/supertab'
-Plug 'https://github.com/junegunn/vim-easy-align'
-Plug 'https://github.com/Yggdroot/indentLine'
-Plug 'https://github.com/FooSoft/vim-argwrap'
-Plug 'https://github.com/guns/jellyx.vim'
-Plug 'https://github.com/AndrewRadev/sideways.vim' " argument swapping
+
+Plug 'https://github.com/tpope/vim-fugitive' " Git.
+Plug 'https://github.com/tpope/vim-rhubarb'
+Plug 'https://github.com/tommcdo/vim-fubitive'
+
 Plug 'https://github.com/evanmiller/nginx-vim-syntax'
-Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/hashivim/vim-terraform'
-Plug 'https://github.com/AndrewRadev/splitjoin.vim'
 Plug 'https://github.com/ekalinin/Dockerfile.vim'
 Plug 'https://github.com/LnL7/vim-nix'
+
+Plug 'https://github.com/sjl/gundo.vim'
+Plug 'https://github.com/tpope/vim-obsession'
 
 if ! exists("vimpager")
     " No commands below this comment will be executed in vimpager,
     Plug 'https://github.com/tpope/vim-surround'
     Plug 'https://github.com/kshenoy/vim-signature' " Marks of all kind.
+endif
+
+if system("hostname") == "spiral\n" " this was a good fucking computer
+    Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
 endif
 
 "Plug 'https://github.com/Valloric/YouCompleteMe', { 'do': './install.py' }
@@ -73,26 +85,19 @@ endif
 "Plug 'https://github.com/Raimondi/delimitMate'
 "Plug 'https://github.com/tpope/vim-sleuth' " Local tabs/spaces.
 
-if system("hostname") == "spiral\n"
-    Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
-endif
-
 call plug#end()
 
 " ==============================================================================
 
-nnoremap <silent> <leader>a :ArgWrap<CR>
 let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null']
-
-" Keeps s/S original functionality.
-" https://github.com/justinmk/vim-sneak/issues/87
-"nmap <Plug>(Go_away_Sneak_s) <Plug>Sneak_s
-"nmap <Plug>(Go_away_Sneak_S) <Plug>Sneak_S
 
 xmap ga <Plug>(EasyAlign) | nmap ga <Plug>(EasyAlign)
 
-nnoremap <M-H> :SidewaysLeft<CR>
-nnoremap <M-L> :SidewaysRight<CR>
+nnoremap <Esc>h :SidewaysLeft<CR>
+nnoremap <Esc>l :SidewaysRight<CR>
+
+nnoremap <Leader>u :GundoToggle<CR>
+cnoreab Obsession Obsession .session.vim
 
 " ==============================================================================
 
@@ -101,8 +106,6 @@ syntax on
 silent! colorscheme jellyx
 
 if ! exists("vimpager")
-    " No commands below this comment will be executed in vimpager,
-    " it whines about my :Share.
     set list lcs=tab:»·,trail:·
 else
     set nonumber
@@ -120,8 +123,6 @@ ca te tabedit
 ca W w
 ca E e
 ca Q q
-
-let g:mapleader = "\<Space>"
 
 "   <Leader>standard filenames
 map <Leader>sf :s/_/-/g<CR>^gu$
@@ -173,6 +174,9 @@ map <F11> :!make &<CR><CR>
 map <F12> :make all<CR>
 inoremap <F6> <C-R>=strftime("%F-%T")<CR>
 
+" Reselect last pasted text.
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
 " :Share to sprunge.us
 exec 'command! -range=% Share :<line1>,<line2>write !paste'
 
@@ -187,9 +191,6 @@ endf
 nmap ek :<C-u>call <SID>MoveLine('k')<CR>
 nmap ej :<C-u>call <SID>MoveLine('j')<CR>
 
-" Reselect last pasted text.
-nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
-
 function! s:CharacterDelta(delta) " Char analog of C-{x,a}
     normal! yl
     let c = nr2char(char2nr(getreg('"')) + a:delta)
@@ -198,5 +199,3 @@ function! s:CharacterDelta(delta) " Char analog of C-{x,a}
 endf
 map <M-x> :call <SID>CharacterDelta(1)<CR>
 map <M-c> :call <SID>CharacterDelta(-1)<CR>
-
-"hi Normal ctermbg=none
