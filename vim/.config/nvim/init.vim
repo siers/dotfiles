@@ -98,6 +98,7 @@ nnoremap <Esc>l :SidewaysRight<CR>
 
 nnoremap <Leader>u :GundoToggle<CR>
 cnoreab Obsession Obsession .session.vim
+cnoreab Obs Obsession .session.vim
 
 " ==============================================================================
 
