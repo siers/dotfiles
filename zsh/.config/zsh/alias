@@ -17,8 +17,10 @@ alias '........'='../../../../../../..'
 # vim macro to make another, longer one: yyp^f'lvypf=llvf/yP
 
 v() {
-    if [ -e .session.vim ] && [ $# -eq 0 ]; then
+    if [ $# -eq 0 ] && [ -e .session.vim ]; then
         nvim -S .session.vim
+    elif [ $# -eq 0 ] && [ -e Session.vim ]; then
+        nvim -S Session.vim
     else
         nvim -p "$@"
     fi
