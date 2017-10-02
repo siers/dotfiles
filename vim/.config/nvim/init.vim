@@ -93,8 +93,8 @@ let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -ty
 
 xmap ga <Plug>(EasyAlign) | nmap ga <Plug>(EasyAlign)
 
-nnoremap <Esc>h :SidewaysLeft<CR>
-nnoremap <Esc>l :SidewaysRight<CR>
+nnoremap <Leader>h :SidewaysLeft<CR>
+nnoremap <Leader>l :SidewaysRight<CR>
 
 nnoremap <Leader>u :GundoToggle<CR>
 cnoreab Obsession Obsession .session.vim
