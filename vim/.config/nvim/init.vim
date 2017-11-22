@@ -165,6 +165,8 @@ imap <silent> <C-j> <ESC>:noh<CR>i
 imap <silent> <C-_> <ESC>:undo<CR>a
 
 map <silent> <F1> :NERDTreeToggle<CR>
+nnoremap <F4> <C-R>=strftime("%b %-d")<CR>P
+inoremap <F4> <C-R>=strftime("%b %-d")<CR>
 nnoremap <F5> "=strftime("%c")<CR>P
 inoremap <F5> <C-R>=strftime("%c")<CR>
 nnoremap <F6> "=strftime("%F-%T")<CR>P
