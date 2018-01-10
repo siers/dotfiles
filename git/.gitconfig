@@ -1,20 +1,29 @@
 [alias]
-	desc = show -s --format=oneline
-	descs = log --format=oneline
 	br = branch
 	b = rebase
 	ch = cherry-pick
 	cl = clone
+	commit = commit -v
+	fo = show --format=fuller
+	h = show --format=oneline
 	k  = checkout
-	l  = log --decorate --graph
+	l = log --decorate --graph
+	lf = log --format=fuller
+	loc = log --format='%h' --abbrev-commit
+	lod = log --format='%h %aD %s' --abbrev-commit
+	lo = log --format=oneline --abbrev-commit
+	ls = ls-files
 	m  = merge
-	pick = cherry-pick
+	o = show
+	p = cherry-pick
+	pf = push --force-with-lease
 	pl = pull
 	ps = push
 	rb = rebase
-	s  = stash
-	t = reset
+	redo = commit --amend -C HEAD
 	rh = reset --hard
+	r = reset
+	s = stash
 [push]
 	default = current
 [core]

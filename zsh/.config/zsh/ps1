@@ -31,7 +31,8 @@ precmd() {
 
     local fst snd thd git ruby succ
 
-    git="$(git branch 2> /dev/null | grep '^*' | tr -cd "a-zA-Z0-9\\-/")"
+    git="$(git branch 2> /dev/null | grep '^*' | tr -cd "a-zA-Z0-9\\-/.")"
+    # git="$(git symbolic-ref -q --short HEAD | tr -cd "a-zA-Z0-9\\-/.")"
     ruby="$(rbenv version 2> /dev/null | grep -Po '^\d\S+')"
 
     [ "$(id -u)" = "0" ] && sep=')' || sep='|'
@@ -47,6 +48,10 @@ precmd() {
         PS1="$PS1$ruby "
     fi
 
+    # if git show HEAD:"config/application.rb" &> /dev/null && ! cat notes/db-path 2> /dev/null | xargs -r rails-is-migrated 2> /dev/null; then
+    #     PS1="$PS1%F{red}UNMIGRATED "
+    # fi
+
     if [ "$__ps1_succ" = "0" ]; then
         succ="default"
     else
@@ -54,4 +59,5 @@ precmd() {
     fi
 
     PS1="$PS1%F{$succ}%#%F{default} "
+    RPS1=""
 }

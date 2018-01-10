@@ -1,12 +1,11 @@
 /tags
-/core*
+# /core*
 /result
 
 notes
 scrap
 trash
 tmp
-build
 venv
 
 gnore-*
@@ -15,3 +14,10 @@ gnore-*
 .tf-version
 .session.vim
 .*envrc*
+
+/docker-compose.yml
+/gemset.nix
+/shell.nix
+/node_modules
+/.ruby-version
+/config/initializers/development_includes.rb

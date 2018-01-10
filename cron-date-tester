@@ -1,0 +1,58 @@
+#!/usr/bin/env ruby
+
+require 'date'
+
+# every sixth day
+# ruby -e 'require "date"; n = Time.now; exit (6 + n.wday + n.to_date.cweek).modulo(7) == 0'
+def f(n)
+  value = (6 + n.wday + n.to_date.cweek).modulo(7)
+end
+
+# triangle wave function of height 3, positioned on [Mon, Tue, Wed].
+def g(n)
+  height = 3; period = (height - 1) * 2
+  day = n.to_date.cweek
+
+  if (n.wday - 1) % 7 < height
+    saw = day % period
+    tri = (saw - (height - 1)).abs
+    value = tri + 1 == n.wday ? 0 : 1
+  else
+    1
+  end
+end
+
+# ruby -e 'require "date"; n = Time.now; exit ((n.wday - 1).modulo(7) < 3 && (n.to_date.cweek.modulo(4) - 2).abs + 1 == n.wday ? 0 : 1) == 0'
+def g_inlined_compressed_optimized(n)
+  (n.wday - 1) % 7 < 3 && (n.to_date.cweek % 4 - 2).abs + 1 == n.wday ? 0 : 1
+end
+
+def present(n)
+  value = g_inlined_compressed_optimized(n)
+  color = $>.tty? ? ((value == 0 ? "\e[32m" : "\e[31m") + "%s\e[0m") : "%s"
+  "#{ "%2s" % n.day }:#{ color % value }"
+end
+
+context_weeks = (ARGV[0] || 3).to_i
+
+month = (context_weeks * 2 + 1).times.map { |delta_week|
+  7.times.map { |delta_day|
+    now = Time.now - (Time.now.wday - 1) * 3600*24
+    now + (3600 * 24) * (7 * (delta_week - context_weeks) + delta_day)
+  }
+}
+
+month.each_with_index do |week, index|
+  prefix = if index == context_weeks; 'today\'s week' else ' ' * 12; end
+  puts (([prefix] + week.map(&method(:present))).join(' | '))
+end
+
+__END__
+
+             | 15:1 | 16:0 | 17:1 | 18:1 | 19:1 | 20:1 | 21:1
+             | 22:1 | 23:1 | 24:0 | 25:1 | 26:1 | 27:1 | 28:1
+             | 29:1 | 30:0 | 31:1 |  1:1 |  2:1 |  3:1 |  4:1
+today's week |  5:0 |  6:1 |  7:1 |  8:1 |  9:1 | 10:1 | 11:1
+             | 12:1 | 13:0 | 14:1 | 15:1 | 16:1 | 17:1 | 18:1
+             | 19:1 | 20:1 | 21:0 | 22:1 | 23:1 | 24:1 | 25:1
+             | 26:1 | 27:0 | 28:1 |  1:1 |  2:1 |  3:1 |  4:1

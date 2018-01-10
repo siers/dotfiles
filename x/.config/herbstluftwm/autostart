@@ -40,25 +40,13 @@ hc keybind Mod4-c close_or_remove
 hc pad 0   17 0 0 0
 #hc pad 0   17 0 26 0
 
-# Tag accessors.
-# hc rename default 1
-# for tag in "q 1" "w 2" "e 3" "r 4" "a 5" "s 6" "d 7" "f 8"; do
-#     read key index <<< $tag
-#     hc add     $index
-#     hc keybind Mod4-$key       use  $index
-#     hc keybind Mod4-Shift-$key move $index
-# done
-for tag in {e,r,d,f}{q,w,a,s}; do
-    hc add $tag
-done
-hc use eq
-hc merge_tag default eq
-
 for tag in {q,w,a,s,e,d}; do
     hc add $tag
+    hc keybind Mod4-$tag use $tag
 done
 hc use q
 hc merge_tag default q
+hc keybind Mod4-Tab use_previous
 
 # cycle through tags
 hc keybind Mod4-period  use_index +1 --skip-visible

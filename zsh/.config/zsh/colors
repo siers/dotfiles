@@ -1,10 +1,18 @@
+the first one takes precedence
+
+# pwd, git, user
+
 plaknis 033 039
-plaknis 027 075
+inspiron 213 229 200
+toshiba 210 174 198
 spiral 115 155 135
-spiral 210 174 198
-spiral 210 174
-spiral 170 174
 fallback 115 155 135
-fallback 210 174 198
+
+# 027 075
+# 033 039
+# 115 155 135
+# 170 174
+# 210 174 198
+
 http://i.stack.imgur.com/UQVe5.png
 http://unix.stackexchange.com/questions/105568/how-can-i-list-the-available-color-names

@@ -1,5 +1,32 @@
 tmpcd() { cd "$(mktemp -d /tmp/sand-XXX)"; }
+tmppd() { cd "$(mktemp -d $HOME/tmp/sand-XXX)"; } # persistent
 cdl() { cd $(dirlast "$1") } 
 cb() { cd "$(dirname "$1")"; } # cd to filename's location
 
-[ -e "$HOME/.config/zsh/tempoary" ] && source ~/.config/zsh/tempoary
+# git multi-add
+local previewer="git diff {} | tee >(grep -q . || cat {})"
+gsel() { git ls-files -mo --exclude-standard | sort -u | fzf -m --preview="$previewer" | c; }
+gma() { git ls-files -mo --exclude-standard | fzf -m --preview="$previewer" | xargs -r git add; }
+grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
+gbrsel() { git checkout "$(git for-each-ref --format='%(refname:short)' refs/heads | fzf)"; }
+gksel() { git checkout "$(git for-each-ref --format='%(refname:short)' | fzf)"; }
+
+rgsel() { rg -l "$@" | fzf -m --preview="$previewer" | c; }
+
+nix-revsha() { nix-prefetch-git "$@" | jq -r '"  rev = \"\(.rev)\";\n  sha256 = \"\(.sha256)\";"' | tee >(c); }
+no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
+
+[ -e "$HOME/.config/zsh/temporary" ] && source ~/.config/zsh/temporary || :
+
+single-line-print() { # for asciinema
+    while read line; do echo -en "\033[2K\r$(cut -c-$(tput cols) <<< "$line")"; done
+}
+
+scrst() {
+    xrandr --output HDMI1 --auto --right-of eDP1
+}
+
+git-parent() { git rev-list --ancestry-path HEAD.."$1" | tail -n1; }
+
+rgsample() { rg -l "$@" | sample; }
+rgsample-v() { vim $(rg -l "$@" | sample); }

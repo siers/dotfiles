@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # purpose:
-# sh /home/s/code/desktop/dotfiles/generate-zsh-long-conf > ~root/.zshrc; exec zsh
+# ./generate-zsh-long-conf | sudo tee ~root/.zshrc > /dev/null
 
 if [ "$(id -u)" = "0" ]; then
     USER="$SUDO_USER"
@@ -10,5 +10,5 @@ fi
 HOME="$(getent passwd "$USER" | cut -d: -f6)"
 
 grep -Ev '^\. ./\.config/zsh/' < $HOME/.zshrc
-grep -Eo '~/\.config/zsh/\w+' < $HOME/.zshrc | xargs -L1 sh -c \
+grep -Eo '~/\.config/zsh/[^#]+' < $HOME/.zshrc | xargs -r -L1 sh -c \
     'f="${1/#\~/'$HOME'}"; cat "$f"' sh
