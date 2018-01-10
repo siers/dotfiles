@@ -41,12 +41,12 @@
 (xbindkey '(Mod4 e) "herbstclient use e")
 (xbindkey '(Mod4 d) "herbstclient use d")
 
-(xbindkey '(Mod4 Shift q) "herbstclient move q)")
-(xbindkey '(Mod4 Shift w) "herbstclient move w)")
-(xbindkey '(Mod4 Shift a) "herbstclient move a)")
-(xbindkey '(Mod4 Shift s) "herbstclient move s)")
-(xbindkey '(Mod4 Shift e) "herbstclient move e)")
-(xbindkey '(Mod4 Shift d) "herbstclient move d)")
+(xbindkey '(Mod4 Shift q) "herbstclient move q")
+(xbindkey '(Mod4 Shift w) "herbstclient move w")
+(xbindkey '(Mod4 Shift a) "herbstclient move a")
+(xbindkey '(Mod4 Shift s) "herbstclient move s")
+(xbindkey '(Mod4 Shift e) "herbstclient move e")
+(xbindkey '(Mod4 Shift d) "herbstclient move d")
 
 ;(xbindkey '(Mod4 e) "herbstclient use $(select-workspace primary   e)")
 ;(xbindkey '(Mod4 r) "herbstclient use $(select-workspace primary   r)")

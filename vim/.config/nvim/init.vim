@@ -68,6 +68,18 @@ Plug 'https://github.com/LnL7/vim-nix'
 
 Plug 'https://github.com/sjl/gundo.vim'
 Plug 'https://github.com/tpope/vim-obsession'
+Plug 'https://github.com/thiagoalessio/rainbow_levels.vim'
+
+let g:rainbow_levels = [
+    \{'ctermbg': 232, 'guibg': '#080808'},
+    \{'ctermbg': 233, 'guibg': '#121212'},
+    \{'ctermbg': 234, 'guibg': '#1c1c1c'},
+    \{'ctermbg': 235, 'guibg': '#262626'},
+    \{'ctermbg': 236, 'guibg': '#303030'},
+    \{'ctermbg': 237, 'guibg': '#3a3a3a'},
+    \{'ctermbg': 238, 'guibg': '#444444'},
+    \{'ctermbg': 239, 'guibg': '#4e4e4e'},
+    \{'ctermbg': 240, 'guibg': '#585858'}]
 
 if ! exists("vimpager")
     " No commands below this comment will be executed in vimpager,
