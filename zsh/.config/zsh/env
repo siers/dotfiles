@@ -1,13 +1,8 @@
 #!/usr/bin/env zsh
 
-#export MANPAGER=vimpager
-#export PAGER=vimpager
-#alias less=$PAGER
-
-# ENV
+#export MANPAGER=vimpager PAGER=vimpager; alias less=$PAGER
 export EDITOR=vim
 
-# PATH
 if [ -z "$ZSH_PATH_INIT" ]
 then
     export ZSH_PATH_INIT=1

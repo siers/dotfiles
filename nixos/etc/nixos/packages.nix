@@ -4,7 +4,7 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    # services
+    # services and stuff
     docker
     pulseaudioFull
     syncthing
@@ -24,6 +24,7 @@
     mpv
     pavucontrol
     rxvt_unicode
+    virtmanager
     vlc
 
     # standard terminal tools (soft category)
