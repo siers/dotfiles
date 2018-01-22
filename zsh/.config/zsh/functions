@@ -2,4 +2,4 @@ tmpcd() { cd "$(mktemp -d /tmp/sand-XXX)"; }
 cdl() { cd $(dirlast "$1") } 
 cb() { cd "$(dirname "$1")"; } # cd to filename's location
 
-[ -e "$HOME/.config/zsh/tempoary" ] && source ~/.config/zsh/tempoary
+[ -e "$HOME/.config/zsh/tempoary" ] && source ~/.config/zsh/tempoary || :

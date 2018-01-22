@@ -1,10 +1,11 @@
 #urxvt.font:     xft:Monaco:size=7:antialias=false
 #urxvt.font:     xft:DejaVu Sans Mono:size=8:antialias=true,xft:Noto Sans Mono CJK SC:size=8:antialias=true
-urxvt.font:     xft:DejaVu Sans Mono:size=9:antialias=true
+urxvt.font:     xft:DejaVu Sans Mono:size=9
+#:antialias=true
 #urxvt.font:     xft:Iosevka:size=10:antialias=true
 #urxvt.font:     xft:Gohu:size=7:antialias=false
 #xterm.faceName:     xft:Gohu:size=7:antialias=false
-urxvt.letterSpace: -2
+#urxvt.letterSpace: -2
 
 urxvt.scrollBar: false
 urxvt.scrollstyle: rxvt
@@ -16,6 +17,7 @@ urxvt.matcher.button: 1
 urxvt.urlLauncher: chromium
 urxvt.iso14755: false
 urxvt.iso14755_52: false
+urxvt.meta8: false
 
 # black: 0, 8; red: 1, 9; green: 2, 10; yellow: 3, 11; blue: 4, 12; magenta: 5, 13; cyan: 6, 14; white: 7, 15
 *foreground:    #cccccf

@@ -61,7 +61,6 @@ Plug 'https://github.com/tpope/vim-fugitive' " Git.
 Plug 'https://github.com/tpope/vim-rhubarb'
 Plug 'https://github.com/tommcdo/vim-fubitive'
 
-Plug 'https://github.com/evanmiller/nginx-vim-syntax'
 Plug 'https://github.com/hashivim/vim-terraform'
 Plug 'https://github.com/ekalinin/Dockerfile.vim'
 Plug 'https://github.com/LnL7/vim-nix'

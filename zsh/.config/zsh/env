@@ -1,15 +1,17 @@
 #!/usr/bin/env zsh
 
+#export MANPAGER=vimpager
+#export PAGER=vimpager
+#alias less=$PAGER
+
 # ENV
-export MANPAGER=vimpager
-export PAGER=vimpager
 export EDITOR=vim
 export ZSH=$HOME/.oh-my-zsh
-alias less=$PAGER
 
 # PATH
-if [ -z "$(echo $PATH | grep ~/bin)" ]
+if [ -z "$ZSH_PATH_INIT" ]
 then
+    export ZSH_PATH_INIT=1
     [ -e ~/bin ] &&
         export PATH="$(find ~/bin -type d | tr '\n' :)$PATH"
 

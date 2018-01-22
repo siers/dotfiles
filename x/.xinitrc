@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-echo -e "\n\n$(date):\n$(date | sed 's/./-/g')" >> /var/tmp/xlog
-exec &>> /var/tmp/xlog
+date >> /tmp/x
+espeak xinitrc
 
-cat ~/.fehbg | zsh  &
+cat ~/.fehbg | zsh      &
 xset -b                 &
 xset r rate 200 25      &
 
@@ -16,12 +16,12 @@ if [ "$(hostname)" == 'spiral' ]; then
     xrandr -s 3840x2160 || exit
 fi
 
-anamnesis --start                     &
+#anamnesis --start                     &
 autocutsel -fork                      &
 autocutsel -selection PRIMARY -fork   &
 unclutter -jitter 2 -noevents -idle 2 &
+#xdg-user-dirs-update                  &
 xsetroot -cursor_name left_prt        &
-xdg-user-dirs-update                  &
 
 xss-lock lock                         &
 xbindkeys                             &
@@ -32,7 +32,6 @@ term in-tag                           &
 
 ~/code/desktop/symbols/make
 
-#exec dbus-launch sh -c 'strace herbstluftwm 2> /tmp/herbitrace'
-#exec dbus-launch strace herbstluftwm 2> /tmp/herbitrace
 #exec dbus-launch openbox-session
-exec dbus-launch herbstluftwm
+#exec dbus-launch herbstluftwm
+exec dbus-launch i3
