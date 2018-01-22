@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
 
-date >> /tmp/x
-espeak xinitrc
-
-cat ~/.fehbg | zsh      &
-xset -b                 &
-xset r rate 200 25      &
+xset -b            &
+xset r rate 200 25 &
 
 if [ "$(hostname)" == 'spiral' ]; then
     export GDK_SCALE=2
@@ -31,7 +27,3 @@ udiskie                               &
 term in-tag                           &
 
 ~/code/desktop/symbols/make
-
-#exec dbus-launch openbox-session
-#exec dbus-launch herbstluftwm
-exec dbus-launch i3

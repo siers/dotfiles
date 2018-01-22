@@ -143,7 +143,8 @@ map <Leader>s :%s/\s\+$//<CR>
 map <Leader>y mtggVG"+y`tzz
 map <Leader>b :ls<CR>:b
 map <Leader>p :!realpath % \| tr -d '\n' \| xclip<CR><CR>
-map <Leader>v vip!hs-import-sort<CR>:w<CR>
+map <Leader>h vip!hs-import-sort<CR>:w<CR>
+map <Leader>v vip!sort<CR>:w<CR>
 map <Leader>i ?^import <CR>:noh<CR>
 map <Leader>r :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 map <Leader>x :%s/>/>\r/g<CR>gg=G

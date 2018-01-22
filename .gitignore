@@ -1,3 +1,4 @@
 /vim/.config/nvim/*
-zsh/.config/zsh/tempoary
+/zsh/.config/zsh/tempoary
+/nixos/**/result
 # manually added if needed

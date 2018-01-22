@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -eux
+
+if (( $EUID == 0 )); then
+    echo 'please run from non-root user in the wheel group'
+else
+    stow -t ~ tmux vim zsh git x shells ack
+    sudo stow -t / nixos
+fi
+
