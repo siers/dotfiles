@@ -3,17 +3,18 @@
 require 'date'
 
 def f(n)
-  (6 + n.wday + n.to_date.cweek).modulo(7)
+  value = (6 + n.wday + n.to_date.cweek).modulo(7)
+  "#{ "%2s" % n.day }:\e[31m#{ value }\e[0m"
 end
 
 day = 3600*24
 month = 5.times.map { |delta_week|
-    7.times.map { |delta_day|
-        Time.now + day*delta_day + day*7*(delta_week-3)
-    }
+  7.times.map { |delta_day|
+    Time.now + day*delta_day + day*7*(delta_week-2)
+  }
 }
 
 month.each_with_index do |week, index|
   prefix = if index == 2; 'week from today' else ' ' * 15; end
-  p([prefix] + week.map(&method(:f)))
+  puts (([prefix] + week.map(&method(:f))).join(' | '))
 end

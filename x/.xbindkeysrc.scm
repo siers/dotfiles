@@ -34,43 +34,7 @@
 
 ; window manager
 
-(xbindkey '(Mod4 q) "herbstclient use q")
-(xbindkey '(Mod4 w) "herbstclient use w")
-(xbindkey '(Mod4 a) "herbstclient use a")
-(xbindkey '(Mod4 s) "herbstclient use s")
-(xbindkey '(Mod4 e) "herbstclient use e")
-(xbindkey '(Mod4 d) "herbstclient use d")
-
-(xbindkey '(Mod4 Shift q) "herbstclient move q")
-(xbindkey '(Mod4 Shift w) "herbstclient move w")
-(xbindkey '(Mod4 Shift a) "herbstclient move a")
-(xbindkey '(Mod4 Shift s) "herbstclient move s")
-(xbindkey '(Mod4 Shift e) "herbstclient move e")
-(xbindkey '(Mod4 Shift d) "herbstclient move d")
-
-;(xbindkey '(Mod4 e) "herbstclient use $(select-workspace primary   e)")
-;(xbindkey '(Mod4 r) "herbstclient use $(select-workspace primary   r)")
-;(xbindkey '(Mod4 d) "herbstclient use $(select-workspace primary   d)")
-;(xbindkey '(Mod4 f) "herbstclient use $(select-workspace primary   f)")
-
-;(xbindkey '(Mod4 q) "herbstclient use $(select-workspace secondary q)")
-;(xbindkey '(Mod4 w) "herbstclient use $(select-workspace secondary w)")
-;(xbindkey '(Mod4 a) "herbstclient use $(select-workspace secondary a)")
-;(xbindkey '(Mod4 s) "herbstclient use $(select-workspace secondary s)")
-
-;(xbindkey '(Mod4 Shift e) "herbstclient move $(select-workspace move primary   e)")
-;(xbindkey '(Mod4 Shift r) "herbstclient move $(select-workspace move primary   r)")
-;(xbindkey '(Mod4 Shift d) "herbstclient move $(select-workspace move primary   d)")
-;(xbindkey '(Mod4 Shift f) "herbstclient move $(select-workspace move primary   f)")
-
-;(xbindkey '(Mod4 Shift q) "herbstclient move $(select-workspace move secondary q)")
-;(xbindkey '(Mod4 Shift w) "herbstclient move $(select-workspace move secondary w)")
-;(xbindkey '(Mod4 Shift a) "herbstclient move $(select-workspace move secondary a)")
-;(xbindkey '(Mod4 Shift s) "herbstclient move $(select-workspace move secondary s)")
-
-(xbindkey '(Mod4 Tab)     "herbstclient use_previous; select-workspace store")
 (xbindkey '(Mod4 Shift c) "xdotool windowkill $(xdotool getactivewindow)")
-(xbindkey '(Mod4 grave)   "jump-status")
 
 ; prtscr magic
 

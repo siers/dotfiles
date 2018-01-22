@@ -26,6 +26,8 @@
     rxvt_unicode
     vlc
 
+    # standard terminal tools (soft category)
+    bc
     coreutils
     cryptsetup
     elfutils
@@ -35,16 +37,14 @@
     htop
     inetutils
     ncdu
-    python
     tmux
     unrar
     utillinux
     wget
-    wget
     which
     zip
 
-    bc
+    # fancy terminal tools
     direnv
     espeak
     ffmpeg
@@ -59,10 +59,12 @@
     pdftk
     python
     ruby
+    sox
     sshpass
     stow
     weechat
 
+    # X tools
     autocutsel
     unclutter
     xbindkeys

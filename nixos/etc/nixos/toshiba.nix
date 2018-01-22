@@ -35,6 +35,8 @@
     { mountPoint = "/"; device = "/dev/vg/root"; fsType = "ext4"; options = ["noatime"]; }
     { mountPoint = "/boot"; device = "/dev/sda1"; fsType = "ntfs"; options = ["noatime" "nofail"]; }
     { mountPoint = "/tmp"; device = "tmpfs"; fsType = "tmpfs"; options = ["nosuid" "nodev" "relatime"]; }
+
+    { mountPoint = "/tmp"; device = "/home/s"; options = ["bind"]; }
   ];
 
   swapDevices = [ { device = "/dev/vg/swap"; } ];
