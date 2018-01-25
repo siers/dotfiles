@@ -1,12 +1,18 @@
 { config, pkgs, ... }:
 
 {
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    chromium = {
+      enablePepperFlash = true;
+      enablePepperPDF = true;
+      #enableWideVine = true;
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     # services and stuff
     docker
-    pulseaudioFull
     syncthing
     syncthing-inotify
 
@@ -18,6 +24,7 @@
     filezilla
     firefox
     gimp
+    gnome3.eog
     gparted
     inkscape
     libreoffice
@@ -37,6 +44,7 @@
     gnumake
     htop
     inetutils
+    inotify-tools
     ncdu
     tmux
     unrar
@@ -59,11 +67,14 @@
     nix-repl
     pdftk
     python
+    ranger
     ruby
     sox
     sshpass
     stow
+    units
     weechat
+    youtube-dl
 
     # X tools
     autocutsel

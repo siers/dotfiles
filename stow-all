@@ -5,6 +5,9 @@ set -eux
 if (( $EUID == 0 )); then
     echo 'please run from non-root user in the wheel group'
 else
+    # https://codeyarns.com/2016/02/01/stow-not-installing-file/
+    touch ~/.stow-global-ignore
+
     stow -t ~ tmux vim zsh git x shells ack
     sudo stow -t / nixos
 fi

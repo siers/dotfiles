@@ -3,7 +3,7 @@
 #export MANPAGER=vimpager PAGER=vimpager; alias less=$PAGER
 export EDITOR=vim
 
-if [ -z "$ZSH_PATH_INIT" ]
+if [ -z "$ZSH_PATH_INIT" ] || command -v ruby &> /dev/null
 then
     export ZSH_PATH_INIT=1
     [ -e ~/bin ] &&
@@ -42,3 +42,6 @@ then
         export PERL_MM_OPT="INSTALL_BASE=$HOME/down/perl5"
     fi
 fi
+
+command -v ruby &> /dev/null && \
+    PATH="$(ruby -e 'puts $stdin.read.split(":").uniq.join(":")' <<< $PATH)"

@@ -23,11 +23,12 @@
   };
 
   networking = {
-    firewall.allowedTCPPorts = [ 80 8000 8080 65353 ];
+    firewall.allowedTCPPorts = [ 22 80 8000 8080 65353 ];
     networkmanager.enable = true;
   };
 
   virtualisation.libvirtd.enable = true;
+  virtualisation.docker.enable = true;
 
   services = {
     openssh.enable = true;
@@ -63,6 +64,7 @@
 
     chromium = {
       enable = true;
+
       extensions = [
         "gcbommkclmclpchllfjekcdonpmejbdp" # https everywhere
         "dbepggeogbaibhgnhhndojpepiihcmeb" # vimium
@@ -72,11 +74,21 @@
     };
   };
 
+  hardware.pulseaudio = {
+    enable = true;
+    package = pkgs.pulseaudioFull;
+    support32Bit = true;
+    daemon.config = {
+      flat-volumes = "no";
+    };
+  };
+
   fonts = {
     fontconfig.enable = true;
     fonts = with pkgs; [
-      material-icons
       dejavu_fonts
+      liberation_ttf
+      material-icons
       source-code-pro
       source-sans-pro
     ];

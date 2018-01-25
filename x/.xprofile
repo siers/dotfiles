@@ -1,8 +1,8 @@
+set -x
+
 exec &> /tmp/x
 
-echo 1
 . ~/.config/zsh/env
-echo 2
 
 xset -b            &
 xset r rate 200 25 &
@@ -21,11 +21,11 @@ autocutsel -selection PRIMARY -fork   &
 unclutter -jitter 2 -noevents -idle 2 &
 xsetroot -cursor_name left_prt        &
 
-xss-lock lock                         &
-xbindkeys                             &
-dunst                                 &
-urxvtd                                &
-udiskie                               &
-term in-tag                           &
+xss-lock lock    &
+xbindkeys        &
+dunst            &
+urxvtd           &
+#udiskie          &
+term in-tag      &
 
-~/code/desktop/symbols/make
+~/code/desktop/symbols/make &
