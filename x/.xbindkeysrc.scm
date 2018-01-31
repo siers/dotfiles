@@ -12,10 +12,10 @@
 (xbindkey '(Mod4 Alt Return)        "alert")
 
 (xbindkey '(KP_Home)                    "chromium")
-(xbindkey '(Shift KP_Home)              "chromium hide")
-(xbindkey '(Control KP_Home)            "chromium hide random")
-(xbindkey '(Shift Control KP_Home)      "chromium hide random proxy")
-(xbindkey '(Alt KP_Home)                "chromium clean | xargs ok")
+(xbindkey '(Shift KP_Home)              "chromium --incognito")
+;(xbindkey '(Control KP_Home)            "chromium hide random")
+;(xbindkey '(Shift Control KP_Home)      "chromium hide random proxy")
+;(xbindkey '(Alt KP_Home)                "chromium clean | xargs ok")
 
 (xbindkey '(XF86Sleep)              "sudo pm-suspend")
 (xbindkey '(Shift XF86Sleep)        "lock & sudo pm-suspend")

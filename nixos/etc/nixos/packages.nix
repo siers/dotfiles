@@ -29,13 +29,30 @@
     inkscape
     libreoffice
     mpv
+    networkmanagerapplet
     pavucontrol
     rxvt_unicode
     virtmanager
     vlc
 
+    # X tools
+    autocutsel
+    unclutter
+    xbindkeys
+    xcalib
+    xclip
+    xdotool
+    xlibs.xev
+    xorg.xbacklight
+    xorg.xkbcomp
+    xorg.xkill
+    xorg.xmodmap
+    xsel
+    xss-lock
+
     # standard terminal tools (soft category)
     bc
+    bind # for dig
     coreutils
     cryptsetup
     elfutils
@@ -68,6 +85,7 @@
     pdftk
     python
     ranger
+    ripgrep
     ruby
     sox
     sshpass
@@ -76,18 +94,9 @@
     weechat
     youtube-dl
 
-    # X tools
-    autocutsel
-    unclutter
-    xbindkeys
-    xcalib
-    xclip
-    xlibs.xev
-    xorg.xbacklight
-    xorg.xkbcomp
-    xorg.xkill
-    xorg.xmodmap
-    xsel
-    xss-lock
+    # haskell
+    cabal2nix
+    cabal-install
+    stack
   ];
 }
