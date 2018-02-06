@@ -22,7 +22,8 @@
         insmod ntfs
         insmod search_fs_uuid
         insmod ntldr
-        search --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1 C406782E06782418
+        # get that UUID wrong and windows will screw around with grub and render system unbootable
+        search --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1 4012AA8B7E6CB042
         ntldr /bootmgr
         }
       '';

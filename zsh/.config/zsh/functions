@@ -1,4 +1,5 @@
 tmpcd() { cd "$(mktemp -d /tmp/sand-XXX)"; }
+tmppd() { cd "$(mktemp -d $HOME/tmp/sand-XXX)"; } # persistent
 cdl() { cd $(dirlast "$1") } 
 cb() { cd "$(dirname "$1")"; } # cd to filename's location
 

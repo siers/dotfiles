@@ -63,6 +63,7 @@
     inetutils
     inotify-tools
     ncdu
+    p7zip
     tmux
     unrar
     utillinux

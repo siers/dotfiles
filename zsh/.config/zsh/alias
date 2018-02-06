@@ -30,9 +30,9 @@ alias vim=v
 
 alias ls='ls --color=auto -hb'
 alias l='ls'
-alias p='ping google.lv -c1' # tired of writing this over and over again.
-alias pg='ping google.lv'
 alias mv='mv -i'
+alias p='ping google.lv -c1' # tired of writing this over and over again.
+pp() { p || (sleep 0.66; pp); }
 
 alias cal='cal -m'
 alias fack='find . | ack'

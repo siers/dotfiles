@@ -13,12 +13,15 @@
   security.sudo.extraConfig = "Defaults timestamp_timeout=30";
   boot.blacklistedKernelModules = [ "pcspkr" ];
   time.timeZone = "Europe/Riga";
+  nix.package = pkgs.nixUnstable;
+  nix.useSandbox = false;
 
-  users.mutableUsers = true;
+  users.mutableUsers = false;
   users.extraUsers.s = {
     isNormalUser = true;
     uid = 1000;
     shell = pkgs.zsh;
+    hashedPassword = "$6$VTWtU4GA$jXBRhB3sp1Odvr19HWUONYRnKud0INAblKebEF//.TpZgvb5lZ9LRGUsjiQ52k6RMiiI9gnMkqODIn9XkN3Un1";
     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" ];
   };
 
