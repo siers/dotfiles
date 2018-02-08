@@ -2,8 +2,7 @@
 
 {
   imports =
-    [
-      ./toshiba-hardware-configuration.nix
+    [ ./toshiba-hardware.nix
     ];
 
   networking.hostName = "toshiba"; # Define your hostname.
@@ -40,15 +39,7 @@
     { mountPoint = "/"; device = "/dev/vg/root"; fsType = "ext4"; options = ["noatime"]; }
     { mountPoint = "/boot"; device = "/dev/sda1"; fsType = "ntfs"; options = ["noatime" "nofail"]; }
     { mountPoint = "/tmp"; device = "tmpfs"; fsType = "tmpfs"; options = ["nosuid" "nodev" "relatime"]; }
-  ] ++
-  (map
-    (dir: {
-      mountPoint = "/home/s/" + dir;
-      device = "/home/s/.syncthing/shares/home/" + dir;
-      options = ["bind"];
-    })
-    ["audio" "bin" "code" "data" "foto" "hack" "http" "log" "pdf"])
-  ;
+  ] ++ import ../syncthing.nix;
 
   swapDevices = [ { device = "/dev/vg/swap"; } ];
 }

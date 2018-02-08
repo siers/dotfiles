@@ -1,22 +1,12 @@
 { config, pkgs, ... }:
 
-{
-  nixpkgs.config = {
-    allowUnfree = true;
-    chromium = {
-      enablePepperFlash = true;
-      enablePepperPDF = true;
-      #enableWideVine = true;
-    };
-  };
-
-  environment.systemPackages = with pkgs; [
-    # services and stuff
+with pkgs; let
+  services = [
     docker
     syncthing
-    syncthing-inotify
+  ];
 
-    # graphical
+  graphical = [
     alacritty
     chromium
     dunst
@@ -34,8 +24,9 @@
     rxvt_unicode
     virtmanager
     vlc
+  ];
 
-    # X tools
+  x = [
     autocutsel
     unclutter
     xbindkeys
@@ -49,8 +40,9 @@
     xorg.xmodmap
     xsel
     xss-lock
+  ];
 
-    # standard terminal tools (soft category)
+  termtools = [
     bc
     bind # for dig
     coreutils
@@ -70,8 +62,9 @@
     wget
     which
     zip
+  ];
 
-    # fancy terminal tools
+  termtoolsFancy = [
     direnv
     espeak
     ffmpeg
@@ -94,10 +87,22 @@
     units
     weechat
     youtube-dl
-
-    # haskell
-    cabal2nix
-    cabal-install
-    stack
   ];
-}
+
+  haskell = [ cabal2nix cabal-install stack ];
+
+  simple = services ++ termtools ++ termtoolsFancy;
+  large = graphical ++ x;
+  everything = simple ++ large;
+in
+  {
+    environment.systemPackages = everything;
+    nixpkgs.config = {
+      allowUnfree = true;
+      chromium = {
+        #enablePepperFlash = true;
+        enablePepperPDF = true;
+        #enableWideVine = true;
+      };
+    };
+  }
