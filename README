@@ -16,4 +16,4 @@
     plugins can be installed with :PlugInstall.
 
 - cron
-    0 13 * * * ruby -e 'require "date"; n = Time.now; exit (6 + n.wday + n.to_date.cweek).modulo(7) == 0' && (cd ~/code/desktop/dotfiles; ~/bin/dev/auto-commit .; git push)
+    0 13 * * * ruby -e 'require "date"; n = Time.now; exit ((n.wday - 1).modulo(7) < 3 && (n.to_date.cweek.modulo(4) - 2).abs + 1 == n.wday ? 0 : 1) == 0' && (cd ~/code/desktop/dotfiles; ~/bin/dev/auto-commit .; git push)

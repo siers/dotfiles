@@ -13,6 +13,7 @@ urxvt.title: Terminal
 urxvt.background: [80]#1e1e1e
 urxvt.perl-lib: /home/s/.config/urxvt
 !urxvt.perl-ext-common: resize-font
+urxvt.perl-ext-common: "default, -searchable-scrollback"
 urxvt.matcher.button: 1
 urxvt.urlLauncher: chromium
 urxvt.iso14755: false

@@ -4,6 +4,6 @@
   imports =
     [
       ./desktop.nix
-      ./hosts/toshiba.nix
+      ./hosts/acer.nix
     ];
 }

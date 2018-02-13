@@ -5,6 +5,7 @@ stty stop ""
 . ~/.config/zsh/alias
 . ~/.config/zsh/settings
 
+. ~/.config/zsh/lib/autocomp-from-tmux.zsh
 . ~/.config/zsh/sessions
 . ~/.config/zsh/functions
 

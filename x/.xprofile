@@ -21,7 +21,7 @@ autocutsel -selection PRIMARY -fork   &
 unclutter -jitter 2 -noevents -idle 2 &
 xsetroot -cursor_name left_prt        &
 
-xss-lock lock    &
+#xss-lock lock    &
 xbindkeys        &
 dunst            &
 urxvtd           &

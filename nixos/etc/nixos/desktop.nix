@@ -3,7 +3,6 @@
 {
   imports =
     [
-      ./packages.nix
     ];
 
   system.stateVersion = "17.09";
@@ -13,8 +12,11 @@
   security.sudo.extraConfig = "Defaults timestamp_timeout=30";
   boot.blacklistedKernelModules = [ "pcspkr" ];
   time.timeZone = "Europe/Riga";
+
   nix.package = pkgs.nixUnstable;
   nix.useSandbox = false;
+  nix.binaryCaches = [ "https://cache.nixos.org/" "https://nixcache.reflex-frp.org" ];
+  nix.binaryCachePublicKeys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
 
   users.mutableUsers = false;
   users.extraUsers.s = {
@@ -22,12 +24,22 @@
     uid = 1000;
     shell = pkgs.zsh;
     hashedPassword = "$6$VTWtU4GA$jXBRhB3sp1Odvr19HWUONYRnKud0INAblKebEF//.TpZgvb5lZ9LRGUsjiQ52k6RMiiI9gnMkqODIn9XkN3Un1";
-    extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "cdrom" ];
   };
 
   networking = {
     firewall.allowedTCPPorts = [ 22 80 8000 8080 65353 ];
     networkmanager.enable = true;
+  };
+
+  environment.systemPackages = (import ./package-sets.nix { inherit pkgs; }).everything;
+  nixpkgs.config = {
+    allowUnfree = true;
+    chromium = {
+      #enablePepperFlash = true;
+      enablePepperPDF = true;
+      #enableWideVine = true;
+    };
   };
 
   virtualisation.libvirtd.enable = true;
@@ -43,16 +55,6 @@
 
       synaptics.enable = true;
       synaptics.twoFingerScroll = true;
-
-      windowManager.default = "i3";
-      windowManager.i3.enable = true;
-
-      desktopManager.default = "none";
-      displayManager.lightdm = {
-        enable = true;
-        autoLogin.enable = true;
-        autoLogin.user = "s";
-      };
     };
 
     syncthing = {
