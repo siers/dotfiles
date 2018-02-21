@@ -102,6 +102,10 @@
       material-icons
       source-code-pro
       source-sans-pro
+
+      emojione
+      noto-fonts
+      noto-fonts-emoji
     ];
   };
 }

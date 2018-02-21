@@ -14,12 +14,10 @@ let
       chromium
       dunst
       evince
-      filezilla
-      firefox
       geeqie
       gnome3.eog
-      #google-chrome
       gparted
+      maim
       mpv
       networkmanagerapplet
       pavucontrol
@@ -28,14 +26,21 @@ let
       vlc
     ];
 
-    graphicalNonessential = [
+    # an uncategory for all things large
+    nonessential = [
+      filezilla
+      firefox
       gimp
+      google-chrome # has netflix, so let's have both chromes
       inkscape
       k3b
       libreoffice
+      tigervnc
+      texlive.combined.scheme-full
     ];
 
     x = [
+      actkbd # don't tell anyone, but it's not an X-util
       autocutsel
       unclutter
       xbindkeys
@@ -90,27 +95,43 @@ let
       pdftk
       ranger
       ripgrep
-      sox
       sshpass
       stow
       units
       weechat
       youtube-dl
-      rubyripper
     ];
 
     dev = [
       cabal2nix
       cabal-install
       ghc
+      manpages
+      nix-prefetch-git
       nix-repl
       stack
+    ];
+
+    audio = [
+      audacity
+      frescobaldi
+      lilypond
+      musescore
+      sox
     ];
   };
 
   derived = with sets; rec {
     simple = termtoolsEssential ++ termtoolsFancy;
-    large = services ++ graphical ++ graphicalNonessential ++ x ++ dev;
+    large = builtins.concatLists [
+      audio
+      dev
+      graphical
+      nonessential
+      services
+      x
+    ];
+
     everything = simple ++ large;
   };
 

@@ -102,6 +102,10 @@ call plug#end()
 
 let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null']
 
+" maybe I should give this a go one day
+" let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
+" Plug 'https://github.com/nixprime/cpsm'
+
 xmap ga <Plug>(EasyAlign) | nmap ga <Plug>(EasyAlign)
 
 nnoremap <Leader>h :SidewaysLeft<CR>
