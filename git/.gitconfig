@@ -8,7 +8,7 @@
 	k  = checkout
 	l  = log --decorate --graph
 	m  = merge
-	pick = cherry-pick
+	p = cherry-pick
 	pl = pull
 	ps = push
 	rb = rebase
