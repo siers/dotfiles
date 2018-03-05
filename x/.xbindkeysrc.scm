@@ -11,17 +11,12 @@
 (xbindkey '(Mod4 Control Return)    "term one || urxvt")
 (xbindkey '(Mod4 Alt Return)        "alert")
 
-(xbindkey '(KP_Home)                    "chromium")
-(xbindkey '(Shift KP_Home)              "chromium --incognito")
-;(xbindkey '(Control KP_Home)            "chromium hide random")
-;(xbindkey '(Shift Control KP_Home)      "chromium hide random proxy")
-;(xbindkey '(Alt KP_Home)                "chromium clean | xargs ok")
-
 (xbindkey '(XF86Sleep)              "sudo pm-suspend")
 (xbindkey '(Shift XF86Sleep)        "lock & sudo pm-suspend")
 
 (xbindkey '(Control F4)             "xdotool click 1")
 (xbindkey '(Mod4 z)                 "xcalib -a -i")
+(xbindkey '(Mod4 Shift z)           "sleep 0.1; xset dpms force off")
 (xbindkey '(XF86MonBrightnessUp)    "xbacklight + 5")
 (xbindkey '(XF86MonBrightnessDown)  "xbacklight - 5")
 
@@ -53,23 +48,6 @@
 (xbindkey '(XF86AudioRaiseVolume)   "amixer set Master 3%+; click")
 (xbindkey '(XF86AudioMute)          "amixer set Master toggle")
 
-(xbindkey '(KP_Divide)              "echo G3 > /tmp/pitch; user-daemon-toggle la.service")
-(xbindkey '(KP_Multiply)            "echo D4 > /tmp/pitch; user-daemon-toggle la.service")
-(xbindkey '(KP_Subtract)            "echo A4 > /tmp/pitch; user-daemon-toggle la.service")
-(xbindkey '(KP_Add)                 "echo E5 > /tmp/pitch; user-daemon-toggle la.service")
-;(xbindkey '(KP_Begin)               "false && sw-audio-outputs | sh")
-(xbindkey '(KP_Right)               "false && ~/code/ruby/util/apklust.rb")
-
-(xbindkey '(KP_Enter)               "mpc toggle")
-(xbindkey '(KP_Down)                "mpc prev")
-(xbindkey '(KP_Next)                "mpc next")
-
-(xbindkey '(KP_Left)                "amixer set Master 3%+")
-(xbindkey '(KP_End)                 "amixer set Master toggle")
-(xbindkey '(KP_Down)                "temporary-sound-off")
-(xbindkey '(shift KP_End)           "amixer set Master off")
-(xbindkey '(KP_Insert)              "amixer set Master 3%-")
-
 (xbindkey '(XF86AudioPlay)          "mpc toggle")
 (xbindkey '(XF86AudioStop)          "mpc stop")
 (xbindkey '(XF86AudioNext)          "mpc next")
@@ -83,6 +61,30 @@
 (xbindkey '(Mod4 shift e)           "clip-pipe sh")
 (xbindkey '(Mod4 shift   grave)     "mapclip paste && alert || alert 0.4 c")
 (xbindkey '(Mod4 F1)                "surf -- \"$(c -o)\"")
+
+; all the keypad binds
+
+(xbindkey '(KP_Home)                "chromium")
+(xbindkey '(Shift KP_Home)          "chromium --incognito")
+(xbindkey '(Control KP_Home)        "chromium hide random")
+(xbindkey '(Shift Control KP_Home)  "chromium hide random proxy")
+(xbindkey '(Alt KP_Home)            "chromium clean | xargs ok")
+
+(xbindkey '(KP_Divide)              "echo G3 > /tmp/pitch; user-daemon-toggle la.service")
+(xbindkey '(KP_Multiply)            "echo D4 > /tmp/pitch; user-daemon-toggle la.service")
+(xbindkey '(KP_Subtract)            "echo A4 > /tmp/pitch; user-daemon-toggle la.service")
+(xbindkey '(KP_Add)                 "echo E5 > /tmp/pitch; user-daemon-toggle la.service")
+(xbindkey '(KP_Right)               "false && ~/code/ruby/util/apklust.rb")
+
+(xbindkey '(KP_Enter)               "mpc toggle")
+(xbindkey '(KP_Down)                "mpc prev")
+(xbindkey '(KP_Next)                "mpc next")
+
+(xbindkey '(KP_Left)                "amixer set Master 3%+")
+(xbindkey '(KP_End)                 "amixer set Master toggle")
+(xbindkey '(KP_Down)                "temporary-sound-off")
+(xbindkey '(shift KP_End)           "amixer set Master off")
+(xbindkey '(KP_Insert)              "amixer set Master 3%-")
 
 ; arbitrary, quick to change shell commands
 

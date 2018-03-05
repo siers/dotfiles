@@ -92,9 +92,16 @@ endif
 
 "Plug 'https://github.com/Valloric/YouCompleteMe', { 'do': './install.py' }
 "Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
-"Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "Plug 'https://github.com/Raimondi/delimitMate'
 "Plug 'https://github.com/tpope/vim-sleuth' " Local tabs/spaces.
+
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+Plug 'junegunn/fzf'
+Plug 'roxma/nvim-completion-manager'
 
 call plug#end()
 
@@ -134,6 +141,7 @@ au FileType go         setlocal noet
 au FileType terraform  setlocal sw=2 ts=2
 au FileType yaml       setlocal sw=2 ts=2
 au FileType javascript setlocal sw=2 ts=2
+au FileType nix        setlocal sw=2 ts=2
 
 ca te tabedit
 ca W w

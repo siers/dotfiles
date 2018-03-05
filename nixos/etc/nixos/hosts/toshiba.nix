@@ -43,7 +43,5 @@
 
   swapDevices = [ { device = "/dev/vg/swap"; } ];
 
-  services = (import ../xserver.nix).dm "plasma5";
-
-  environment.systemPackages = with pkgs; [ google-chrome ];
+  services = (import ../xserver.nix).dm "xfce";
 }

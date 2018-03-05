@@ -85,6 +85,7 @@ let
       direnv
       espeak
       ffmpeg
+      fzf
       gnupg
       haskellPackages.pandoc
       haskellPackages.ShellCheck
