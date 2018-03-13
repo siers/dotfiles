@@ -12,8 +12,15 @@
         % l -l ~/.config/nvim
         lrwxrwxrwx 1 s s 41 Sep 19 16:41 ~/.config/nvim -> ../code/desktop/dotfiles/vim/.config/nvim
 
+    (Though I use the `stow-all' script in the root of the repo.)
+
     Amongs the things I use are vim, zsh, xbindkeys, git, tmux. Vim's
     plugins can be installed with :PlugInstall.
 
+    To generate a snapshot of the zsh config for root's zshrc, use
+    ./generate-zsh-long-conf.
+
 - cron
     0 13 * * * ruby -e 'require "date"; n = Time.now; exit ((n.wday - 1).modulo(7) < 3 && (n.to_date.cweek.modulo(4) - 2).abs + 1 == n.wday ? 0 : 1) == 0' && (cd ~/code/desktop/dotfiles; ~/bin/dev/auto-commit .; git push)
+
+    To view the schedule, use ./cron-date-tester.

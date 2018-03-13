@@ -111,6 +111,7 @@ let
       nix-prefetch-git
       nix-repl
       stack
+      xxd
     ];
 
     audio = [

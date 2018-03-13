@@ -41,6 +41,7 @@ alias pwgen='pwgen -n 10'
 alias watch='watch -n.5'
 alias hexdump='hexdump -C'
 alias dc='docker-compose'
+alias r='rails'
 
 alias pS='pacman -S'
 alias pSs='pacman -Ss'

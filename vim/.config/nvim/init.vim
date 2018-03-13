@@ -56,6 +56,7 @@ Plug 'https://github.com/AndrewRadev/sideways.vim' " argument swapping
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/tpope/vim-abolish' " Subvert, crs.
+Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
 
 Plug 'https://github.com/tpope/vim-fugitive' " Git.
 Plug 'https://github.com/tpope/vim-rhubarb'
@@ -64,10 +65,60 @@ Plug 'https://github.com/tommcdo/vim-fubitive'
 Plug 'https://github.com/hashivim/vim-terraform'
 Plug 'https://github.com/ekalinin/Dockerfile.vim'
 Plug 'https://github.com/LnL7/vim-nix'
+Plug 'https://github.com/gisraptor/vim-lilypond-integrator'
 
+" The Plugs below don't mean much to me.
 Plug 'https://github.com/sjl/gundo.vim'
 Plug 'https://github.com/tpope/vim-obsession'
 Plug 'https://github.com/thiagoalessio/rainbow_levels.vim'
+Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
+" Plug 'https://github.com/nixprime/cpsm'
+
+Plug 'junegunn/fzf'
+" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+Plug 'roxma/nvim-completion-manager'
+
+if ! exists("vimpager")
+    " No commands below this comment will be executed in vimpager,
+    Plug 'https://github.com/tpope/vim-surround'
+    Plug 'https://github.com/kshenoy/vim-signature' " Marks of all kind.
+endif
+
+call plug#end()
+
+" ==============================================================================
+
+let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null']
+
+" maybe I should give this a go one day
+"let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
+
+xmap ga <Plug>(EasyAlign) | nmap ga <Plug>(EasyAlign)
+
+nnoremap <Leader>eh :SidewaysLeft<CR>
+nnoremap <Leader>el :SidewaysRight<CR>
+nnoremap <leader>er :RainbowLevelsToggle<cr>
+
+nnoremap <Leader>u :GundoToggle<CR>
+cnoreab Obsession Obsession .session.vim
+cnoreab Obs Obsession .session.vim
+
+" Just like standard f/F except it works on multiple lines.
+nmap f <Plug>Sneak_f
+nmap F <Plug>Sneak_F
+vmap f <Plug>Sneak_f
+vmap F <Plug>Sneak_F
+
+" Just like standard t/T except it works on multiple lines.
+nmap t <Plug>Sneak_t
+nmap T <Plug>Sneak_T
+vmap t <Plug>Sneak_t
+vmap T <Plug>Sneak_T
+
+" Keeps s/S original functionality.
+" https://github.com/justinmk/vim-sneak/issues/87
+nmap <Plug>(Go_away_Sneak_s) <Plug>Sneak_s
+nmap <Plug>(Go_away_Sneak_S) <Plug>Sneak_S
 
 let g:rainbow_levels = [
     \{'ctermbg': 232, 'guibg': '#080808'},
@@ -79,48 +130,6 @@ let g:rainbow_levels = [
     \{'ctermbg': 238, 'guibg': '#444444'},
     \{'ctermbg': 239, 'guibg': '#4e4e4e'},
     \{'ctermbg': 240, 'guibg': '#585858'}]
-
-if ! exists("vimpager")
-    " No commands below this comment will be executed in vimpager,
-    Plug 'https://github.com/tpope/vim-surround'
-    Plug 'https://github.com/kshenoy/vim-signature' " Marks of all kind.
-endif
-
-if system("hostname") == "spiral\n" " this was a good fucking computer
-    Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
-endif
-
-"Plug 'https://github.com/Valloric/YouCompleteMe', { 'do': './install.py' }
-"Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
-"Plug 'https://github.com/Raimondi/delimitMate'
-"Plug 'https://github.com/tpope/vim-sleuth' " Local tabs/spaces.
-
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-
-Plug 'junegunn/fzf'
-Plug 'roxma/nvim-completion-manager'
-
-call plug#end()
-
-" ==============================================================================
-
-let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null']
-
-" maybe I should give this a go one day
-" let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
-" Plug 'https://github.com/nixprime/cpsm'
-
-xmap ga <Plug>(EasyAlign) | nmap ga <Plug>(EasyAlign)
-
-nnoremap <Leader>h :SidewaysLeft<CR>
-nnoremap <Leader>l :SidewaysRight<CR>
-
-nnoremap <Leader>u :GundoToggle<CR>
-cnoreab Obsession Obsession .session.vim
-cnoreab Obs Obsession .session.vim
 
 " ==============================================================================
 
@@ -155,7 +164,7 @@ map <Leader>s :%s/\s\+$//<CR>
 map <Leader>y mtggVG"+y`tzz
 map <Leader>b :ls<CR>:b
 map <Leader>p :!realpath % \| tr -d '\n' \| xclip<CR><CR>
-map <Leader>h vip!hs-import-sort<CR>:w<CR>
+" map <Leader>h vip!hs-import-sort<CR>:w<CR>
 map <Leader>v vip!sort<CR>:w<CR>
 map <Leader>i ?^import <CR>:noh<CR>
 map <Leader>r :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
