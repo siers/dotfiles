@@ -82,6 +82,7 @@ let
     ];
 
     termtoolsFancy = [
+      camlistore
       direnv
       espeak
       ffmpeg

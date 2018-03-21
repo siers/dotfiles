@@ -159,27 +159,31 @@ ca Q q
 
 "   <Leader>standard filenames
 map <Leader>sf :s/_/-/g<CR>^gu$
-
 map <Leader>s :%s/\s\+$//<CR>
-map <Leader>y mtggVG"+y`tzz
-map <Leader>b :ls<CR>:b
-map <Leader>p :!realpath % \| tr -d '\n' \| xclip<CR><CR>
-" map <Leader>h vip!hs-import-sort<CR>:w<CR>
-map <Leader>v vip!sort<CR>:w<CR>
-map <Leader>i ?^import <CR>:noh<CR>
-map <Leader>r :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 map <Leader>x :%s/>/>\r/g<CR>gg=G
-map <Leader>gd :Gdiff<CR>
-map <Leader>gb :Gblame<CR>
-map <Leader>gu :Gbrowse!<CR>
+map <Leader>y mtggVG"+y`tzz
+map <Leader>l :set nowrap!<CR>
+
+" map <Leader>h vip!hs-import-sort<CR>:w<CR>
+map <Leader>i ?^import <CR>:noh<CR>
+map <Leader>i ?^import <CR>:noh<CR>
+map <Leader>v vip!sort<CR>:w<CR>
+
+map <Leader>p :!realpath % \| tr -d '\n' \| xclip<CR><CR>
+map <Leader>r :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+" git show
 map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR>
 
-map <Leader>w :w<CR>
+map <Leader>b :ls<CR>:b
+map <Leader>gb :Gblame<CR>
+map <Leader>gd :Gdiff<CR>
+map <Leader>gu :Gbrowse!<CR>
 map <Leader>q :wq<CR>
+map <Leader>w :w<CR>
 map <M-a> gT
 map <M-s> gt
-map <M-z> :q<CR>
 map <M-t> :tabnew<CR>
+map <M-z> :q<CR>
 
 nnoremap <M-n> ^
 nnoremap <M-m> $
