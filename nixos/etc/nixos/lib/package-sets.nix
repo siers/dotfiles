@@ -130,7 +130,7 @@ let
       audio
       dev
       graphical
-      nonessential
+      # nonessential
       services
       x
     ];
@@ -145,6 +145,6 @@ let
 
 in
   with derived; with sets;
-  assert derivationsPreorder everything (builtins.concatLists (builtins.attrValues sets));
+  #assert derivationsPreorder everything (builtins.concatLists (builtins.attrValues sets));
 
   sets // derived

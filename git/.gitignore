@@ -15,3 +15,9 @@ gnore-*
 .tf-version
 .session.vim
 .*envrc*
+
+/docker-compose.yml
+/gemset.nix
+/shell.nix
+/node_modules
+/.ruby-version

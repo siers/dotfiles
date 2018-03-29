@@ -14,16 +14,17 @@
   time.timeZone = "Europe/Riga";
 
   nix.package = pkgs.nixUnstable;
-  nix.useSandbox = false;
-  nix.binaryCaches = [ "https://cache.nixos.org/" "https://nixcache.reflex-frp.org" ];
-  nix.binaryCachePublicKeys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
+  nix.binaryCaches = [ "https://cache.nixos.org/" ]; # "https://nixcache.reflex-frp.org" ];
+  # nix.binaryCachePublicKeys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
+  nix.daemonNiceLevel = 19;
+  nix.daemonIONiceLevel = 7;
 
-  users.mutableUsers = false;
   users.extraUsers.s = {
     isNormalUser = true;
     uid = 1000;
     shell = pkgs.zsh;
     hashedPassword = "$6$VTWtU4GA$jXBRhB3sp1Odvr19HWUONYRnKud0INAblKebEF//.TpZgvb5lZ9LRGUsjiQ52k6RMiiI9gnMkqODIn9XkN3Un1";
+    openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGHwoKCn9k47dD+AiLD757nRkHtjoZV0FZ6vQtujdc5J"];
     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "cdrom" ];
   };
 
@@ -32,7 +33,6 @@
     networkmanager.enable = true;
   };
 
-  environment.systemPackages = (import ./package-sets.nix { inherit pkgs; }).everything;
   nixpkgs.config = {
     allowUnfree = true;
     chromium = {
@@ -48,6 +48,14 @@
   services = {
     openssh.enable = true;
     cron.enable = true;
+    ntp.enable = true;
+
+    avahi.enable = true;
+    avahi.publish.enable = true;
+    #avahi.publish.domain = true;
+    #avahi.publish.workstation = true;
+    avahi.publish.addresses = true;
+    avahi.nssmdns = true;
 
     xserver = {
       enable = true;
@@ -65,9 +73,11 @@
     };
   };
 
+  environment.systemPackages = (import lib/package-sets.nix { inherit pkgs; }).everything;
+
   programs = {
     bash.enableCompletion = true;
-    #zsh.enable = true;
+    zsh.enable = true;
 
     ssh.knownHosts = [
       { hostNames = ["github.com"]; publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=="; }

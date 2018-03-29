@@ -39,9 +39,9 @@
     { mountPoint = "/"; device = "/dev/vg/root"; fsType = "ext4"; options = ["noatime"]; }
     { mountPoint = "/boot"; device = "/dev/sda1"; fsType = "ntfs"; options = ["noatime" "nofail"]; }
     { mountPoint = "/tmp"; device = "tmpfs"; fsType = "tmpfs"; options = ["nosuid" "nodev" "relatime"]; }
-  ] ++ import ../syncthing.nix;
+  ] ++ import ../lib/syncthing.nix;
 
   swapDevices = [ { device = "/dev/vg/swap"; } ];
 
-  services = (import ../xserver.nix).dm "xfce";
+  services = (import ../lib/xserver.nix).dm "xfce";
 }

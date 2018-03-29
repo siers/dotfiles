@@ -19,10 +19,11 @@
 (xbindkey '(Mod4 Shift z)           "sleep 0.1; xset dpms force off")
 (xbindkey '(XF86MonBrightnessUp)    "xbacklight + 5")
 (xbindkey '(XF86MonBrightnessDown)  "xbacklight - 5")
+(xbindkey '(Mod4 Shift t)           "synclient TouchpadOff=$(synclient | ruby -ne 'puts ($_.match(/\\d+/)[0].to_i ^ 1) if /TouchpadOff/ =~ $_'); alert 80")
 
 (xbindkey '(Mod4 F12)               "lock; xset dpms force off")
 (xbindkey '(Mod4 Shift F12)         "lock")
-(xbindkey '(Mod4 Control F12)       "sudo pm-suspend")
+;(xbindkey '(Mod4 Control F12)       "sudo pm-suspend")
 
 (xbindkey '(Mod4 Alt F12)           "lock --stealth")
 (xbindkey '(Mod4 Alt Shift F12)     "touch /tmp/nolock; notify-send -t 1 ' '")

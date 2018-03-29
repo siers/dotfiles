@@ -4,6 +4,6 @@
   imports =
     [
       ./desktop.nix
-      ./hosts/acer.nix
+      ./hosts/inspiron.nix
     ];
 }
