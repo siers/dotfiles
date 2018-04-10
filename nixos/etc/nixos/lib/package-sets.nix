@@ -36,12 +36,13 @@ let
       k3b
       libreoffice
       tigervnc
-      texlive.combined.scheme-full
+      #texlive.combined.scheme-full
     ];
 
     x = [
-      actkbd # don't tell anyone, but it's not an X-util
       autocutsel
+      dmenu
+      rofi
       unclutter
       xbindkeys
       xcalib
@@ -57,6 +58,8 @@ let
     ];
 
     termtoolsEssential = [
+      actkbd
+      alsaUtils
       bc
       bind # for dig
       coreutils
@@ -69,8 +72,10 @@ let
       htop
       inetutils
       inotify-tools
+      iotop
       ncdu
       p7zip
+      pmutils
       python
       ruby
       tmux
@@ -82,7 +87,6 @@ let
     ];
 
     termtoolsFancy = [
-      camlistore
       direnv
       espeak
       ffmpeg
@@ -93,8 +97,11 @@ let
       jq
       libnotify
       mkpasswd
-      (neovim.override { vimAlias = true; })
+      (neovim.override { vimAlias = true; withPython = true; })
+      python27Packages.neovim
+      nmap
       pdftk
+      perkeep
       ranger
       ripgrep
       sshpass
@@ -107,6 +114,7 @@ let
     dev = [
       cabal2nix
       cabal-install
+      docker_compose
       ghc
       manpages
       nix-prefetch-git
@@ -126,16 +134,17 @@ let
 
   derived = with sets; rec {
     simple = termtoolsEssential ++ termtoolsFancy;
-    large = builtins.concatLists [
+    most = builtins.concatLists [
       audio
       dev
       graphical
-      # nonessential
       services
       x
     ];
+    large = nonessential;
 
-    everything = simple ++ large;
+    live = builtins.concatLists [ simple most ];
+    everything = simple ++ most ++ large;
   };
 
   # It would be better if I had a total order on sets instead preorder.
@@ -145,6 +154,6 @@ let
 
 in
   with derived; with sets;
-  #assert derivationsPreorder everything (builtins.concatLists (builtins.attrValues sets));
+  assert derivationsPreorder everything (builtins.concatLists (builtins.attrValues sets));
 
   sets // derived

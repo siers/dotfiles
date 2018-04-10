@@ -54,4 +54,5 @@ precmd() {
     fi
 
     PS1="$PS1%F{$succ}%#%F{default} "
+    RPS1=""
 }

@@ -1,6 +1,6 @@
 set -x
 
-exec &> /tmp/x
+exec &> /tmp/xsession-output
 
 . ~/.config/zsh/env
 
@@ -22,7 +22,7 @@ unclutter -jitter 2 -noevents -idle 2 &
 xsetroot -cursor_name left_prt        &
 
 #xss-lock lock    &
-xbindkeys        &
+xbindkeys -v     &
 dunst            &
 urxvtd           &
 #udiskie          &

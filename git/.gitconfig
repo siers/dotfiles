@@ -13,8 +13,10 @@
 	p = cherry-pick
 	pl = pull
 	ps = push
+	pf = push --force-with-lease
 	rb = rebase
 	rh = reset --hard
+	r = reset
 	s  = stash
 	t = reset
 [push]

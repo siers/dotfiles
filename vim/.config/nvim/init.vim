@@ -66,13 +66,15 @@ Plug 'https://github.com/hashivim/vim-terraform'
 Plug 'https://github.com/ekalinin/Dockerfile.vim'
 Plug 'https://github.com/LnL7/vim-nix'
 Plug 'https://github.com/gisraptor/vim-lilypond-integrator'
+Plug 'https://github.com/cakebaker/scss-syntax.vim'
+Plug 'https://github.com/bronson/vim-ruby-block-conv'
 
 " The Plugs below don't mean much to me.
 Plug 'https://github.com/sjl/gundo.vim'
 Plug 'https://github.com/tpope/vim-obsession'
 Plug 'https://github.com/thiagoalessio/rainbow_levels.vim'
 Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
-" Plug 'https://github.com/nixprime/cpsm'
+Plug 'https://github.com/nixprime/cpsm'
 
 Plug 'junegunn/fzf'
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
@@ -90,8 +92,8 @@ call plug#end()
 
 let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null']
 
-" maybe I should give this a go one day
-"let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
+" let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
+" ERROR: cpsm built with version of Python not supported by Vim
 
 xmap ga <Plug>(EasyAlign) | nmap ga <Plug>(EasyAlign)
 
@@ -121,15 +123,15 @@ nmap <Plug>(Go_away_Sneak_s) <Plug>Sneak_s
 nmap <Plug>(Go_away_Sneak_S) <Plug>Sneak_S
 
 let g:rainbow_levels = [
-    \{'ctermbg': 232, 'guibg': '#080808'},
-    \{'ctermbg': 233, 'guibg': '#121212'},
-    \{'ctermbg': 234, 'guibg': '#1c1c1c'},
-    \{'ctermbg': 235, 'guibg': '#262626'},
-    \{'ctermbg': 236, 'guibg': '#303030'},
-    \{'ctermbg': 237, 'guibg': '#3a3a3a'},
-    \{'ctermbg': 238, 'guibg': '#444444'},
-    \{'ctermbg': 239, 'guibg': '#4e4e4e'},
-    \{'ctermbg': 240, 'guibg': '#585858'}]
+    \{'ctermbg': 232, 'guibg': '#121212'},
+    \{'ctermbg': 233, 'guibg': '#1c1c1c'},
+    \{'ctermbg': 234, 'guibg': '#262626'},
+    \{'ctermbg': 235, 'guibg': '#303030'},
+    \{'ctermbg': 236, 'guibg': '#3a3a3a'},
+    \{'ctermbg': 237, 'guibg': '#444444'},
+    \{'ctermbg': 238, 'guibg': '#4e4e4e'},
+    \{'ctermbg': 239, 'guibg': '#585858'},
+    \{'ctermbg': 240, 'guibg': '#626262'}]
 
 " ==============================================================================
 
@@ -151,6 +153,8 @@ au FileType terraform  setlocal sw=2 ts=2
 au FileType yaml       setlocal sw=2 ts=2
 au FileType javascript setlocal sw=2 ts=2
 au FileType nix        setlocal sw=2 ts=2
+au FileType scss       setlocal sw=2 ts=2
+au FileType vim        nnoremap <buffer> <F9> :source %<CR>
 
 ca te tabedit
 ca W w
@@ -161,8 +165,8 @@ ca Q q
 map <Leader>sf :s/_/-/g<CR>^gu$
 map <Leader>s :%s/\s\+$//<CR>
 map <Leader>x :%s/>/>\r/g<CR>gg=G
-map <Leader>y mtggVG"+y`tzz
-map <Leader>l :set nowrap!<CR>
+map <Leader>y myggVG"+y`ymyzz
+map <Leader>l :setlocal nowrap!<CR>
 
 " map <Leader>h vip!hs-import-sort<CR>:w<CR>
 map <Leader>i ?^import <CR>:noh<CR>
@@ -170,16 +174,18 @@ map <Leader>i ?^import <CR>:noh<CR>
 map <Leader>v vip!sort<CR>:w<CR>
 
 map <Leader>p :!realpath % \| tr -d '\n' \| xclip<CR><CR>
+map <Leader>o :!realpath --relative-to=. % \| tr -d '\n' \| xclip<CR><CR>
 map <Leader>r :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 " git show
 map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR>
 
-map <Leader>b :ls<CR>:b
+" map <Leader>b :ls<CR>:b
 map <Leader>gb :Gblame<CR>
 map <Leader>gd :Gdiff<CR>
 map <Leader>gu :Gbrowse!<CR>
 map <Leader>q :wq<CR>
 map <Leader>w :w<CR>
+map <Leader>e :e<CR>
 map <M-a> gT
 map <M-s> gt
 map <M-t> :tabnew<CR>

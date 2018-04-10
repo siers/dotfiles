@@ -1,23 +1,30 @@
 { config, pkgs, ... }:
 
+let
+  literals = import ./lib/literals.nix;
+in
+
 {
   imports =
     [
     ];
 
-  system.stateVersion = "17.09";
+  system.stateVersion = "18.03";
   system.autoUpgrade.enable = true;
 
   # grouped by singlelinedness
   security.sudo.extraConfig = "Defaults timestamp_timeout=30";
+  security.sudo.configFile = literals.sudoConf;
   boot.blacklistedKernelModules = [ "pcspkr" ];
   time.timeZone = "Europe/Riga";
 
-  nix.package = pkgs.nixUnstable;
-  nix.binaryCaches = [ "https://cache.nixos.org/" ]; # "https://nixcache.reflex-frp.org" ];
-  # nix.binaryCachePublicKeys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
-  nix.daemonNiceLevel = 19;
-  nix.daemonIONiceLevel = 7;
+  nix = {
+    package = pkgs.nixUnstable;
+    binaryCaches = [ "https://cache.nixos.org/" ];
+    daemonNiceLevel = 19;
+    daemonIONiceLevel = 19;
+    # gc = { automatic = true; dates = "00:00"; }; # interesting, but no
+  };
 
   users.extraUsers.s = {
     isNormalUser = true;
@@ -33,6 +40,8 @@
     networkmanager.enable = true;
   };
 
+  environment.etc."resolv.conf.head".text = ''nameserver 1.1.1.1'';
+
   nixpkgs.config = {
     allowUnfree = true;
     chromium = {
@@ -46,9 +55,12 @@
   virtualisation.docker.enable = true;
 
   services = {
+    cron.enable    = true;
+    dbus.enable    = true;
+    ntp.enable     = true;
     openssh.enable = true;
-    cron.enable = true;
-    ntp.enable = true;
+    udisks2.enable = true;
+    upower.enable  = true;
 
     avahi.enable = true;
     avahi.publish.enable = true;
@@ -63,36 +75,26 @@
 
       synaptics.enable = true;
       synaptics.twoFingerScroll = true;
+      synaptics.palmDetect = true;
     };
 
     syncthing = {
       enable = true;
-      useInotify = true;
       user = "s";
       dataDir = "/home/s/.syncthing";
     };
   };
 
-  environment.systemPackages = (import lib/package-sets.nix { inherit pkgs; }).everything;
-
   programs = {
     bash.enableCompletion = true;
     zsh.enable = true;
+    ssh.startAgent = true;
 
-    ssh.knownHosts = [
-      { hostNames = ["github.com"]; publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=="; }
-      { hostNames = ["bitbucket.org"]; publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAubiN81eDcafrgMeLzaFPsw2kNvEcqTKl/VqLat/MaB33pZy0y3rJZtnqwR2qOOvbwKZYKiEO1O6VqNEBxKvJJelCq0dTXWT5pbO2gDXC6h6QDXCaHo6pOHGPUy+YBaGQRGuSusMEASYiWunYN0vCAI8QaXnWMXNMdFP3jHAJH0eDsoiGnLPBlBp4TNm6rYI74nMzgz3B9IikW4WVK+dc8KZJZWYjAuORU3jc1c/NPskD2ASinf8v3xnfXeukU0sJ5N6m5E8VLjObPEO+mN2t/FZTMZLiFqPWc/ALSqnMnnhwrNi2rbfg/rd/IpL8Le3pSBne8+seeFVBoGqzHM9yXw=="; }
-    ];
+    ssh.knownHosts = literals.knownHosts;
 
     chromium = {
       enable = true;
-
-      extensions = [
-        "gcbommkclmclpchllfjekcdonpmejbdp" # https everywhere
-        "dbepggeogbaibhgnhhndojpepiihcmeb" # vimium
-        "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
-        "jlgkpaicikihijadgifklkbpdajbkhjo" # mouse gestures
-      ];
+      extensions = literals.chromiumExtensions;
     };
   };
 

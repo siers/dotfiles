@@ -44,4 +44,6 @@
   swapDevices = [ { device = "/dev/vg/swap"; } ];
 
   services = (import ../lib/xserver.nix).dm "xfce";
+
+  environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything;
 }

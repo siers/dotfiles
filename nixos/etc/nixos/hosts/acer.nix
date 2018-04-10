@@ -7,12 +7,18 @@
 
   networking.hostName = "acer"; # Define your hostname.
 
+
   hardware.cpu.intel.updateMicrocode = true;
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  #boot.loader.grub = { enable = true; efiSupport = true; device = "/dev/sda1"; };
-  boot.initrd.luks.devices = [{ name = "enc-vg"; device = "/dev/sda8"; preLVM = true; allowDiscards = true; }];
+  boot = {
+    kernelParams = ["acpi_backlight=vendor"];
+
+    # $ cd /boot; mkdir -p EFI/Microsoft/Boot; cp EFI/BOOT/BOOTX64.EFI EFI/Microsoft/Boot/bootmgfw.efi
+    loader.grub = { enable = true; device = "nodev"; efiSupport = true; efiInstallAsRemovable = true; };
+    loader.systemd-boot.enable = true;
+
+    initrd.luks.devices = [{ name = "enc-vg"; device = "/dev/sda8"; preLVM = true; allowDiscards = true; }];
+  };
 
   fileSystems = [
     { mountPoint = "/"; device = "/dev/disk/by-uuid/00c80c0f-1459-4b0a-ab88-d3b9313e22e7"; fsType = "ext4"; options = ["noatime"]; }
@@ -23,4 +29,6 @@
   swapDevices = [ { device = "/dev/vg/swap"; } ];
 
   services = (import ../lib/xserver.nix).i3;
+
+  environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything;
 }

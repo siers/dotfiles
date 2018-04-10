@@ -26,4 +26,6 @@
   swapDevices = [ { device = "/dev/vg/swap"; } ];
 
   services = (import ../lib/xserver.nix).i3;
+
+  environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything;
 }
