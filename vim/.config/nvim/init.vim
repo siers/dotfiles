@@ -68,6 +68,7 @@ Plug 'https://github.com/LnL7/vim-nix'
 Plug 'https://github.com/gisraptor/vim-lilypond-integrator'
 Plug 'https://github.com/cakebaker/scss-syntax.vim'
 Plug 'https://github.com/bronson/vim-ruby-block-conv'
+Plug 'https://github.com/posva/vim-vue'
 
 " The Plugs below don't mean much to me.
 Plug 'https://github.com/sjl/gundo.vim'
@@ -167,6 +168,7 @@ map <Leader>s :%s/\s\+$//<CR>
 map <Leader>x :%s/>/>\r/g<CR>gg=G
 map <Leader>y myggVG"+y`ymyzz
 map <Leader>l :setlocal nowrap!<CR>
+map <Leader>m :set paste!<CR>
 
 " map <Leader>h vip!hs-import-sort<CR>:w<CR>
 map <Leader>i ?^import <CR>:noh<CR>
@@ -225,6 +227,8 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " :Share to sprunge.us
 exec 'command! -range=% Share :<line1>,<line2>write !paste'
+
+command! Config :tabedit ~/.config/nvim/init.vim
 
 function! s:MoveLine(direction) " Move line <count> lines higher/lower.
     if a:direction == 'k'

@@ -21,3 +21,4 @@ gnore-*
 /shell.nix
 /node_modules
 /.ruby-version
+/config/initializers/development_includes.rb

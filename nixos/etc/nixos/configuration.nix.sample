@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 
+# don't forget to include the following line in your syncthing's stignore!
+# /**/configuration.nix
+
 {
   imports =
     [

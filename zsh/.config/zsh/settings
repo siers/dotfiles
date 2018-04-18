@@ -2,7 +2,9 @@
 # Opts and history
 DIRSTACKSIZE=8
 setopt autocd autopushd pushdminus pushdsilent pushdtohome
-setopt interactivecomments extendedglob incappendhistory
+setopt interactivecomments extendedglob
+setopt appendhistory incappendhistory nosharehistory
+setopt prompt_cr prompt_sp # programs.zsh.enable screws with these :(
 bindkey -e
 HISTFILE=~/.histfile
 HISTSIZE=1000000000
@@ -18,3 +20,7 @@ autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
+
+reload-shell-history() { fc -R }
+zle -N reload-shell-history
+bindkey '^x^h' reload-shell-history

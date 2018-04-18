@@ -1,7 +1,7 @@
 require 'rubygems'
 
 require 'irb/ext/save-history'
-IRB.conf[:SAVE_HISTORY] = 20000
+IRB.conf[:SAVE_HISTORY] = 10_000_000 # let's never lose it
 IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
 
 require "#{ ENV['HOME'] }/code/ruby/util/extend.rb"

@@ -76,6 +76,7 @@ in
       synaptics.enable = true;
       synaptics.twoFingerScroll = true;
       synaptics.palmDetect = true;
+      synaptics.tapButtons = true;
     };
 
     syncthing = {
