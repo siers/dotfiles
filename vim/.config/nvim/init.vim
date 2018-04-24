@@ -76,6 +76,8 @@ Plug 'https://github.com/tpope/vim-obsession'
 Plug 'https://github.com/thiagoalessio/rainbow_levels.vim'
 Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
 Plug 'https://github.com/nixprime/cpsm'
+Plug 'https://github.com/monokrome/vim-lazy-obsession' " It doesn't work, because maybe I haven't enabled something, but eh.
+Plug 'https://github.com/mattn/emmet-vim'
 
 Plug 'junegunn/fzf'
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
@@ -103,8 +105,7 @@ nnoremap <Leader>el :SidewaysRight<CR>
 nnoremap <leader>er :RainbowLevelsToggle<cr>
 
 nnoremap <Leader>u :GundoToggle<CR>
-cnoreab Obsession Obsession .session.vim
-cnoreab Obs Obsession .session.vim
+command! Session :Obsession .session.vim
 
 " Just like standard f/F except it works on multiple lines.
 nmap f <Plug>Sneak_f
@@ -148,14 +149,9 @@ endif
 
 " When reading a file, jump to the last cursor position.
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-au FileType ruby       setlocal sw=2 ts=2
 au FileType go         setlocal noet
-au FileType terraform  setlocal sw=2 ts=2
-au FileType yaml       setlocal sw=2 ts=2
-au FileType javascript setlocal sw=2 ts=2
-au FileType nix        setlocal sw=2 ts=2
-au FileType scss       setlocal sw=2 ts=2
 au FileType vim        nnoremap <buffer> <F9> :source %<CR>
+au FileType ruby,terraform,yaml,javascript,nix,scss,vim,vue setlocal sw=2 ts=2
 
 ca te tabedit
 ca W w
