@@ -4,5 +4,6 @@ cdl() { cd $(dirlast "$1") }
 cb() { cd "$(dirname "$1")"; } # cd to filename's location
 
 nix-revsha() { nix-prefetch-git "$@" | jq -r '"  rev = \"\(.rev)\";\n  sha256 = \"\(.sha256)\";"' | tee >(c); }
+no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
 
 [ -e "$HOME/.config/zsh/tempoary" ] && source ~/.config/zsh/tempoary || :

@@ -222,7 +222,7 @@ inoremap <F6> <C-R>=strftime("%F-%T")<CR>
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " :Share to sprunge.us
-exec 'command! -range=% Share :<line1>,<line2>write !paste'
+exec 'command! -range=% Share :<line1>,<line2>write !pasty'
 
 command! Config :tabedit ~/.config/nvim/init.vim
 
