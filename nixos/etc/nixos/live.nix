@@ -18,7 +18,10 @@ nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=live
 
   services = (import lib/xserver.nix).dm "xfce";
 
-  environment.systemPackages = (import lib/package-sets.nix { inherit pkgs; }).live;
+  environment.systemPackages = ((import lib/package-sets.nix { inherit pkgs; }).live) ++ (with pkgs; [
+    # libreoffice
+    # skype
+  ]);
 
   # Make sure ./image's accessible from the nixbld user in case ./. is in ~.
   # isoImage.contents = [

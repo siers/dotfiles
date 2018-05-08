@@ -7,3 +7,7 @@ nix-revsha() { nix-prefetch-git "$@" | jq -r '"  rev = \"\(.rev)\";\n  sha256 = 
 no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
 
 [ -e "$HOME/.config/zsh/tempoary" ] && source ~/.config/zsh/tempoary || :
+
+single-line-print() { # for asciinema
+    while read line; do echo -en "\033[2K\r$(cut -c-$(tput cols) <<< "$line")"; done
+}

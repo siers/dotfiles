@@ -4,6 +4,14 @@ with pkgs;
 
 let
   sets = {
+    aliases = [
+      (runCommand "command-aliases" { buildInputs = [ systemd ]; } ''
+        mkdir -p $out/bin
+        where="$(command -v systemctl)"
+        ln -s "$where" $out/bin/sc
+      '')
+    ];
+
     services = [
       docker
       syncthing
@@ -66,7 +74,6 @@ let
       cryptsetup
       elfutils
       file
-      file
       gitAndTools.gitFull
       gnumake
       htop
@@ -78,6 +85,7 @@ let
       pmutils
       python
       ruby
+      socat
       tmux
       unrar
       utillinux
@@ -133,7 +141,7 @@ let
   };
 
   derived = with sets; rec {
-    simple = termtoolsEssential ++ termtoolsFancy;
+    simple = aliases ++ termtoolsEssential ++ termtoolsFancy;
     most = builtins.concatLists [
       audio
       dev

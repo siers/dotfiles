@@ -62,12 +62,14 @@ in
     udisks2.enable = true;
     upower.enable  = true;
 
-    avahi.enable = true;
-    avahi.publish.enable = true;
-    #avahi.publish.domain = true;
-    #avahi.publish.workstation = true;
-    avahi.publish.addresses = true;
-    avahi.nssmdns = true;
+    avahi = {
+      enable = true;
+      publish.enable = true;
+      publish.addresses = true;
+      nssmdns = true;
+      reflector = true;
+      allowPointToPoint = true;
+    };
 
     xserver = {
       enable = true;

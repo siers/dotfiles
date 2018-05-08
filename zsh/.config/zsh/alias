@@ -35,7 +35,7 @@ alias mv='mv -i'
 
 alias vim=v
 alias cal='cal -m'
-alias fack='find . | ack'
+alias frg='find . | rg'
 alias grep='grep --colour'
 alias pwgen='pwgen -n 10'
 alias watch='watch -n.5'
@@ -49,6 +49,7 @@ alias gc='git commit'
 alias gd='git diff'
 alias gk='git checkout'
 alias gr='git reset'
+alias grem='git remote'
 alias grb='git rebase'
 alias gls='git ls-files'
 

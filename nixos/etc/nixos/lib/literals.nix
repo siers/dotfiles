@@ -14,7 +14,7 @@
     "gcbommkclmclpchllfjekcdonpmejbdp" # https everywhere
     "dbepggeogbaibhgnhhndojpepiihcmeb" # vimium
     "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
-    "jlgkpaicikihijadgifklkbpdajbkhjo" # mouse gestures
+    "mjidkpedjlfnanainpdfnedkdlacidla" # CLEAN crxMouse Gestures
     "lgaiigbekmcejmhenhhleeaicbcjjddi" # zero-width-chrome-extension
     "hgimnogjllphhhkhlmebbmlgjoejdpjl" # xpath-helper
     "pfippblampohahkkdoomekekmfbjkimg" # duplicate tab shortcut key
