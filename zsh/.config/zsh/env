@@ -3,6 +3,11 @@
 #export MANPAGER=vimpager PAGER=vimpager; alias less=$PAGER
 export EDITOR=vim
 
+if tty | grep -qE '^/dev/tty[0-9]+$'; then
+    TMOUT=$(( 60 * 20 ))
+    echo "setting \$TMOUT=$TMOUT because of a tty login"
+fi
+
 if [ -z "$ZSH_PATH_INIT" ] || command -v ruby &> /dev/null
 then
     export ZSH_PATH_INIT=1
