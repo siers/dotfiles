@@ -51,8 +51,13 @@ in
     };
   };
 
-  virtualisation.libvirtd.enable = true;
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    libvirtd.enable = true;
+    docker = {
+      enable = true;
+      extraOptions = "--iptables=false";
+    };
+  };
 
   services = {
     cron.enable    = true;
