@@ -3,6 +3,10 @@ tmppd() { cd "$(mktemp -d $HOME/tmp/sand-XXX)"; } # persistent
 cdl() { cd $(dirlast "$1") } 
 cb() { cd "$(dirname "$1")"; } # cd to filename's location
 
+# git multi-add
+gma() { git ls-files -mo --exclude-standard | fzf -m --preview='git diff {} | tee >(grep -q . || cat {})' | xargs -r git add; }
+grbi() { git log --format=oneline --since='3 days ago' | fzf | awk '{print $1}' | xargs -r git rebase -i; }
+
 nix-revsha() { nix-prefetch-git "$@" | jq -r '"  rev = \"\(.rev)\";\n  sha256 = \"\(.sha256)\";"' | tee >(c); }
 no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
 

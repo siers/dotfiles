@@ -10,6 +10,7 @@
 	l  = log --decorate --graph
 	m  = merge
 	o = show
+    fo = show --format=fuller
 	p = cherry-pick
 	pl = pull
 	ps = push
