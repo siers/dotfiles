@@ -1,15 +1,12 @@
 { pkgs, ... }:
 
 with pkgs;
+with (import ./packages.nix pkgs);
 
 let
   sets = {
     aliases = [
-      (runCommand "command-aliases" { buildInputs = [ systemd ]; } ''
-        mkdir -p $out/bin
-        where="$(command -v systemctl)"
-        ln -s "$where" $out/bin/sc
-      '')
+      (alias [systemd] "systemctl" "sc")
     ];
 
     services = [
@@ -50,6 +47,8 @@ let
     x = [
       autocutsel
       dmenu
+      go-upower-notify
+      intel-brightness-script
       rofi
       unclutter
       xbindkeys

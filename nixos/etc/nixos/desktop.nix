@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  literals = import ./lib/literals.nix;
+  literals = import ./lib/literals.nix pkgs;
 in
 
 {
@@ -36,7 +36,7 @@ in
   };
 
   networking = {
-    firewall.allowedTCPPorts = [ 22 80 8000 8080 65353 ];
+    firewall.allowedTCPPorts = [ 22 80 8080 65353 ];
     networkmanager.enable = true;
   };
 
@@ -64,8 +64,6 @@ in
     dbus.enable    = true;
     ntp.enable     = true;
     openssh.enable = true;
-    udisks2.enable = true;
-    upower.enable  = true;
 
     avahi = {
       enable = true;
@@ -106,6 +104,7 @@ in
     };
   };
 
+  sound.enable = true;
   hardware.pulseaudio = {
     enable = true;
     package = pkgs.pulseaudioFull;

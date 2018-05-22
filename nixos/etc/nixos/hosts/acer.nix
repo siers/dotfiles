@@ -7,7 +7,6 @@
 
   networking.hostName = "acer"; # Define your hostname.
 
-
   hardware.cpu.intel.updateMicrocode = true;
 
   boot = {
@@ -28,7 +27,7 @@
 
   swapDevices = [ { device = "/dev/vg/swap"; } ];
 
-  services = (import ../lib/xserver.nix).i3;
+  services = (import ../lib/xserver.nix).xfce-i3;
 
   environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything;
 }

@@ -2,8 +2,10 @@
 
 {
   imports =
-    [ ./inspiron-hardware.nix
-    ];
+  [
+    ./inspiron-hardware.nix
+    ../lib/monitor-hotplug.nix
+  ];
 
   networking.hostName = "inspiron";
 

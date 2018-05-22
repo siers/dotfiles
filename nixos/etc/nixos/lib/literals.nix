@@ -1,8 +1,13 @@
+pkgs:
+
+with (import ./packages.nix pkgs);
+
 {
   sudoConf = ''
-    Cmnd_Alias SUSPEND = /var/run/current-system/sw/sbin/pm-suspend, /var/run/current-system/sw/bin/systemctl suspend
+    Cmnd_Alias SUSPEND = /run/current-system/sw/sbin/pm-suspend, /run/current-system/sw/bin/systemctl suspend
+    Cmnd_Alias BRIGHTNESS = /run/current-system/sw/bin/intel-brightness-script
 
-    %users      ALL=NOPASSWD: SUSPEND
+    %users      ALL=NOPASSWD: SUSPEND, BRIGHTNESS
   '';
 
   knownHosts = [
