@@ -104,7 +104,6 @@ nnoremap <Leader>eh :SidewaysLeft<CR>
 nnoremap <Leader>el :SidewaysRight<CR>
 nnoremap <leader>er :RainbowLevelsToggle<cr>
 
-nnoremap <Leader>u :GundoToggle<CR>
 command! Session :Obsession .session.vim
 
 " Just like standard f/F except it works on multiple lines.
@@ -151,7 +150,7 @@ endif
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 au FileType go         setlocal noet
 au FileType vim        nnoremap <buffer> <F9> :source %<CR>
-au FileType ruby,terraform,yaml,javascript,nix,scss,vim,vue setlocal sw=2 ts=2
+au FileType ruby,terraform,yaml,javascript,nix,scss,vim,vue,css setlocal sw=2 ts=2
 
 ca te tabedit
 ca W w
