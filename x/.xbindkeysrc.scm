@@ -9,7 +9,7 @@
 (xbindkey '(Mod4 Return)            "term || urxvt")
 (xbindkey '(Mod4 Shift Return)      "term in-tag")
 (xbindkey '(Mod4 Control Return)    "term one || urxvt")
-(xbindkey '(Mod4 Alt Return)        "alert")
+(xbindkey '(Mod4 Alt Return)        "term specific")
 
 (xbindkey '(XF86Sleep)              "sudo pm-suspend")
 (xbindkey '(Shift XF86Sleep)        "lock & sudo pm-suspend")

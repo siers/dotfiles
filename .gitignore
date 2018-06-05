@@ -1,5 +1,9 @@
-/vim/.config/nvim/*
-/zsh/.config/zsh/tempoary
-/nixos/**/result
-/nixos/**/configuration.nix
+# let's be a tad bit more radical
+*
+
+# /vim/.config/nvim/*
+# /zsh/.config/zsh/tempoary
+# /nixos/**/result
+# /nixos/**/configuration.nix
+# /**/private.nix
 # manually added if needed

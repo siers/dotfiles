@@ -3,6 +3,7 @@
 {
   imports =
     [ ./toshiba-hardware.nix
+      <musnix>
     ];
 
   networking.hostName = "toshiba"; # Define your hostname.
@@ -16,7 +17,7 @@
       version = 2;
       device = "/dev/sda"; # or "nodev" for efi only
       extraEntries = ''
-        menuentry "Microsoft Windows Vista/7/8/8.1/10 BIOS-MBR" {
+        menuentry "Microsoft Windows Vista 7 BIOS-MBR" {
         insmod part_msdos
         insmod ntfs
         insmod search_fs_uuid
@@ -46,4 +47,9 @@
   services = (import ../lib/xserver.nix).dm "xfce";
 
   environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything;
+
+  musnix = {
+    enable = true;
+    # kernel.realtime = true;
+  };
 }

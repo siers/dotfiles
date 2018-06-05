@@ -26,8 +26,8 @@ v() {
     fi
 }
 
-alias p='ping google.lv -c1' # tired of writing this over and over again.
-pp() { p || (sleep 0.66; pp); }
+p() { f="$1"; shift 2> /dev/null; ping "${f:-google.lv}" "$@"; } # tired of writing this over and over again.
+pp() { p "$@" || (sleep 0.66; pp "$@"); }
 
 alias ls='ls --color=auto -hb --group-directories-first'
 alias l='ls'

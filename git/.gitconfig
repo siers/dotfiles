@@ -8,9 +8,10 @@
 	descs = log --format=oneline
 	k  = checkout
 	l  = log --decorate --graph
+	lo  = log --format=oneline
 	m  = merge
 	o = show
-    fo = show --format=fuller
+	fo = show --format=fuller
 	p = cherry-pick
 	pl = pull
 	ps = push
@@ -18,8 +19,7 @@
 	rb = rebase
 	rh = reset --hard
 	r = reset
-	s  = stash
-	t = reset
+	s = stash
 [push]
 	default = current
 [core]

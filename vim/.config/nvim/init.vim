@@ -52,6 +52,9 @@ Plug 'https://github.com/Yggdroot/indentLine'
 Plug 'https://github.com/junegunn/vim-easy-align'
 Plug 'https://github.com/AndrewRadev/splitjoin.vim'
 Plug 'https://github.com/AndrewRadev/sideways.vim' " argument swapping
+Plug 'https://github.com/sjl/gundo.vim'
+Plug 'https://github.com/tpope/vim-obsession'
+Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
 
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/tpope/vim-repeat'
@@ -71,13 +74,11 @@ Plug 'https://github.com/bronson/vim-ruby-block-conv'
 Plug 'https://github.com/posva/vim-vue'
 
 " The Plugs below don't mean much to me.
-Plug 'https://github.com/sjl/gundo.vim'
-Plug 'https://github.com/tpope/vim-obsession'
+Plug 'https://github.com/vim-scripts/vis' " :'<,'>B s/// for visual blocks
 Plug 'https://github.com/thiagoalessio/rainbow_levels.vim'
-Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
 Plug 'https://github.com/nixprime/cpsm'
 Plug 'https://github.com/monokrome/vim-lazy-obsession' " It doesn't work, because maybe I haven't enabled something, but eh.
-Plug 'https://github.com/mattn/emmet-vim'
+" Plug 'https://github.com/mattn/emmet-vim' " div#foo<C-y>, => <div id=foo>
 
 Plug 'junegunn/fzf'
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
@@ -150,7 +151,7 @@ endif
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 au FileType go         setlocal noet
 au FileType vim        nnoremap <buffer> <F9> :source %<CR>
-au FileType ruby,terraform,yaml,javascript,nix,scss,vim,vue,css setlocal sw=2 ts=2
+au FileType ruby,terraform,yaml,javascript,nix,scss,vim,vue,css,erb setlocal sw=2 ts=2
 
 ca te tabedit
 ca W w

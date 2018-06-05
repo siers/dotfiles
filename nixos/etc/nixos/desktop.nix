@@ -30,9 +30,9 @@ in
     isNormalUser = true;
     uid = 1000;
     shell = pkgs.zsh;
-    hashedPassword = "$6$VTWtU4GA$jXBRhB3sp1Odvr19HWUONYRnKud0INAblKebEF//.TpZgvb5lZ9LRGUsjiQ52k6RMiiI9gnMkqODIn9XkN3Un1";
+    hashedPassword = literals.password;
     openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGHwoKCn9k47dD+AiLD757nRkHtjoZV0FZ6vQtujdc5J"];
-    extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "cdrom" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "cdrom" "audio" "camera" ];
   };
 
   networking = {
@@ -102,6 +102,8 @@ in
       enable = true;
       extensions = literals.chromiumExtensions;
     };
+
+    gphoto2.enable = true;
   };
 
   sound.enable = true;

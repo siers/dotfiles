@@ -4,7 +4,6 @@
   imports =
   [
     ./inspiron-hardware.nix
-    ../lib/monitor-hotplug.nix
   ];
 
   networking.hostName = "inspiron";
@@ -27,7 +26,7 @@
 
   swapDevices = [ { device = "/dev/vg/swap"; } ];
 
-  services = (import ../lib/xserver.nix).i3;
+  services = (import ../lib/xserver.nix).xfce-i3;
 
   environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything;
 }

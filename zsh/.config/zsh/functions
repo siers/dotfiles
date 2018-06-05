@@ -4,8 +4,12 @@ cdl() { cd $(dirlast "$1") }
 cb() { cd "$(dirname "$1")"; } # cd to filename's location
 
 # git multi-add
-gma() { git ls-files -mo --exclude-standard | fzf -m --preview='git diff {} | tee >(grep -q . || cat {})' | xargs -r git add; }
-grbi() { git log --format=oneline --since='3 days ago' | fzf | awk '{print $1}' | xargs -r git rebase -i; }
+local previewer="git diff {} | tee >(grep -q . || cat {})"
+gsel() { git ls-files -mo --exclude-standard | sort -u | fzf -m --preview="$previewer" | c; }
+gma() { git ls-files -mo --exclude-standard | fzf -m --preview="$previewer" | xargs -r git add; }
+grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
+
+rgsel() { rg -l "$@" | fzf -m --preview="$previewer" | c; }
 
 nix-revsha() { nix-prefetch-git "$@" | jq -r '"  rev = \"\(.rev)\";\n  sha256 = \"\(.sha256)\";"' | tee >(c); }
 no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
