@@ -11,6 +11,7 @@ let
 
     services = [
       docker
+      ntfs3g
       syncthing
     ];
 

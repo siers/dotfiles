@@ -7,6 +7,7 @@ in
 {
   imports =
     [
+      ./lib/audio.nix
     ];
 
   system.stateVersion = "18.03";
@@ -107,14 +108,6 @@ in
   };
 
   sound.enable = true;
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
-    support32Bit = true;
-    daemon.config = {
-      flat-volumes = "no";
-    };
-  };
 
   fonts = {
     fontconfig.enable = true;
