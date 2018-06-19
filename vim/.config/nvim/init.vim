@@ -21,7 +21,7 @@ set undofile
 
 set expandtab shiftround smarttab autoindent
 set nofoldenable foldmethod=indent
-set tabstop=4 laststatus=2 shiftwidth=4 showtabline=2 softtabstop=4
+set tabstop=2 laststatus=2 shiftwidth=2 showtabline=2 softtabstop=2
 
 set ignorecase smartcase
 set incsearch hlsearch
@@ -72,13 +72,19 @@ Plug 'https://github.com/gisraptor/vim-lilypond-integrator'
 Plug 'https://github.com/cakebaker/scss-syntax.vim'
 Plug 'https://github.com/bronson/vim-ruby-block-conv'
 Plug 'https://github.com/posva/vim-vue'
+Plug 'https://github.com/isRuslan/vim-es6'
 
 " The Plugs below don't mean much to me.
+Plug 'https://github.com/SirVer/ultisnips'
 Plug 'https://github.com/vim-scripts/vis' " :'<,'>B s/// for visual blocks
 Plug 'https://github.com/thiagoalessio/rainbow_levels.vim'
 Plug 'https://github.com/nixprime/cpsm'
 Plug 'https://github.com/monokrome/vim-lazy-obsession' " It doesn't work, because maybe I haven't enabled something, but eh.
 " Plug 'https://github.com/mattn/emmet-vim' " div#foo<C-y>, => <div id=foo>
+
+if hostname() == 'inspiron'
+    Plug 'https://github.com/vim-syntastic/syntastic'
+endif
 
 Plug 'junegunn/fzf'
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
@@ -112,12 +118,6 @@ nmap f <Plug>Sneak_f
 nmap F <Plug>Sneak_F
 vmap f <Plug>Sneak_f
 vmap F <Plug>Sneak_F
-
-" Just like standard t/T except it works on multiple lines.
-nmap t <Plug>Sneak_t
-nmap T <Plug>Sneak_T
-vmap t <Plug>Sneak_t
-vmap T <Plug>Sneak_T
 
 " Keeps s/S original functionality.
 " https://github.com/justinmk/vim-sneak/issues/87
@@ -173,6 +173,7 @@ map <Leader>v vip!sort<CR>:w<CR>
 
 map <Leader>p :!realpath % \| tr -d '\n' \| xclip<CR><CR>
 map <Leader>o :!realpath --relative-to=. % \| tr -d '\n' \| xclip<CR><CR>
+map <Leader>O :!echo -n "$(basename %)" \| xclip<CR><CR>
 map <Leader>r :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 " git show
 map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR>

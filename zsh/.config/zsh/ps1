@@ -48,6 +48,10 @@ precmd() {
         PS1="$PS1$ruby "
     fi
 
+    if git show HEAD:"config/application.rb" &> /dev/null && ! cat notes/db-path 2> /dev/null | xargs -r rails-is-migrated 2> /dev/null; then
+        PS1="$PS1%F{red}UNMIGRATED "
+    fi
+
     if [ "$__ps1_succ" = "0" ]; then
         succ="default"
     else

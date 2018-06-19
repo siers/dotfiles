@@ -1,8 +1,8 @@
 - dotfiles
     These are my personal dotfiles:
-        ● RAW.
-        ● Don't expect them to work right.
-        ● Free to steal, copy, redistribute and use.
+        • RAW.
+        • Don't expect them to work right.
+        • Free to steal, copy, redistribute and use.
 
     I use them on two seperate machines as of right now. There is some
     `hostname'(1) dependent code inside. Use with `stow' — the software
