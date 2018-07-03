@@ -55,6 +55,7 @@ alias gls='git ls-files'
 
 alias r='bundle exec rails'
 alias rk='bundle exec rake'
+alias rc='bundle exec rspec'
 alias be='bundle exec'
 alias b='bundle'
 alias dal='direnv allow'

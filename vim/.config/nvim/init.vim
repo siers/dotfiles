@@ -21,7 +21,7 @@ set undofile
 
 set expandtab shiftround smarttab autoindent
 set nofoldenable foldmethod=indent
-set tabstop=2 laststatus=2 shiftwidth=2 showtabline=2 softtabstop=2
+set tabstop=4 laststatus=4 shiftwidth=4 showtabline=4 softtabstop=4
 
 set ignorecase smartcase
 set incsearch hlsearch
@@ -151,7 +151,7 @@ endif
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 au FileType go         setlocal noet
 au FileType vim        nnoremap <buffer> <F9> :source %<CR>
-au FileType ruby,terraform,yaml,javascript,nix,scss,vim,vue,css,erb setlocal sw=2 ts=2
+au FileType ruby,terraform,yaml,javascript,nix,scss,vim,vue,css,erb,haskell setlocal sw=2 ts=2
 
 ca te tabedit
 ca W w

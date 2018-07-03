@@ -20,3 +20,5 @@ class Array
 end
 
 def lines(fn); File.read(fn).each_line.to_a; end
+
+def watch; loop do yield; sleep 1; end; end
