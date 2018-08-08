@@ -21,7 +21,7 @@ set undofile
 
 set expandtab shiftround smarttab autoindent
 set nofoldenable foldmethod=indent
-set tabstop=4 laststatus=4 shiftwidth=4 showtabline=4 softtabstop=4
+set laststatus=2 tabstop=4 shiftwidth=4 showtabline=4 softtabstop=4
 
 set ignorecase smartcase
 set incsearch hlsearch
@@ -101,6 +101,7 @@ call plug#end()
 " ==============================================================================
 
 let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null']
+let g:syntastic_always_populate_loc_list = 1
 
 " let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
 " ERROR: cpsm built with version of Python not supported by Vim

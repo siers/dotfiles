@@ -56,7 +56,7 @@ in
     libvirtd.enable = true;
     docker = {
       enable = true;
-      extraOptions = "--iptables=false";
+      # extraOptions = "--iptables=false";
     };
   };
 
@@ -73,6 +73,10 @@ in
       nssmdns = true;
       reflector = true;
       allowPointToPoint = true;
+    };
+
+    logind = {
+      lidSwitch = "suspend";
     };
 
     xserver = {
