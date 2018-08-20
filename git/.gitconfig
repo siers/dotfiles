@@ -12,8 +12,9 @@
 	desc = show -s --format=oneline
 	descs = log --format=oneline
 	k  = checkout
-	l  = log --decorate --graph
-	lo  = log --format=oneline
+	l = log --decorate --graph
+	lo = log --format=oneline --abbrev-commit
+	lod = log --format='%h %aD %s' --abbrev-commit
 	m  = merge
 	o = show
 	fo = show --format=fuller

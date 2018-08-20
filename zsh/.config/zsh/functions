@@ -21,3 +21,7 @@ no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
 single-line-print() { # for asciinema
     while read line; do echo -en "\033[2K\r$(cut -c-$(tput cols) <<< "$line")"; done
 }
+
+scrst() {
+    xrandr --output HDMI1 --auto --right-of eDP1
+}
