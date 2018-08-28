@@ -178,6 +178,8 @@ map <Leader>O :!echo -n "$(basename %)" \| xclip<CR><CR>
 map <Leader>r :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 " git show
 map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR>
+map <silent> gr :tabm +1<CR>
+map <silent> gR :tabm -1<CR>
 
 " map <Leader>b :ls<CR>:b
 map <Leader>gb :Gblame<CR>

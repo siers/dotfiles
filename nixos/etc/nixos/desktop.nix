@@ -20,7 +20,6 @@ in
   time.timeZone = "Europe/Riga";
 
   nix = {
-    package = pkgs.nixUnstable;
     binaryCaches = [ "https://cache.nixos.org/" ];
     daemonNiceLevel = 19;
     daemonIONiceLevel = 19;
