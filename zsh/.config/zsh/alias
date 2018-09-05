@@ -45,6 +45,7 @@ alias dc='docker-compose'
 alias g=git
 alias gst='git status'
 alias ga='git add'
+alias gam='git commit --amend'
 alias gc='git commit'
 alias gca='git commit -a'
 alias gd='git diff'

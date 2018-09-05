@@ -6,7 +6,7 @@ pkgs.lib.recursiveUpdate
   (import ./private.nix pkgs)
   {
     sudoConf = ''
-      Cmnd_Alias SUSPEND = /run/current-system/sw/sbin/pm-suspend, /run/current-system/sw/bin/systemctl suspend
+      Cmnd_Alias SUSPEND = ${pkgs.pmutils}/bin/pm-suspend
       Cmnd_Alias BRIGHTNESS = /run/current-system/sw/bin/intel-brightness-script
 
       %users      ALL=NOPASSWD: SUSPEND, BRIGHTNESS

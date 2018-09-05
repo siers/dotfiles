@@ -191,6 +191,7 @@ map <Leader>e :e<CR>
 map <M-a> gT
 map <M-s> gt
 map <M-t> :tabnew<CR>
+map <M-r> :tabnew<CR>gR
 map <M-z> :q<CR>
 
 nnoremap <M-n> ^

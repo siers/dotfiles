@@ -3,9 +3,6 @@
 	b = rebase
 	ch = cherry-pick
 	cl = clone
-	amend = commit --amend
-	amn = commit --amend
-	a = commit --amend
 	smush = commit --amend -C HEAD
 	redo = commit --amend -C HEAD
 	commit = commit -v
