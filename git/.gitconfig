@@ -3,25 +3,24 @@
 	b = rebase
 	ch = cherry-pick
 	cl = clone
-	smush = commit --amend -C HEAD
-	redo = commit --amend -C HEAD
 	commit = commit -v
-	desc = show -s --format=oneline
-	descs = log --format=oneline
+	fo = show --format=fuller
 	k  = checkout
 	l = log --decorate --graph
-	lo = log --format=oneline --abbrev-commit
 	lod = log --format='%h %aD %s' --abbrev-commit
+	lo = log --format=oneline --abbrev-commit
+	ls = ls-files
 	m  = merge
 	o = show
-	fo = show --format=fuller
 	p = cherry-pick
+	pf = push --force-with-lease
 	pl = pull
 	ps = push
-	pf = push --force-with-lease
 	rb = rebase
+	redo = commit --amend -C HEAD
 	rh = reset --hard
 	r = reset
+	smush = commit --amend -C HEAD
 	s = stash
 [push]
 	default = current
