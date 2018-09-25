@@ -86,6 +86,9 @@ in
       synaptics.twoFingerScroll = true;
       synaptics.palmDetect = true;
       synaptics.tapButtons = true;
+
+      autoRepeatDelay = 200;
+      autoRepeatInterval = 25;
     };
 
     syncthing = {

@@ -4,6 +4,7 @@
   imports =
   [
     ./inspiron-hardware.nix
+    ../lib/work-development-forwarder.nix
   ];
 
   networking.hostName = "inspiron";

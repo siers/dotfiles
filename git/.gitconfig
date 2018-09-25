@@ -20,7 +20,6 @@
 	redo = commit --amend -C HEAD
 	rh = reset --hard
 	r = reset
-	smush = commit --amend -C HEAD
 	s = stash
 [push]
 	default = current

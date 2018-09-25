@@ -12,6 +12,7 @@ let
     services = [
       docker
       ntfs3g
+      openvpn
       syncthing
     ];
 
@@ -68,6 +69,7 @@ let
     termtoolsEssential = [
       actkbd
       alsaUtils
+      asciinema
       bc
       bind # for dig
       coreutils
@@ -88,7 +90,9 @@ let
       socat
       tmux
       unrar
+      unzip
       utillinux
+      # vitetris # essential — ha!
       wget
       which
       zip
@@ -99,21 +103,25 @@ let
       espeak
       ffmpeg
       fzf
+      # geoipWithDatabase
       gnupg
       haskellPackages.pandoc
       haskellPackages.ShellCheck
+      iftop
       jq
       libnotify
+      massren
       mkpasswd
       (neovim.override { vimAlias = true; withPython = true; })
-      python27Packages.neovim
       nmap
       pdftk
       perkeep
+      python27Packages.neovim
       ranger
       ripgrep
       sshpass
       stow
+      sysstat # pidstat
       units
       weechat
       youtube-dl

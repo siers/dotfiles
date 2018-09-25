@@ -165,7 +165,7 @@ map <Leader>s :%s/\s\+$//<CR>
 map <Leader>x :%s/>/>\r/g<CR>gg=G
 map <Leader>y myggVG"+y`ymyzz
 map <Leader>l :setlocal nowrap!<CR>
-map <Leader>m :set paste!<CR>
+map <Leader>t :set paste!<CR>
 
 " map <Leader>h vip!hs-import-sort<CR>:w<CR>
 map <Leader>i ?^import <CR>:noh<CR>
@@ -188,6 +188,8 @@ map <Leader>gu :Gbrowse!<CR>
 map <Leader>q :wq<CR>
 map <Leader>w :w<CR>
 map <Leader>e :e<CR>
+map <C-n> gT
+map <C-m> gt
 map <M-a> gT
 map <M-s> gt
 map <M-t> :tabnew<CR>
@@ -220,7 +222,7 @@ inoremap <F6> <C-R>=strftime("%F.%T")<CR>
 nmap <F9> :!./%<CR>
 map <F10> :!make clean &<CR><CR>
 map <F11> :!make &<CR><CR>
-map <F12> :make all<CR>
+map <silent> <leader>c :%!rufo 2> /dev/null \|\| :<CR>
 inoremap <F6> <C-R>=strftime("%F-%T")<CR>
 
 " Reselect last pasted text.
