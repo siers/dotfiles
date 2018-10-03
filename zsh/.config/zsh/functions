@@ -25,3 +25,5 @@ single-line-print() { # for asciinema
 scrst() {
     xrandr --output HDMI1 --auto --right-of eDP1
 }
+
+git-parent() { git rev-list --ancestry-path HEAD.."$1" | tail -n1; }

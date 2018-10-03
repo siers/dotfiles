@@ -192,7 +192,7 @@ map <C-n> gT
 map <C-m> gt
 map <M-a> gT
 map <M-s> gt
-map <M-t> :tabnew<CR>
+map <C-t> :tabnew<CR>
 map <M-r> :tabnew<CR>gR
 map <M-z> :q<CR>
 
