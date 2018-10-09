@@ -7,6 +7,7 @@
 	fo = show --format=fuller
 	k  = checkout
 	l = log --decorate --graph
+	loc = log --format='%h' --abbrev-commit
 	lod = log --format='%h %aD %s' --abbrev-commit
 	lo = log --format=oneline --abbrev-commit
 	ls = ls-files
