@@ -55,6 +55,7 @@ Plug 'https://github.com/AndrewRadev/sideways.vim' " argument swapping
 Plug 'https://github.com/sjl/gundo.vim'
 Plug 'https://github.com/tpope/vim-obsession'
 Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
+Plug 'https://github.com/benekastah/neomake'
 
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/tpope/vim-repeat'
@@ -75,16 +76,11 @@ Plug 'https://github.com/posva/vim-vue'
 Plug 'https://github.com/isRuslan/vim-es6'
 
 " The Plugs below don't mean much to me.
-Plug 'https://github.com/SirVer/ultisnips'
+"Plug 'https://github.com/SirVer/ultisnips'
 Plug 'https://github.com/vim-scripts/vis' " :'<,'>B s/// for visual blocks
 Plug 'https://github.com/thiagoalessio/rainbow_levels.vim'
 Plug 'https://github.com/nixprime/cpsm'
-Plug 'https://github.com/monokrome/vim-lazy-obsession' " It doesn't work, because maybe I haven't enabled something, but eh.
 " Plug 'https://github.com/mattn/emmet-vim' " div#foo<C-y>, => <div id=foo>
-
-if hostname() == 'inspiron'
-    Plug 'https://github.com/vim-syntastic/syntastic'
-endif
 
 Plug 'junegunn/fzf'
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }

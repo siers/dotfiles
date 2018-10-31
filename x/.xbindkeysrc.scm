@@ -4,7 +4,7 @@
 ;; ;; ;;
 
 (xbindkey '(Mod4 Control Shift f)   "sudo /root/iptables.sh")
-(xbindkey '(Mod4 Control Shift x)   "sleep 0.5; pkill xbindkeys; xbindkeys; notify-send success:\\ $?")
+(xbindkey '(Mod4 Control Shift x)   "sleep 0.1; pkill xbindkeys; xbindkeys && click || alert")
 
 (xbindkey '(Mod4 Return)            "term || urxvt")
 (xbindkey '(Mod4 Shift Return)      "term in-tag")
@@ -62,6 +62,7 @@
 (xbindkey '(Mod4 shift e)           "clip-pipe sh")
 (xbindkey '(Mod4 shift   grave)     "mapclip paste && alert || alert 0.4 c")
 (xbindkey '(Mod4 F1)                "surf -- \"$(c -o)\"")
+(xbindkey '(Mod4 shift n)           "dmenu <<< '' | xargs -d' ' -L1 sh -c 'play -n synth sin \"$(tr a-z A-Z <<< \"${1:-A4}\")\" gain -10 trim 0 1 fade 0.1 0.8 0.1' 'sh'")
 
 ; all the keypad binds
 

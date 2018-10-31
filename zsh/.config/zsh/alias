@@ -32,6 +32,7 @@ pp() { p "$@" || (sleep 0.66; pp "$@"); }
 alias ls='ls --color=auto -hb --group-directories-first'
 alias l='ls'
 alias mv='mv -i'
+alias du='du -h'
 
 alias vim=v
 alias cal='cal -m'
