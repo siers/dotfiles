@@ -5,6 +5,7 @@
 	cl = clone
 	commit = commit -v
 	fo = show --format=fuller
+	h = show --format=oneline
 	k  = checkout
 	l = log --decorate --graph
 	loc = log --format='%h' --abbrev-commit

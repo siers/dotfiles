@@ -149,6 +149,8 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 au FileType go         setlocal noet
 au FileType vim        nnoremap <buffer> <F9> :source %<CR>
 au FileType ruby,terraform,yaml,javascript,nix,scss,vim,vue,css,erb,haskell setlocal sw=2 ts=2
+au FileType erb setlocal sw=2 ts=2
+map <silent> <leader>st :set ts=2 sw=2<CR>
 
 ca te tabedit
 ca W w
