@@ -1,3 +1,6 @@
+" configure haskell properly for god's sakes!
+" https://www.reddit.com/r/haskell/comments/a4lr0h/haskell_programming_set_up_in_vim/
+
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://github.com/junegunn/vim-plug/raw/master/plug.vim
 

@@ -27,3 +27,6 @@ scrst() {
 }
 
 git-parent() { git rev-list --ancestry-path HEAD.."$1" | tail -n1; }
+
+rgsample() { rg -l "$@" | sample; }
+rgsample-v() { vim $(rg -l "$@" | sample); }

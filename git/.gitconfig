@@ -8,6 +8,7 @@
 	h = show --format=oneline
 	k  = checkout
 	l = log --decorate --graph
+	lf = log --format=fuller
 	loc = log --format='%h' --abbrev-commit
 	lod = log --format='%h %aD %s' --abbrev-commit
 	lo = log --format=oneline --abbrev-commit
