@@ -29,7 +29,7 @@ let
       networkmanagerapplet
       pavucontrol
       rxvt_unicode
-      virtmanager
+      #virtmanager
       vlc
     ];
 
@@ -92,7 +92,7 @@ let
       unrar
       unzip
       utillinux
-      # vitetris # essential — ha!
+      vitetris # essential — ha!
       wget
       which
       zip
@@ -134,7 +134,6 @@ let
       ghc
       manpages
       nix-prefetch-git
-      nix-repl
       stack
       xxd
     ];

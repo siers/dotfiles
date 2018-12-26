@@ -6,9 +6,8 @@ let
     sha256 = "1ybja7i5c8nh0drlp4pjxkp3v6zp7f8hi8d8nwbsgf2ym9cxjlwf";
   };
 in {
-  imports = [ musnix ];
-
-  musnix.enable = true;
+  # imports = [ musnix ];
+  # musnix.enable = true;
 
   hardware.pulseaudio = {
     enable = true;
