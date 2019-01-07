@@ -2,6 +2,8 @@
 
 # environments
 load-session() {
+    command -v md5sum > /dev/null || return 0
+
     id=$(md5sum <<< "$ZSH_SETUP" | cut -b-10 | tr -cd '0-9a-z')
     already_loaded_variable="ZSH_LOADED_$id"
     if ! [ -z "$ZSH_SETUP" ] && [ -z "${(P)already_loaded_variable}" ]; then

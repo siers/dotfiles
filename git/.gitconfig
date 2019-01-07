@@ -6,14 +6,15 @@
 	commit = commit -v
 	fo = show --format=fuller
 	h = show --format=oneline
-	k  = checkout
+	k = checkout
+	kp = checkout -
 	l = log --decorate --graph
 	lf = log --format=fuller
 	loc = log --format='%h' --abbrev-commit
 	lod = log --format='%h %aD %s' --abbrev-commit
 	lo = log --format=oneline --abbrev-commit
 	ls = ls-files
-	m  = merge
+	m = merge
 	o = show
 	p = cherry-pick
 	pf = push --force-with-lease
@@ -22,8 +23,10 @@
 	rb = rebase
 	redo = commit --amend -C HEAD
 	rh = reset --hard
+	rhu = reset --hard @{u}
 	r = reset
 	s = stash
+	vc = verify-commit
 [push]
 	default = current
 [core]
@@ -33,3 +36,8 @@
 # [user]
 #	email = I SET THESE MANUALLY DEPENDING ON WORK/PERSONAL PROJECT
 #	name = I SET THESE MANUALLY DEPENDING ON WORK/PERSONAL PROJECT
+[commit]
+	cleanup = scissors
+	verbose = true
+[user]
+	signingkey = D58EB6183E211B335B23ED5A5C1B1DF079F39C4B

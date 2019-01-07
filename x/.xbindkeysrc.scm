@@ -1,6 +1,8 @@
 ;(load-option 'synchronous-subprocess)
 ;(run-shell-command "rev < ~/.zshrc | head -n1")
 
+(xbindkey '(Mod4 Shift e) "rofimoji -s medium-light")
+
 ;; ;; ;;
 
 (xbindkey '(Mod4 Control Shift f)   "sudo /root/iptables.sh")
@@ -17,8 +19,8 @@
 (xbindkey '(Control F4)             "xdotool click 1")
 (xbindkey '(Mod4 z)                 "xcalib -a -i")
 (xbindkey '(Mod4 Shift z)           "sleep 0.1; xset dpms force off")
-(xbindkey '(XF86MonBrightnessUp)    "xbacklight + 10")
-(xbindkey '(XF86MonBrightnessDown)  "xbacklight - 10")
+(xbindkey '(XF86MonBrightnessUp)    "~/.nix-profile/bin/xbacklight -inc 7")
+(xbindkey '(XF86MonBrightnessDown)  "~/.nix-profile/bin/xbacklight -dec 7")
 (xbindkey '(Mod4 Shift t)           "synclient TouchpadOff=$(synclient | ruby -ne 'puts ($_.match(/\\d+/)[0].to_i ^ 1) if /TouchpadOff/ =~ $_'); alert 80")
 
 (xbindkey '(Mod4 F12)               "lock; xset dpms force off")
@@ -36,12 +38,10 @@
 
 (xbindkey '(Print)                  "prtscr")
 (xbindkey '(Control Print)          "sleep 1; prtscr -s")
+(xbindkey '(Shift Print)            "sleep 1; prtscr -sb 0")
 
-(xbindkey '(Alt Print)              "prtscr    | xargs -I% share % $(mktemp -up . prtscr/XXX.png)")
-(xbindkey '(Alt Control Print)      "prtscr -s | xargs -I% share % $(mktemp -up . prtscr/XXX.png)")
-
-(xbindkey '(Shift Print)            "cloud-prtscr")
-(xbindkey '(Shift Control Print)    "sleep 1; cloud-prtscr -s")
+; (xbindkey '(Shift Print)            "cloud-prtscr")
+; (xbindkey '(Shift Control Print)    "sleep 1; cloud-prtscr -s")
 
 ; sound
 
@@ -62,7 +62,7 @@
 (xbindkey '(Mod4 shift e)           "clip-pipe sh")
 (xbindkey '(Mod4 shift   grave)     "mapclip paste && alert || alert 0.4 c")
 (xbindkey '(Mod4 F1)                "surf -- \"$(c -o)\"")
-(xbindkey '(Mod4 shift n)           "dmenu <<< '' | xargs -d' ' -L1 sh -c 'play -n synth sin \"$(tr a-z A-Z <<< \"${1:-A4}\")\" gain -10 trim 0 1 fade 0.1 0.8 0.1' 'sh'")
+(xbindkey '(Mod4 shift n)           "dmenu <<< '' | xargs -d' ' -L1 sh -c 'play -n synth sin \"$(tr -cd a-zA-Z0-9 <<< \"${1:-A4}\")\" gain -10 trim 0 1 fade 0.1 0.8 0.1' 'sh'")
 
 ; all the keypad binds
 

@@ -2,13 +2,20 @@
 
 set -eux
 
-if (( $EUID == 0 )); then
-    echo 'please run from non-root user in the wheel group'
-else
+stow-home-cross() {
     # https://codeyarns.com/2016/02/01/stow-not-installing-file/
     touch ~/.stow-global-ignore
 
-    stow -t ~ tmux vim zsh git x shells ack
-    sudo stow -t / nixos
-fi
+    stow -t ~ ack git nix shells ssh tmux vim zsh "$@"
+}
 
+linux () {
+    if (( $EUID == 0 )); then
+        echo 'please run from non-root user in the wheel group'
+    else
+        stow-home-cross x
+        sudo stow -t / nixos
+    fi
+}
+
+[ "$(uname)" = "Linux" ] && linux || stow-home-cross

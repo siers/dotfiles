@@ -19,9 +19,9 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
-    ardour
-    jack2Full
-    qjackctl
-    qsynth
+    # ardour
+    # jack2Full
+    # qjackctl
+    # qsynth
   ];
 }

@@ -19,6 +19,8 @@ rec {
 
   xfce-i3 = {
     xserver = {
+      libinput.enable = false;
+
       windowManager.default = "i3";
       windowManager.i3.enable = true;
 
@@ -36,4 +38,18 @@ rec {
       displayManager = autoLogin;
     };
   };
+
+  # services = {
+  #   xserver.enable = true;
+  #   xserver.displayManager = {
+  #     gdm = {
+  #       enable = true;
+  #       wayland = true;
+  #     };
+  #   };
+  #   xserver.desktopManager = {
+  #     gnome3.enable = true;
+  #     default = "gnome3";
+  #   };
+  # };
 }

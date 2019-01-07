@@ -1,6 +1,11 @@
 " configure haskell properly for god's sakes!
 " https://www.reddit.com/r/haskell/comments/a4lr0h/haskell_programming_set_up_in_vim/
 
+" http://ix.io/1BXY
+" cinoremap <Space>ex.. <C-r>=fnameescape(expand('%:.'))<CR>
+" cnoremap <Space>ex.h <C-r>=fnameescape(expand('%:.:h'))<CR>
+" cnoremap <Space>ex.t <C-r>=expand('%:t')<CR>
+
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://github.com/junegunn/vim-plug/raw/master/plug.vim
 
@@ -77,17 +82,24 @@ Plug 'https://github.com/cakebaker/scss-syntax.vim'
 Plug 'https://github.com/bronson/vim-ruby-block-conv'
 Plug 'https://github.com/posva/vim-vue'
 Plug 'https://github.com/isRuslan/vim-es6'
+Plug 'derekwyatt/vim-scala'
 
 " The Plugs below don't mean much to me.
-"Plug 'https://github.com/SirVer/ultisnips'
-Plug 'https://github.com/vim-scripts/vis' " :'<,'>B s/// for visual blocks
+Plug 'https://github.com/HerringtonDarkholme/yats.vim', {'for': ['typescript', 'typescript.jsx']}
+Plug 'https://github.com/SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'https://github.com/vim-scripts/vis' " :'<,'>B s/// for visual blocks in ruby
 Plug 'https://github.com/thiagoalessio/rainbow_levels.vim'
 Plug 'https://github.com/nixprime/cpsm'
 " Plug 'https://github.com/mattn/emmet-vim' " div#foo<C-y>, => <div id=foo>
 
 Plug 'junegunn/fzf'
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-Plug 'roxma/nvim-completion-manager'
+" Plug 'roxma/nvim-completion-manager'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
+Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+Plug 'vim-syntastic/syntastic'
 
 if ! exists("vimpager")
     " No commands below this comment will be executed in vimpager,
@@ -97,10 +109,40 @@ endif
 
 call plug#end()
 
-" ==============================================================================
+" Plugin settings ==============================================================================
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_mode_map = { "mode": "active",
+                           \ "active_filetypes": [],
+                           \ "passive_filetypes": ["scala"] }
+
+"
 
 let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null']
-let g:syntastic_always_populate_loc_list = 1
+let g:ctrlp_map = ''
+
+" Expand snippet under the cursor.
+" See: .config/nvim/UltiSnips/*.snippets
+let g:UltiSnipsExpandTrigger = "<C-s>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+function! CtrlP()
+  if (getcwd() == $HOME)
+    echo "Won't run in ~"
+    return
+  endif
+  if (getcwd() == '/')
+    echo "Won't run in /"
+    return
+  endif
+  CtrlP
+endfunction
+
+nnoremap <C-p> :call CtrlP()<CR>
 
 " let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
 " ERROR: cpsm built with version of Python not supported by Vim
@@ -151,9 +193,13 @@ endif
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 au FileType go         setlocal noet
 au FileType vim        nnoremap <buffer> <F9> :source %<CR>
+au FileType haskell    setlocal sw=4 ts=4
 au FileType ruby,terraform,yaml,javascript,nix,scss,vim,vue,css,erb,haskell setlocal sw=2 ts=2
 au FileType erb setlocal sw=2 ts=2
+autocmd BufWritePre * %s/\s\+$//e
 map <silent> <leader>st :set ts=2 sw=2<CR>
+
+" ==============================================================================
 
 ca te tabedit
 ca W w
@@ -167,6 +213,7 @@ map <Leader>x :%s/>/>\r/g<CR>gg=G
 map <Leader>y myggVG"+y`ymyzz
 map <Leader>l :setlocal nowrap!<CR>
 map <Leader>t :set paste!<CR>
+map <Leader>N :set relativenumber!<CR>
 
 " map <Leader>h vip!hs-import-sort<CR>:w<CR>
 map <Leader>i ?^import <CR>:noh<CR>
@@ -213,6 +260,10 @@ map <C-j> :noh<CR>:<ESC>
 imap <silent> <C-j> <ESC>:noh<CR>i
 imap <silent> <C-_> <ESC>:undo<CR>a
 
+cnoremap mk. !mkdir -p <c-r>=expand("%:h")<cr>/
+nnoremap zh 10zh
+nnoremap zl 10zl
+
 map <silent> <F1> :NERDTreeToggle<CR>
 nnoremap <F4> <C-R>=strftime("%b %-d")<CR>P
 inoremap <F4> <C-R>=strftime("%b %-d")<CR>
@@ -229,10 +280,15 @@ inoremap <F6> <C-R>=strftime("%F-%T")<CR>
 " Reselect last pasted text.
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
+" ==============================================================================
+
 " :Share to sprunge.us
 exec 'command! -range=% Share :<line1>,<line2>write !pasty'
 
 command! Config :tabedit ~/.config/nvim/init.vim
+command! NF :tabedit notes
+command! NN :tabedit notes/notes
+command! -range=% Sum :<line1>,<line2>!paste -sd+ | bc
 
 function! s:MoveLine(direction) " Move line <count> lines higher/lower.
     if a:direction == 'k'

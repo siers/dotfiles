@@ -1,12 +1,5 @@
 #!/usr/bin/env zsh
 
-if [ "$(id -u)" = "0" ]; then
-    alias m=mount
-    alias um=umount
-else
-    alias m=mpv
-fi
-
 # Aliases.
 alias '...'='../..'
 alias '....'='../../..'
@@ -14,6 +7,8 @@ alias '.....'='../../../..'
 alias '......'='../../../../..'
 alias '.......'='../../../../../..'
 alias '........'='../../../../../../..'
+alias '.........'='../../../../../../../..'
+alias '..........'='../../../../../../../../..' # because java directories
 # vim macro to make another, longer one: yyp^f'lvypf=llvf/yP
 
 v() {
@@ -26,44 +21,77 @@ v() {
     fi
 }
 
+#
+
+if [ "$(id -u)" = "0" ]; then
+    alias m=mount
+    alias um=umount
+else
+    alias m=mpv
+fi
+
+if [ -n "$ZSH_DARWIN" ]; then alias ping=/sbin/ping; fi
+
+if ! [ -n "$ZSH_DARWIN" ] || which ls | grep -qE '/run/current-system|/nix/store'; then
+  alias ls='ls --color=auto -hb --group-directories-first'
+else
+  alias ls='ls -hb'
+fi
+
 p() { f="$1"; shift 2> /dev/null; ping -c1 "${f:-google.lv}" "$@"; } # tired of writing this over and over again.
 pp() { p "$@" || (sleep 0.66; pp "$@"); }
+ppo() { pp; ok internet\ on\!; }
 
-alias ls='ls --color=auto -hb --group-directories-first'
 alias l='ls'
 alias mv='mv -i'
 alias du='du -h'
+alias mkd=mkdir
+alias th=touch
 
 alias vim=v
-alias cal='cal -m'
-alias frg='find . | rg'
+[ -z "$ZSH_DARWIN" ] && alias cal='cal -m'
 alias grep='grep --colour'
-alias pwgen='pwgen -n 10'
 alias watch='watch -n.5'
 alias hexdump='hexdump -C'
-alias dc='docker-compose'
+
+alias tmux-alt-shell='tmux bind-key v new-window'
 
 alias g=git
 alias gst='git status'
 alias ga='git add'
-alias gam='git commit --amend'
-alias gc='git commit'
-alias gca='git commit -a'
-alias gm='git commit -am'
 alias gd='git diff'
 alias gwd='git diff --word-diff'
 alias gk='git checkout'
 alias gr='git reset'
-alias grem='git remote'
+alias grhu='git reset --hard @{u}'
+alias grm='git remote'
 alias grb='git rebase'
+alias gbs='git bisect'
 alias gls='git ls-files'
+alias gf='git fetch'
+alias gcl='git clone'
 
-alias r='bundle exec rails'
-alias rk='bundle exec rake'
-alias rsp='bundle exec rspec'
+alias gc='git commit'
+alias gca='git commit -a'
+alias gcam='git commit -am'
+alias gam='git commit --amend'
+alias g+='git commit --amend -C HEAD'
+alias g-='git revert'
+
 alias be='bundle exec'
 alias b='bundle'
-alias dal='direnv allow'
-alias zr='exec zsh'
 
-alias tmux-alt-shell='tmux bind-key v new-window'
+local RAILS_PREFIX="bundle exec"
+alias r="$RAILS_PREFIX rails"
+alias rk="$RAILS_PREFIX rake"
+alias rsp="$RAILS_PREFIX rspec"
+alias rdm="$RAILS_PREFIX rake db:migrate"
+alias rgm="$RAILS_PREFIX rails generate migration"
+
+de-nix() { > .envrc <<< "use nix" }
+alias dea='direnv allow'
+alias ded='direnv deny'
+alias rn='react-native'
+
+alias dc='docker-compose'
+alias kctl='kubectl'

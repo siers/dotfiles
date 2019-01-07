@@ -9,21 +9,12 @@ precmdcolorcache="$(precmd-color)"
 precmd-color() { echo "${precmdcolorcache}" }
 
 precmd-realm() {
-    local merightnow realm depth
-    merightnow="$(pwd | sed "s:$HOME::")"
-    realm="$(echo $merightnow | grep -Eo '^/[^/]+($|/[^/]+)' | cut -b2-)"
-    depth="$(tr -cd '/' <<< "$merightnow" | wc -c)"
-
-    if (( $depth < 2 )); then
-        realm="%."
-    elif (( $depth == 3 )); then
-        realm="$realm/%."
-    elif (( $depth > 3 )); then
-        realm="$realm %."
-    fi
-
-    echo "$realm"
+    ruby -e "a, b, *r, l = ENV['PWD'].sub(ENV['HOME'], '').sub(%r{^/}, '').split(?/); puts([a || '%.', b, l].compact.zip(['/', r.any? ? ' ' : '/', '.']).flatten.join[0..-2])"
 }
+
+if [ -z "$ZSH_NESTED" ]; then
+    export ZSH_NESTED=$$
+fi
 
 # PS1
 precmd() {
@@ -31,20 +22,20 @@ precmd() {
 
     local fst snd thd git ruby succ
 
-    git="$(git branch 2> /dev/null | grep '^*' | tr -cd "a-zA-Z0-9\\-/.")"
+    git="$(git branch 2> /dev/null | grep '^*' | tr -cd "a-zA-Z0-9\\-_/.")"
     # git="$(git symbolic-ref -q --short HEAD | tr -cd "a-zA-Z0-9\\-/.")"
-    ruby="$(rbenv version 2> /dev/null | grep -Po '^\d\S+')"
+    ruby="$(rbenv version 2> /dev/null | grep -Eo '^[0-9]\S+')"
 
     [ "$(id -u)" = "0" ] && sep=')' || sep='|'
     read fst snd thd <<< "$(precmd-color)"
     fst="${fst:-105}"; snd="${snd:-105}"; thd="${thd:-105}"
     PS1="%F{$thd}%n$sep%F{$fst}%B$(precmd-realm)%b%F{default} "
 
-    if [ -n "$git" ]; then
+    if [ -n "$git" ] && [ -z "$PS1_OMMIT_BRANCH" ]; then
         PS1="$PS1%F{$snd}$git "
     fi
 
-    if [ -n "$ruby" ]; then
+    if [ -n "$ruby" ] && false; then
         PS1="$PS1$ruby "
     fi
 
@@ -53,7 +44,11 @@ precmd() {
     # fi
 
     if [ "$__ps1_succ" = "0" ]; then
-        succ="default"
+        if [ "$ZSH_NESTED" = "$(ps -p $$ -o ppid=)" ]; then
+            succ="green"
+        else
+            succ="default"
+        fi
     else
         succ="red"
     fi

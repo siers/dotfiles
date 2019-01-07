@@ -4,6 +4,12 @@ with pkgs;
 with (import ./packages.nix pkgs);
 
 let
+  nur = fetchTarball {
+    # see revisions: https://github.com/nix-community/NUR/commits/master
+    url = "https://github.com/nix-community/NUR/archive/9f4866850306098224356342ec0a798518aa9461.tar.gz";
+    sha256 = "04387gzgl8y555b3lkz9aiw9xsldfg4zmzp930m62qw8zbrvrshd";
+  };
+
   sets = {
     aliases = [
       (alias [systemd] "systemctl" "sc")
@@ -51,7 +57,7 @@ let
       dmenu
       go-upower-notify
       intel-brightness-script
-      rofi
+      # rofi
       unclutter
       xbindkeys
       xcalib
@@ -67,32 +73,26 @@ let
     ];
 
     termtoolsEssential = [
-      actkbd
-      alsaUtils
       asciinema
       bc
       bind # for dig
       coreutils
-      cryptsetup
-      elfutils
       file
       gitAndTools.gitFull
       gnumake
       htop
       inetutils
-      inotify-tools
-      iotop
       ncdu
       p7zip
-      pmutils
+      pass
       python
       ruby
       socat
       tmux
-      unrar
       unzip
       utillinux
       vitetris # essential — ha!
+      watch
       wget
       which
       zip
@@ -100,7 +100,6 @@ let
 
     termtoolsFancy = [
       direnv
-      espeak
       ffmpeg
       fzf
       # geoipWithDatabase
@@ -111,44 +110,62 @@ let
       jq
       libnotify
       massren
-      mkpasswd
       (neovim.override { vimAlias = true; withPython = true; })
       nmap
-      pdftk
       perkeep
-      python27Packages.neovim
       ranger
       ripgrep
       sshpass
       stow
-      sysstat # pidstat
       units
       weechat
       youtube-dl
     ];
 
+    termtoolsLinux = [
+      alsaUtils
+      cryptsetup
+      elfutils
+      espeak
+      inotify-tools
+      iotop
+      pmutils
+      mkpasswd
+      pdftk
+      sysstat # pidstat
+      unrar
+    ];
+
     dev = [
-      cabal2nix
-      cabal-install
       docker_compose
-      ghc
       manpages
       nix-prefetch-git
-      stack
       xxd
     ];
 
     audio = [
       audacity
       frescobaldi
-      lilypond
+      lilypond-unstable
       musescore
       sox
+    ];
+
+    darwin = [
+      coreutils
+      docker_compose
+      findutils
+      musescore
+      syncthing
+      xclip-for-mac
     ];
   };
 
   derived = with sets; rec {
-    simple = aliases ++ termtoolsEssential ++ termtoolsFancy;
+    simple = termtoolsEssential ++ termtoolsFancy;
+    simple-linux = simple ++ termtoolsLinux;
+    simple-darwin = simple ++ darwin;
+
     most = builtins.concatLists [
       audio
       dev
@@ -156,9 +173,11 @@ let
       services
       x
     ];
-    large = nonessential;
+
+    large = nonessential ++ aliases;
 
     live = builtins.concatLists [ simple most ];
+
     everything = simple ++ most ++ large;
   };
 
@@ -169,6 +188,6 @@ let
 
 in
   with derived; with sets;
-  assert derivationsPreorder everything (builtins.concatLists (builtins.attrValues sets));
+  #assert derivationsPreorder everything (builtins.concatLists (builtins.attrValues sets));
 
   sets // derived
