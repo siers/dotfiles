@@ -40,11 +40,11 @@ precmd() {
     fst="${fst:-105}"; snd="${snd:-105}"; thd="${thd:-105}"
     PS1="%F{$thd}%n$sep%F{$fst}%B$(precmd-realm)%b%F{default} "
 
-    if [ -n "$git" ]; then
+    if [ -n "$git" ] && [ -z "$PS1_OMMIT_BRANCH" ]; then
         PS1="$PS1%F{$snd}$git "
     fi
 
-    if [ -n "$ruby" ]; then
+    if [ -n "$ruby" ] && false; then
         PS1="$PS1$ruby "
     fi
 
