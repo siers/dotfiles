@@ -46,6 +46,14 @@ then
         export PERL_MB_OPT="--install_base \"/$HOME/down/perl5\""
         export PERL_MM_OPT="INSTALL_BASE=$HOME/down/perl5"
     fi
+
+    if [ -e ~/work/vendor/android ]; then
+        export ANDROID_HOME=$HOME/work/vendor/android
+        export PATH=$PATH:$ANDROID_HOME/emulator
+        export PATH=$PATH:$ANDROID_HOME/tools
+        export PATH=$PATH:$ANDROID_HOME/tools/bin
+        export PATH=$PATH:$ANDROID_HOME/platform-tools
+    fi
 fi
 
 command -v ruby &> /dev/null && \

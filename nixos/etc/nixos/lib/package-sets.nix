@@ -141,7 +141,7 @@ let
     audio = [
       audacity
       frescobaldi
-      lilypond
+      lilypond-unstable
       musescore
       sox
     ];
