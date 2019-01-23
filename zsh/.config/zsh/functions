@@ -30,3 +30,38 @@ git-parent() { git rev-list --ancestry-path HEAD.."$1" | tail -n1; }
 
 rgsample() { rg -l "$@" | sample; }
 rgsample-v() { vim $(rg -l "$@" | sample); }
+rgedit() { vim $(rg -l "$@"); }
+
+# qemu
+qemu-toggle() {
+    grep -q 'State.*T' /proc/$(pgrep -f qemu-system-x86_64)/status
+    pkill "-$(if [ $? -eq 0 ]; then echo CONT; else echo STOP; fi)"  -f qemu-system-x86_64
+}
+
+pk9f() { pkill -9 -f "$@"; }
+
+# heroku for nixos
+
+heroku_flags(){
+  docker run -it --rm \
+    -w "$HOME" \
+    -u $(id -u):$(id -g) \
+    -v /etc/passwd:/etc/passwd:ro \
+    -v /etc/group:/etc/group:ro \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v /home:/home \
+    -v /tmp:/tmp \
+    -v /run/user/$(id -u):/run/user/$(id -u) \
+    -v $(pwd):/workdir \
+    -w /workdir \
+    --name heroku \
+    "$@"
+}
+
+herokui() {
+    heroku_flags -it --entrypoint bash johnnagro/heroku-toolbelt
+}
+
+heroku() {
+    heroku_flags johnnagro/heroku-toolbelt "$@"
+}
