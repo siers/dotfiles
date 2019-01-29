@@ -65,3 +65,6 @@ herokui() {
 heroku() {
     heroku_flags johnnagro/heroku-toolbelt "$@"
 }
+
+dipr() { docker image prune -a --filter "until=24h"; }
+dcpr() { docker container prune; }

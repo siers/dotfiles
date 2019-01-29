@@ -10,7 +10,7 @@ in
       ./lib/audio.nix
     ];
 
-  system.stateVersion = "18.03";
+  system.stateVersion = "18.09";
   system.autoUpgrade.enable = true;
 
   # grouped by singlelinedness

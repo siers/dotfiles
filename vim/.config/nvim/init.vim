@@ -99,8 +99,26 @@ call plug#end()
 
 " ==============================================================================
 
-let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null']
 let g:syntastic_always_populate_loc_list = 1
+
+"
+
+let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null']
+let g:ctrlp_map = ''
+
+function! CtrlP()
+  if (getcwd() == $HOME)
+    echo "Won't run in ~"
+    return
+  endif
+  if (getcwd() == '/')
+    echo "Won't run in /"
+    return
+  endif
+  CtrlP
+endfunction
+
+nnoremap <C-p> :call CtrlP()<CR>
 
 " let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
 " ERROR: cpsm built with version of Python not supported by Vim
@@ -233,6 +251,7 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 exec 'command! -range=% Share :<line1>,<line2>write !pasty'
 
 command! Config :tabedit ~/.config/nvim/init.vim
+command! -range=% Sum :<line1>,<line2>!paste -sd+ | bc
 
 function! s:MoveLine(direction) " Move line <count> lines higher/lower.
     if a:direction == 'k'
