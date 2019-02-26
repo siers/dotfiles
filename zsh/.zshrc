@@ -1,5 +1,9 @@
 stty stop ""
 
+if [[ "$(uname)" == "Darwin" ]]; then ZSH_DARWIN=1; fi
+
+alias zr='exec zsh'
+
 . ~/.config/zsh/ps1
 . ~/.config/zsh/env
 . ~/.config/zsh/alias

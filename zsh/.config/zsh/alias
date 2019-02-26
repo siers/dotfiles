@@ -26,10 +26,17 @@ v() {
     fi
 }
 
+if [ -n "$ZSH_DARWIN" ]; then alias ping=/sbin/ping; fi
+
 p() { f="$1"; shift 2> /dev/null; ping -c1 "${f:-google.lv}" "$@"; } # tired of writing this over and over again.
 pp() { p "$@" || (sleep 0.66; pp "$@"); }
 
-alias ls='ls --color=auto -hb --group-directories-first'
+if ! [ -n "$ZSH_DARWIN" ] || which ls | grep -q /run/current-system; then
+  alias ls='ls --color=auto -hb --group-directories-first'
+else
+  alias ls='ls -hb'
+fi
+
 alias l='ls'
 alias mv='mv -i'
 alias du='du -h'
@@ -38,7 +45,6 @@ alias vim=v
 alias cal='cal -m'
 alias frg='find . | rg'
 alias grep='grep --colour'
-alias pwgen='pwgen -n 10'
 alias watch='watch -n.5'
 alias hexdump='hexdump -C'
 alias dc='docker-compose'
@@ -59,13 +65,17 @@ alias gca='git commit -a'
 alias gm='git commit -am'
 alias gam='git commit --amend'
 alias g+='git commit --amend -C HEAD'
+alias g-='git revert'
 
-alias r='bundle exec rails'
-alias rk='bundle exec rake'
-alias rsp='bundle exec rspec'
+# alias r='bundle exec rails'
+# alias rk='bundle exec rake'
+# alias rsp='bundle exec rspec'
+alias r='rails'
+alias rk='rake'
+alias rsp='rspec'
 alias be='bundle exec'
 alias b='bundle'
 alias dal='direnv allow'
-alias zr='exec zsh'
+alias dad='direnv deny'
 
 alias tmux-alt-shell='tmux bind-key v new-window'

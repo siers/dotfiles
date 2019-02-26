@@ -67,29 +67,21 @@ let
     ];
 
     termtoolsEssential = [
-      actkbd
-      alsaUtils
       asciinema
       bc
       bind # for dig
       coreutils
-      cryptsetup
-      elfutils
       file
       gitAndTools.gitFull
       gnumake
       htop
       inetutils
-      inotify-tools
-      iotop
       ncdu
       p7zip
-      pmutils
       python
       ruby
       socat
       tmux
-      unrar
       unzip
       utillinux
       vitetris # essential — ha!
@@ -100,7 +92,6 @@ let
 
     termtoolsFancy = [
       direnv
-      espeak
       ffmpeg
       fzf
       # geoipWithDatabase
@@ -111,20 +102,30 @@ let
       jq
       libnotify
       massren
-      mkpasswd
       (neovim.override { vimAlias = true; withPython = true; })
       nmap
-      pdftk
       perkeep
-      python27Packages.neovim
       ranger
       ripgrep
       sshpass
       stow
-      sysstat # pidstat
       units
       weechat
       youtube-dl
+    ];
+
+    termtoolsLinux = [
+      alsaUtils
+      cryptsetup
+      elfutils
+      espeak
+      inotify-tools
+      iotop
+      pmutils
+      mkpasswd
+      pdftk
+      sysstat # pidstat
+      unrar
     ];
 
     dev = [
@@ -145,10 +146,21 @@ let
       musescore
       sox
     ];
+
+    darwin = [
+      coreutils
+      docker_compose
+      findutils
+      musescore
+      syncthing
+      xclip-for-mac
+    ];
   };
 
   derived = with sets; rec {
-    simple = aliases ++ termtoolsEssential ++ termtoolsFancy;
+    simple-darwin = termtoolsEssential ++ termtoolsFancy ++ darwin;
+    simple = simple-darwin ++ termtoolsLinux;
+
     most = builtins.concatLists [
       audio
       dev
@@ -156,9 +168,11 @@ let
       services
       x
     ];
-    large = nonessential;
+
+    large = nonessential ++ aliases;
 
     live = builtins.concatLists [ simple most ];
+
     everything = simple ++ most ++ large;
   };
 
@@ -169,6 +183,6 @@ let
 
 in
   with derived; with sets;
-  assert derivationsPreorder everything (builtins.concatLists (builtins.attrValues sets));
+  #assert derivationsPreorder everything (builtins.concatLists (builtins.attrValues sets));
 
   sets // derived

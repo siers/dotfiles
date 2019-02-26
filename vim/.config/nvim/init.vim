@@ -1,6 +1,8 @@
 " configure haskell properly for god's sakes!
 " https://www.reddit.com/r/haskell/comments/a4lr0h/haskell_programming_set_up_in_vim/
 
+" http://ix.io/1BXY
+
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://github.com/junegunn/vim-plug/raw/master/plug.vim
 
@@ -272,3 +274,7 @@ function! s:CharacterDelta(delta) " Char analog of C-{x,a}
 endf
 map <M-x> :call <SID>CharacterDelta(1)<CR>
 map <M-c> :call <SID>CharacterDelta(-1)<CR>
+
+cnoremap mk. !mkdir -p <c-r>=expand("%:h")<cr>/
+nnoremap zh 10zh
+nnoremap zl 10zl

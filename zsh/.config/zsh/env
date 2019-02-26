@@ -11,8 +11,9 @@ fi
 if [ -z "$ZSH_PATH_INIT" ] || command -v ruby &> /dev/null
 then
     export ZSH_PATH_INIT=1
+
     [ -e ~/bin ] &&
-        export PATH="$(find ~/bin -type d | tr '\n' :)$PATH"
+        export PATH="$(find -L ~/bin -type d | tr '\n' :)$PATH"
 
     [ -e ~/.local/bin ] &&
         export PATH="$HOME/.local/bin:$PATH"
@@ -26,10 +27,12 @@ then
     [ -n "$ZSH_VERSION" ] && # sourced in the bash-run ~/.xprofile
         command -v direnv &> /dev/null && eval "$(direnv hook zsh)"
 
-    if [ -e ~/.rbenv/bin ]; then
-        # git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-        # git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-        export PATH="$HOME/.rbenv/bin:$PATH"
+    #
+
+    [ -n "$ZSH_DARWIN" ] && eval $(docker-machine env default 2> /dev/null)
+
+    if command -v rbenv > /dev/null && [ -d ~/.rbenv ]; then
+        # git clone https://github.com/rbenv/rbenv.git ~/.rbenv; git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
         eval "$(rbenv init -)"
     fi
 
@@ -55,6 +58,14 @@ then
         export PATH=$PATH:$ANDROID_HOME/tools
         export PATH=$PATH:$ANDROID_HOME/tools/bin
         export PATH=$PATH:$ANDROID_HOME/platform-tools
+    fi
+
+    if command -v avdmanager > /dev/null && [ -n "$ZSH_DARWIN" ]; then
+        export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
+        export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+        export PATH=$PATH:$ANDROID_SDK_ROOT/tools
+        export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
+        export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
     fi
 fi
 

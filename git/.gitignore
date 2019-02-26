@@ -17,7 +17,9 @@ gnore-*
 
 /docker-compose.yml
 /gemset.nix
-/shell.nix
+/shell-*.nix
+/shell*.nix
 /node_modules
 /.ruby-version
 /config/initializers/development_includes.rb
+/.*.swp

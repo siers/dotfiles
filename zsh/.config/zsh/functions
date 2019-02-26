@@ -1,7 +1,17 @@
 tmpcd() { cd "$(mktemp -d /tmp/sand-XXX)"; }
 tmppd() { cd "$(mktemp -d $HOME/tmp/sand-XXX)"; } # persistent
-cdl() { cd $(dirlast "$1") } 
+cdl() { cd $(dirlast "$1") }
 cb() { cd "$(dirname "$1")"; } # cd to filename's location
+
+pk9f() { pkill -9 -f "$@"; }
+
+nix-revsha() { nix-prefetch-git "$@" | jq -r '"  rev = \"\(.rev)\";\n  sha256 = \"\(.sha256)\";"' | tee >(c); }
+no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
+
+tmx-sel() { tmx $(tmux ls -F '#{session_group}' | fzf); }
+
+direnv-unload() { pushd /; _direnv_hook; popd; }
+dau() { direnv-unload; }
 
 # git multi-add
 local previewer="git diff {} | tee >(grep -q . || cat {})"
@@ -11,26 +21,20 @@ grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git r
 gbrsel() { git checkout "$(git for-each-ref --format='%(refname:short)' refs/heads | fzf)"; }
 gksel() { git checkout "$(git for-each-ref --format='%(refname:short)' | fzf)"; }
 
-rgsel() { rg -l "$@" | fzf -m --preview="$previewer" | c; }
-
-nix-revsha() { nix-prefetch-git "$@" | jq -r '"  rev = \"\(.rev)\";\n  sha256 = \"\(.sha256)\";"' | tee >(c); }
-no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
-
-[ -e "$HOME/.config/zsh/temporary" ] && source ~/.config/zsh/temporary || :
-
-single-line-print() { # for asciinema
-    while read line; do echo -en "\033[2K\r$(cut -c-$(tput cols) <<< "$line")"; done
-}
-
-scrst() {
-    xrandr --output HDMI1 --auto --right-of eDP1
-}
-
 git-parent() { git rev-list --ancestry-path HEAD.."$1" | tail -n1; }
 
 rgsample() { rg -l "$@" | sample; }
 rgsample-v() { vim $(rg -l "$@" | sample); }
 rgedit() { vim $(rg -l "$@"); }
+rgsel() { rg -l "$@" | fzf -m --preview="$previewer" | c; }
+
+[ -e "$HOME/.config/zsh/temporary" ] && source ~/.config/zsh/temporary || :
+
+# misc
+
+# for asciinema
+single-line-print() { while read line; do echo -en "\033[2K\r$(cut -c-$(tput cols) <<< "$line")"; done; }
+scrst() { xrandr --output HDMI1 --auto --right-of eDP1; }
 
 # qemu
 qemu-toggle() {
@@ -38,10 +42,12 @@ qemu-toggle() {
     pkill "-$(if [ $? -eq 0 ]; then echo CONT; else echo STOP; fi)"  -f qemu-system-x86_64
 }
 
-pk9f() { pkill -9 -f "$@"; }
+qemu-start() { pkill -CONT -f qemu-system-x86_64; }
+qemu-pause() { pkill -STOP -f qemu-system-x86_64; }
 
 # heroku for nixos
 
+if [ -z "$ZSH_DARWIN" ]; then
 heroku_flags(){
   docker run -it --rm \
     -w "$HOME" \
@@ -65,6 +71,11 @@ herokui() {
 heroku() {
     heroku_flags johnnagro/heroku-toolbelt "$@"
 }
+fi
+
+# docker
 
 dipr() { docker image prune -a --filter "until=24h"; }
 dcpr() { docker container prune; }
+d-ip() { docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$@"; }
+d-mip() { docker-machine ip default; }
