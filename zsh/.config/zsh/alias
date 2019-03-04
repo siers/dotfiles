@@ -42,7 +42,7 @@ alias mv='mv -i'
 alias du='du -h'
 
 alias vim=v
-alias cal='cal -m'
+[ -z "$ZSH_DARWIN" ] && alias cal='cal -m'
 alias frg='find . | rg'
 alias grep='grep --colour'
 alias watch='watch -n.5'

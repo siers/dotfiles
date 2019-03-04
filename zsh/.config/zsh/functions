@@ -8,7 +8,8 @@ pk9f() { pkill -9 -f "$@"; }
 nix-revsha() { nix-prefetch-git "$@" | jq -r '"  rev = \"\(.rev)\";\n  sha256 = \"\(.sha256)\";"' | tee >(c); }
 no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
 
-tmx-sel() { tmx $(tmux ls -F '#{session_group}' | fzf); }
+tmx-sel() { tmx $(tmux ls -F '#{session_name}' | fzf); }
+tda() { tmux detach -a; }
 
 direnv-unload() { pushd /; _direnv_hook; popd; }
 dau() { direnv-unload; }
