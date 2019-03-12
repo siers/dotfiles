@@ -1,12 +1,5 @@
 #!/usr/bin/env zsh
 
-if [ "$(id -u)" = "0" ]; then
-    alias m=mount
-    alias um=umount
-else
-    alias m=mpv
-fi
-
 # Aliases.
 alias '...'='../..'
 alias '....'='../../..'
@@ -26,16 +19,25 @@ v() {
     fi
 }
 
-if [ -n "$ZSH_DARWIN" ]; then alias ping=/sbin/ping; fi
+#
 
-p() { f="$1"; shift 2> /dev/null; ping -c1 "${f:-google.lv}" "$@"; } # tired of writing this over and over again.
-pp() { p "$@" || (sleep 0.66; pp "$@"); }
+if [ "$(id -u)" = "0" ]; then
+    alias m=mount
+    alias um=umount
+else
+    alias m=mpv
+fi
+
+if [ -n "$ZSH_DARWIN" ]; then alias ping=/sbin/ping; fi
 
 if ! [ -n "$ZSH_DARWIN" ] || which ls | grep -q /run/current-system; then
   alias ls='ls --color=auto -hb --group-directories-first'
 else
   alias ls='ls -hb'
 fi
+
+p() { f="$1"; shift 2> /dev/null; ping -c1 "${f:-google.lv}" "$@"; } # tired of writing this over and over again.
+pp() { p "$@" || (sleep 0.66; pp "$@"); }
 
 alias l='ls'
 alias mv='mv -i'
@@ -48,6 +50,8 @@ alias grep='grep --colour'
 alias watch='watch -n.5'
 alias hexdump='hexdump -C'
 alias dc='docker-compose'
+
+alias tmux-alt-shell='tmux bind-key v new-window'
 
 alias g=git
 alias gst='git status'
@@ -77,5 +81,4 @@ alias be='bundle exec'
 alias b='bundle'
 alias dal='direnv allow'
 alias dad='direnv deny'
-
-alias tmux-alt-shell='tmux bind-key v new-window'
+alias rn='react-native'

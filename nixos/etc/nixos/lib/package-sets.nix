@@ -85,6 +85,7 @@ let
       unzip
       utillinux
       vitetris # essential — ha!
+      watch
       wget
       which
       zip

@@ -29,6 +29,15 @@ rgsample-v() { vim $(rg -l "$@" | sample); }
 rgedit() { vim $(rg -l "$@"); }
 rgsel() { rg -l "$@" | fzf -m --preview="$previewer" | c; }
 
+f() {
+    if [ -z "$1" ]; then p="$(pwd)"; else p="$1"; fi
+    echo -n "file://$(realpath $p)" | tee >(xclip) | tee >(xclip -selection clip)
+}
+
+fp() {
+    echo -n "$(realpath "$(if [ -z "$1" ]; then echo "$(pwd)"; else echo "$1"; fi)")" | tee >(xclip) | tee >(xclip -selection clip)
+}
+
 [ -e "$HOME/.config/zsh/temporary" ] && source ~/.config/zsh/temporary || :
 
 # misc
