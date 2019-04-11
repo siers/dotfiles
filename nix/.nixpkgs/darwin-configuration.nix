@@ -20,5 +20,5 @@ in
   environment.systemPackages = with pkgs; psets.simple-darwin;
 
   services.redis = { enable = true; };
-  services.postgresql = { enable = true; };
+  # services.postgresql = { enable = true; };
 }

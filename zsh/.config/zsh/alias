@@ -30,7 +30,7 @@ fi
 
 if [ -n "$ZSH_DARWIN" ]; then alias ping=/sbin/ping; fi
 
-if ! [ -n "$ZSH_DARWIN" ] || which ls | grep -q /run/current-system; then
+if ! [ -n "$ZSH_DARWIN" ] || which ls | grep -qE '/run/current-system|/nix/store'; then
   alias ls='ls --color=auto -hb --group-directories-first'
 else
   alias ls='ls -hb'
@@ -75,6 +75,7 @@ alias g-='git revert'
 # alias rk='bundle exec rake'
 # alias rsp='bundle exec rspec'
 alias r='rails'
+alias rdm='rake db:migrate'
 alias rk='rake'
 alias rsp='rspec'
 alias be='bundle exec'

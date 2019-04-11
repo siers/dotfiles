@@ -12,7 +12,7 @@ gnore-*
 *-gign
 
 .tf-version
-.session.vim
+.session*.vim
 .*envrc*
 
 /docker-compose.yml

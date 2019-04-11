@@ -159,8 +159,9 @@ let
   };
 
   derived = with sets; rec {
-    simple-darwin = termtoolsEssential ++ termtoolsFancy ++ darwin;
-    simple = simple-darwin ++ termtoolsLinux;
+    simple = termtoolsEssential ++ termtoolsFancy;
+    simple-linux = simple ++ termtoolsLinux;
+    simple-darwin = simple ++ darwin;
 
     most = builtins.concatLists [
       audio
