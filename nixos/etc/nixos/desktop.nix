@@ -2,6 +2,14 @@
 
 let
   literals = import ./lib/literals.nix pkgs;
+  nixpkgs = fetchTarball {
+    url = "https://nixos.org/channels/nixos-19.03/nixexprs.tar.xz?2019-04-12";
+    sha256 = "0z3al9ybw6ix3fmjxwgr0iqgglyml3dcy6agcvfac13dpihg616z";
+  };
+  nixos-hardware = fetchTarball {
+    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2019-04-20";
+    sha256 = "10v0wz4b6z2qcmg4ifqszfb1g7xvm8gggbdglb8lzf21ms6550ac";
+  };
 in
 
 {
@@ -10,7 +18,7 @@ in
       ./lib/audio.nix
     ];
 
-  system.stateVersion = "18.09";
+  system.stateVersion = "19.03";
   system.autoUpgrade.enable = true;
 
   # grouped by singlelinedness
@@ -20,6 +28,7 @@ in
   time.timeZone = "Europe/Riga";
 
   nix = {
+    nixPath = ["nixpkgs=${nixpkgs}:nixos-hardware=${nixos-hardware}:nixos-config=/etc/nixos/configuration.nix"];
     binaryCaches = [ "https://cache.nixos.org/" ];
     daemonNiceLevel = 19;
     daemonIONiceLevel = 19;
@@ -44,11 +53,6 @@ in
 
   nixpkgs.config = {
     allowUnfree = true;
-    chromium = {
-      #enablePepperFlash = true;
-      enablePepperPDF = true;
-      #enableWideVine = true;
-    };
   };
 
   virtualisation = {
@@ -94,7 +98,7 @@ in
     syncthing = {
       enable = true;
       user = "s";
-      dataDir = "/home/s/.syncthing";
+      dataDir = "/home/s";
     };
   };
 

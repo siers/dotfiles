@@ -38,6 +38,8 @@ fp() {
     echo -n "$(realpath "$(if [ -z "$1" ]; then echo "$(pwd)"; else echo "$1"; fi)")" | tee >(xclip) | tee >(xclip -selection clip)
 }
 
+slq() { clip-pipe sh "echo -n \"\\\`\\\`\\\`\$(cat)\\\`\\\`\\\`\""; } # slack quotes
+
 [ -e "$HOME/.config/zsh/temporary" ] && source ~/.config/zsh/temporary || :
 
 # misc

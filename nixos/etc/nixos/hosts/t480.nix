@@ -4,12 +4,10 @@
   imports =
   [
     ./inspiron-hardware.nix
-    # ../lib/work-development-forwarder.nix
+    <nixos-hardware/lenovo/thinkpad/t480s>
   ];
 
   networking.hostName = "t480";
-
-  hardware.cpu.intel.updateMicrocode = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -27,7 +25,13 @@
 
   swapDevices = [ { device = "/dev/vg/swap"; } ];
 
-  services = (import ../lib/xserver.nix).xfce-i3;
+  #
+
+  hardware.cpu.intel.updateMicrocode = true;
+
+  services = (import ../lib/xserver.nix).xfce-i3 // {
+    xserver.libinput.enable = false;
+  };
 
   environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything;
 }

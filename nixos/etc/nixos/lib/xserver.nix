@@ -36,4 +36,18 @@ rec {
       displayManager = autoLogin;
     };
   };
+
+  # services = {
+  #   xserver.enable = true;
+  #   xserver.displayManager = {
+  #     gdm = {
+  #       enable = true;
+  #       wayland = true;
+  #     };
+  #   };
+  #   xserver.desktopManager = {
+  #     gnome3.enable = true;
+  #     default = "gnome3";
+  #   };
+  # };
 }
