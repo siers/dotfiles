@@ -78,6 +78,7 @@ let
       inetutils
       ncdu
       p7zip
+      pass
       python
       ruby
       socat

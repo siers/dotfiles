@@ -33,5 +33,10 @@
     xserver.libinput.enable = false;
   };
 
+  virtualisation.virtualbox.host = {
+    enable = true;
+    headless = true;
+  };
+
   environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything;
 }
