@@ -12,6 +12,10 @@ precmd-realm() {
     ruby -e "a, b, *r, l = ENV['PWD'].sub(ENV['HOME'], '').sub(%r{^/}, '').split(?/); puts([a || '%.', b, l].compact.zip(['/', r.any? ? ' ' : '/', '.']).flatten.join[0..-2])"
 }
 
+if [ -z "$ZSH_NESTED" ]; then
+    export ZSH_NESTED=$$
+fi
+
 # PS1
 precmd() {
     __ps1_succ="$?"
@@ -40,7 +44,11 @@ precmd() {
     # fi
 
     if [ "$__ps1_succ" = "0" ]; then
-        succ="default"
+        if [ "$ZSH_NESTED" = "$$" ]; then
+            succ="default"
+        else
+            succ="green"
+        fi
     else
         succ="red"
     fi

@@ -19,6 +19,8 @@ rec {
 
   xfce-i3 = {
     xserver = {
+      libinput.enable = false;
+
       windowManager.default = "i3";
       windowManager.i3.enable = true;
 

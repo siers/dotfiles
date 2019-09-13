@@ -22,6 +22,7 @@
 	rb = rebase
 	redo = commit --amend -C HEAD
 	rh = reset --hard
+	rhu = reset --hard @{u}
 	r = reset
 	s = stash
 [push]
@@ -35,3 +36,4 @@
 #	name = I SET THESE MANUALLY DEPENDING ON WORK/PERSONAL PROJECT
 [commit]
 	cleanup = scissors
+	verbose = true

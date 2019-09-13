@@ -131,13 +131,9 @@ let
     ];
 
     dev = [
-      cabal2nix
-      cabal-install
       docker_compose
-      ghc
       manpages
       nix-prefetch-git
-      stack
       xxd
     ];
 

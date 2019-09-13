@@ -29,8 +29,34 @@
 
   hardware.cpu.intel.updateMicrocode = true;
 
-  services = (import ../lib/xserver.nix).xfce-i3 // {
-    xserver.libinput.enable = false;
+  services = {
+    xserver = {
+      windowManager.default = "i3";
+      windowManager.i3.enable = true;
+
+      desktopManager.default = "xfce";
+      desktopManager.xfce.enable = true;
+      desktopManager.xfce.noDesktop = true;
+
+      displayManager = {
+        lightdm = {
+          enable = true;
+          autoLogin.enable = true;
+          autoLogin.user = "s";
+        };
+      };
+
+      libinput.enable = false; # due to nixos-hardware
+
+      extraConfig = ''
+        Section "Device"
+          Identifier  "card0"
+          Driver      "intel"
+          Option      "Backlight"  "intel_backlight"
+          BusID       "PCI:0:2:0"
+        EndSection
+      '';
+    };
   };
 
   virtualisation.virtualbox.host = {

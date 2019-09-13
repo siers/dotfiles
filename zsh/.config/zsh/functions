@@ -16,13 +16,16 @@ dau() { direnv-unload; }
 
 # git multi-add
 local previewer="git diff {} | tee >(grep -q . || cat {})"
-gsel() { git ls-files -mo --exclude-standard | sort -u | fzf -m --preview="$previewer" | c; }
+gsel() { git ls-files -mo --exclude-standard | sort -u | fzf -m --preview="$previewer" | tee >(c); }
 gma() { git ls-files -mo --exclude-standard | fzf -m --preview="$previewer" | xargs -r git add; }
 grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
 gbrsel() { git checkout "$(git for-each-ref --format='%(refname:short)' refs/heads | fzf)"; }
 gksel() { git checkout "$(git for-each-ref --format='%(refname:short)' | fzf)"; }
 
 git-parent() { git rev-list --ancestry-path HEAD.."$1" | tail -n1; }
+
+gbrd() { git branch -d "$2" && git push --delete "$1" "$2" }
+gbrdf() { git branch -D "$2" && git push --delete "$1" "$2" }
 
 rgsample() { rg -l "$@" | sample; }
 rgsample-v() { vim $(rg -l "$@" | sample); }

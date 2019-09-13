@@ -89,7 +89,11 @@ Plug 'https://github.com/nixprime/cpsm'
 
 Plug 'junegunn/fzf'
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-Plug 'roxma/nvim-completion-manager'
+" Plug 'roxma/nvim-completion-manager'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
+Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+Plug 'vim-syntastic/syntastic'
 
 if ! exists("vimpager")
     " No commands below this comment will be executed in vimpager,
@@ -173,7 +177,10 @@ au FileType go         setlocal noet
 au FileType vim        nnoremap <buffer> <F9> :source %<CR>
 au FileType ruby,terraform,yaml,javascript,nix,scss,vim,vue,css,erb,haskell setlocal sw=2 ts=2
 au FileType erb setlocal sw=2 ts=2
+autocmd BufWritePre * %s/\s\+$//e
 map <silent> <leader>st :set ts=2 sw=2<CR>
+
+" ==============================================================================
 
 ca te tabedit
 ca W w
@@ -233,6 +240,10 @@ map <C-j> :noh<CR>:<ESC>
 imap <silent> <C-j> <ESC>:noh<CR>i
 imap <silent> <C-_> <ESC>:undo<CR>a
 
+cnoremap mk. !mkdir -p <c-r>=expand("%:h")<cr>/
+nnoremap zh 10zh
+nnoremap zl 10zl
+
 map <silent> <F1> :NERDTreeToggle<CR>
 nnoremap <F4> <C-R>=strftime("%b %-d")<CR>P
 inoremap <F4> <C-R>=strftime("%b %-d")<CR>
@@ -248,6 +259,8 @@ inoremap <F6> <C-R>=strftime("%F-%T")<CR>
 
 " Reselect last pasted text.
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
+" ==============================================================================
 
 " :Share to sprunge.us
 exec 'command! -range=% Share :<line1>,<line2>write !pasty'
@@ -274,7 +287,3 @@ function! s:CharacterDelta(delta) " Char analog of C-{x,a}
 endf
 map <M-x> :call <SID>CharacterDelta(1)<CR>
 map <M-c> :call <SID>CharacterDelta(-1)<CR>
-
-cnoremap mk. !mkdir -p <c-r>=expand("%:h")<cr>/
-nnoremap zh 10zh
-nnoremap zl 10zl
