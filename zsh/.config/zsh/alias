@@ -7,6 +7,8 @@ alias '.....'='../../../..'
 alias '......'='../../../../..'
 alias '.......'='../../../../../..'
 alias '........'='../../../../../../..'
+alias '.........'='../../../../../../../..'
+alias '..........'='../../../../../../../../..' # because java directories
 # vim macro to make another, longer one: yyp^f'lvypf=llvf/yP
 
 v() {
@@ -42,6 +44,7 @@ pp() { p "$@" || (sleep 0.66; pp "$@"); }
 alias l='ls'
 alias mv='mv -i'
 alias du='du -h'
+alias mkd=mkdir
 
 alias vim=v
 [ -z "$ZSH_DARWIN" ] && alias cal='cal -m'
@@ -59,10 +62,12 @@ alias gd='git diff'
 alias gwd='git diff --word-diff'
 alias gk='git checkout'
 alias gr='git reset'
+alias grhu='git reset --hard @{u}'
 alias grem='git remote'
 alias grb='git rebase'
 alias gbs='git bisect'
 alias gls='git ls-files'
+alias gf='git fetch'
 
 alias gc='git commit'
 alias gca='git commit -a'
@@ -71,16 +76,16 @@ alias gam='git commit --amend'
 alias g+='git commit --amend -C HEAD'
 alias g-='git revert'
 
-# alias r='bundle exec rails'
-# alias rk='bundle exec rake'
-# alias rsp='bundle exec rspec'
-alias r='rails'
-alias rdm='rake db:migrate'
-alias rgm='rails generate migration'
-alias rk='rake'
-alias rsp='rspec'
 alias be='bundle exec'
 alias b='bundle'
+
+local RAILS_PREFIX="bundle exec"
+alias r="$RAILS_PREFIX rails"
+alias rk="$RAILS_PREFIX rake"
+alias rsp="$RAILS_PREFIX rspec"
+alias rdm="$RAILS_PREFIX rake db:migrate"
+alias rgm="$RAILS_PREFIX rails generate migration"
+
 alias dal='direnv allow'
 alias dad='direnv deny'
 alias rn='react-native'

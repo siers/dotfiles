@@ -2,6 +2,9 @@
 " https://www.reddit.com/r/haskell/comments/a4lr0h/haskell_programming_set_up_in_vim/
 
 " http://ix.io/1BXY
+" cinoremap <Space>ex.. <C-r>=fnameescape(expand('%:.'))<CR>
+" cnoremap <Space>ex.h <C-r>=fnameescape(expand('%:.:h'))<CR>
+" cnoremap <Space>ex.t <C-r>=expand('%:t')<CR>
 
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://github.com/junegunn/vim-plug/raw/master/plug.vim
@@ -194,6 +197,7 @@ map <Leader>x :%s/>/>\r/g<CR>gg=G
 map <Leader>y myggVG"+y`ymyzz
 map <Leader>l :setlocal nowrap!<CR>
 map <Leader>t :set paste!<CR>
+map <Leader>N :set relativenumber!<CR>
 
 " map <Leader>h vip!hs-import-sort<CR>:w<CR>
 map <Leader>i ?^import <CR>:noh<CR>

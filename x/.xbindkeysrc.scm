@@ -17,8 +17,8 @@
 (xbindkey '(Control F4)             "xdotool click 1")
 (xbindkey '(Mod4 z)                 "xcalib -a -i")
 (xbindkey '(Mod4 Shift z)           "sleep 0.1; xset dpms force off")
-(xbindkey '(XF86MonBrightnessUp)    "xbacklight + 10")
-(xbindkey '(XF86MonBrightnessDown)  "xbacklight - 10")
+(xbindkey '(XF86MonBrightnessUp)    "~/.nix-profile/bin/xbacklight -inc 7")
+(xbindkey '(XF86MonBrightnessDown)  "~/.nix-profile/bin/xbacklight -dec 7")
 (xbindkey '(Mod4 Shift t)           "synclient TouchpadOff=$(synclient | ruby -ne 'puts ($_.match(/\\d+/)[0].to_i ^ 1) if /TouchpadOff/ =~ $_'); alert 80")
 
 (xbindkey '(Mod4 F12)               "lock; xset dpms force off")

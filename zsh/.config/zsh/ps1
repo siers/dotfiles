@@ -22,7 +22,7 @@ precmd() {
 
     local fst snd thd git ruby succ
 
-    git="$(git branch 2> /dev/null | grep '^*' | tr -cd "a-zA-Z0-9\\-/.")"
+    git="$(git branch 2> /dev/null | grep '^*' | tr -cd "a-zA-Z0-9\\-_/.")"
     # git="$(git symbolic-ref -q --short HEAD | tr -cd "a-zA-Z0-9\\-/.")"
     ruby="$(rbenv version 2> /dev/null | grep -Eo '^[0-9]\S+')"
 
@@ -44,10 +44,10 @@ precmd() {
     # fi
 
     if [ "$__ps1_succ" = "0" ]; then
-        if [ "$ZSH_NESTED" = "$$" ]; then
-            succ="default"
-        else
+        if [ "$ZSH_NESTED" = "$(ps -p $$ -o ppid=)" ]; then
             succ="green"
+        else
+            succ="default"
         fi
     else
         succ="red"

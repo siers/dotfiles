@@ -4,6 +4,7 @@
   imports =
   [
     ./inspiron-hardware.nix
+    ../lib/steam.nix
     <nixos-hardware/lenovo/thinkpad/t480s>
   ];
 

@@ -3,11 +3,11 @@
 let
   literals = import ./lib/literals.nix pkgs;
   nixpkgs = fetchTarball {
-    url = "https://nixos.org/channels/nixos-19.03/nixexprs.tar.xz?2019-04-12";
-    sha256 = "0z3al9ybw6ix3fmjxwgr0iqgglyml3dcy6agcvfac13dpihg616z";
+    url = "https://nixos.org/channels/nixos-19.09/nixexprs.tar.xz?2019-11-20";
+    sha256 = "0nvk4nfr7irshdg2m3gza4n6himvkdsd3ai3rbcinx8f6ag38qka";
   };
   nixos-hardware = fetchTarball {
-    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2019-04-20";
+    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2019-11-20";
     sha256 = "10v0wz4b6z2qcmg4ifqszfb1g7xvm8gggbdglb8lzf21ms6550ac";
   };
 in
@@ -41,7 +41,7 @@ in
     shell = pkgs.zsh;
     hashedPassword = literals.password;
     openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGHwoKCn9k47dD+AiLD757nRkHtjoZV0FZ6vQtujdc5J"];
-    extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "cdrom" "audio" "camera" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "cdrom" "audio" "camera" "video" ];
   };
 
   networking = {
@@ -117,6 +117,8 @@ in
 
     gphoto2.enable = true;
   };
+
+  hardware.brightnessctl.enable = true;
 
   sound.enable = true;
 

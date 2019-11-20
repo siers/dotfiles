@@ -27,6 +27,8 @@ git-parent() { git rev-list --ancestry-path HEAD.."$1" | tail -n1; }
 gbrd() { git branch -d "$2" && git push --delete "$1" "$2" }
 gbrdf() { git branch -D "$2" && git push --delete "$1" "$2" }
 
+gahead() { ! gst --porcelain=2 -b | grep -q 'branch.ab +0'; }
+
 rgsample() { rg -l "$@" | sample; }
 rgsample-v() { vim $(rg -l "$@" | sample); }
 rgedit() { vim $(rg -l "$@"); }
