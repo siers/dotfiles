@@ -5,7 +5,7 @@ IRB.conf[:SAVE_HISTORY] = 10_000_000 # let's never lose it
 IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
 
 require "#{ ENV['HOME'] }/code/ruby/util/extend.rb"
-load "#{ ENV['HOME'] }/work/irbrc"
+#load "#{ ENV['HOME'] }/work/irbrc"
 
 class Array
   def self.wrap(object)

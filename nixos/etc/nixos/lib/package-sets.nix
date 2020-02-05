@@ -4,6 +4,12 @@ with pkgs;
 with (import ./packages.nix pkgs);
 
 let
+  nur = fetchTarball {
+    # see revisions: https://github.com/nix-community/NUR/commits/master
+    url = "https://github.com/nix-community/NUR/archive/9f4866850306098224356342ec0a798518aa9461.tar.gz";
+    sha256 = "04387gzgl8y555b3lkz9aiw9xsldfg4zmzp930m62qw8zbrvrshd";
+  };
+
   sets = {
     aliases = [
       (alias [systemd] "systemctl" "sc")
@@ -51,7 +57,7 @@ let
       dmenu
       go-upower-notify
       intel-brightness-script
-      rofi
+      # rofi
       unclutter
       xbindkeys
       xcalib

@@ -1,20 +1,39 @@
+[ -e "$HOME/.config/zsh/temporary" ] && source ~/.config/zsh/temporary || :
+
+forever() { while sleep 0.5; do "$@"; done }
+
+f() {
+    if [ -z "$1" ]; then p="$(pwd)"; else p="$1"; fi
+    echo -n "file://$(realpath $p)" | tee >(xclip) | tee >(xclip -selection clip)
+}
+
+fp() {
+    echo -n "$(realpath "$(if [ -z "$1" ]; then echo "$(pwd)"; else echo "$1"; fi)")" | tee >(xclip) | tee >(xclip -selection clip)
+}
+
 tmpcd() { cd "$(mktemp -d /tmp/sand-XXX)"; }
 tmppd() { cd "$(mktemp -d $HOME/tmp/sand-XXX)"; } # persistent
 cdl() { cd $(dirlast "$1") }
 cb() { cd "$(dirname "$1")"; } # cd to filename's location
 
 pk9f() { pkill -9 -f "$@"; }
+which-cat () { less "$(which "$1")" }
 
 nix-revsha() { nix-prefetch-git "$@" | jq -r '"  rev = \"\(.rev)\";\n  sha256 = \"\(.sha256)\";"' | tee >(c); }
 no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
 
 tmx-sel() { tmx $(tmux ls -F '#{session_name}' | fzf); }
 tda() { tmux detach -a; }
+tmux-term() { unset TMUX; run urxvt -e tmx "$(tmux display-message -p '#S')" }
 
+zns() { nix-shell "$@" --run zsh }
 direnv-unload() { pushd /; _direnv_hook; popd; }
 dau() { direnv-unload; }
 
-# git multi-add
+url-decode() { ruby -ne 'require "cgi"; puts(CGI.unescape($_))' }
+
+## GIT
+
 local previewer="git diff {} | tee >(grep -q . || cat {})"
 gsel() { git ls-files -mo --exclude-standard | sort -u | fzf -m --preview="$previewer" | tee >(c); }
 gma() { git ls-files -mo --exclude-standard | fzf -m --preview="$previewer" | xargs -r git add; }
@@ -34,33 +53,22 @@ rgsample-v() { vim $(rg -l "$@" | sample); }
 rgedit() { vim $(rg -l "$@"); }
 rgsel() { rg -l "$@" | fzf -m --preview="$previewer" | c; }
 
-f() {
-    if [ -z "$1" ]; then p="$(pwd)"; else p="$1"; fi
-    echo -n "file://$(realpath $p)" | tee >(xclip) | tee >(xclip -selection clip)
-}
+## MISC
 
-fp() {
-    echo -n "$(realpath "$(if [ -z "$1" ]; then echo "$(pwd)"; else echo "$1"; fi)")" | tee >(xclip) | tee >(xclip -selection clip)
-}
-
+wait() { interval=0.1 wait-diff > /dev/null 2>&1 sh -c 'ls /tmp/flag'; }
 slq() { clip-pipe sh "echo -n \"\\\`\\\`\\\`\$(cat)\\\`\\\`\\\`\""; } # slack quotes
 
-[ -e "$HOME/.config/zsh/temporary" ] && source ~/.config/zsh/temporary || :
+## ARGUMENT DEBUG
 
-# misc
+quote() { for a in "$@"; do echo -n "'$a' "; done; echo }
 
-# argument debug
-quote() {
-    for a in "$@"; do
-        echo -n "'$a' "
-    done; echo
-}
+## ASCIINEMA
 
-# for asciinema
 single-line-print() { while read line; do echo -en "\033[2K\r$(cut -c-$(tput cols) <<< "$line")"; done; }
 scrst() { xrandr --output HDMI1 --auto --right-of eDP1; }
 
-# qemu
+## QEMU
+
 qemu-toggle() {
     grep -q 'State.*T' /proc/$(pgrep -f qemu-system-x86_64)/status
     pkill "-$(if [ $? -eq 0 ]; then echo CONT; else echo STOP; fi)"  -f qemu-system-x86_64
@@ -69,7 +77,7 @@ qemu-toggle() {
 qemu-start() { pkill -CONT -f qemu-system-x86_64; }
 qemu-pause() { pkill -STOP -f qemu-system-x86_64; }
 
-# heroku for nixos
+## HEROKU
 
 if [ -z "$ZSH_DARWIN" ]; then
 heroku_flags(){
@@ -97,9 +105,13 @@ heroku() {
 }
 fi
 
-# docker
+## DICKER
 
 dipr() { docker image prune -a --filter "until=24h"; }
 dcpr() { docker container prune; }
 d-ip() { docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$@"; }
 d-mip() { docker-machine ip default; }
+
+## HESBURGER
+
+heslogin() { curl http:'//192.168.77.10/login?dst=http%3A%2F%2Ftest.lv%2F' | grep -Po 'http://192.168.77.10[^"]+' | ruby -ne 'require "cgi"; puts(CGI.unescapeHTML($_))' | xargs -r curl }

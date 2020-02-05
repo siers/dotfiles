@@ -82,9 +82,11 @@ Plug 'https://github.com/cakebaker/scss-syntax.vim'
 Plug 'https://github.com/bronson/vim-ruby-block-conv'
 Plug 'https://github.com/posva/vim-vue'
 Plug 'https://github.com/isRuslan/vim-es6'
+Plug 'derekwyatt/vim-scala'
 
 " The Plugs below don't mean much to me.
-"Plug 'https://github.com/SirVer/ultisnips'
+Plug 'https://github.com/SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'https://github.com/vim-scripts/vis' " :'<,'>B s/// for visual blocks
 Plug 'https://github.com/thiagoalessio/rainbow_levels.vim'
 Plug 'https://github.com/nixprime/cpsm'
@@ -106,14 +108,26 @@ endif
 
 call plug#end()
 
-" ==============================================================================
+" Plugin settings ==============================================================================
 
 let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_mode_map = { "mode": "active",
+                           \ "active_filetypes": [],
+                           \ "passive_filetypes": ["scala"] }
 
 "
 
 let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null']
 let g:ctrlp_map = ''
+
+" Expand snippet under the cursor.
+" See: .config/nvim/UltiSnips/*.snippets
+let g:UltiSnipsExpandTrigger = "<C-s>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 function! CtrlP()
   if (getcwd() == $HOME)
@@ -178,6 +192,7 @@ endif
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 au FileType go         setlocal noet
 au FileType vim        nnoremap <buffer> <F9> :source %<CR>
+au FileType haskell    setlocal sw=4 ts=4
 au FileType ruby,terraform,yaml,javascript,nix,scss,vim,vue,css,erb,haskell setlocal sw=2 ts=2
 au FileType erb setlocal sw=2 ts=2
 autocmd BufWritePre * %s/\s\+$//e

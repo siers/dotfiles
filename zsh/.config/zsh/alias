@@ -40,11 +40,13 @@ fi
 
 p() { f="$1"; shift 2> /dev/null; ping -c1 "${f:-google.lv}" "$@"; } # tired of writing this over and over again.
 pp() { p "$@" || (sleep 0.66; pp "$@"); }
+ppo() { pp; ok internet\ on\!; }
 
 alias l='ls'
 alias mv='mv -i'
 alias du='du -h'
 alias mkd=mkdir
+alias th=touch
 
 alias vim=v
 [ -z "$ZSH_DARWIN" ] && alias cal='cal -m'
@@ -68,6 +70,7 @@ alias grb='git rebase'
 alias gbs='git bisect'
 alias gls='git ls-files'
 alias gf='git fetch'
+alias gcl='git clone'
 
 alias gc='git commit'
 alias gca='git commit -a'
@@ -86,8 +89,8 @@ alias rsp="$RAILS_PREFIX rspec"
 alias rdm="$RAILS_PREFIX rake db:migrate"
 alias rgm="$RAILS_PREFIX rails generate migration"
 
-alias dal='direnv allow'
-alias dad='direnv deny'
+alias dea='direnv allow'
+alias ded='direnv deny'
 alias rn='react-native'
 
 alias dc='docker-compose'

@@ -10,12 +10,17 @@ let
     url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2019-11-20";
     sha256 = "10v0wz4b6z2qcmg4ifqszfb1g7xvm8gggbdglb8lzf21ms6550ac";
   };
+  # also update NUR in lib/package-sets.nix
 in
+
+# I hope this makes sense... not sure any more
+assert builtins.readFile <nixpkgs/.version> == builtins.readFile (nixpkgs + "/.version");
 
 {
   imports =
     [
       ./lib/audio.nix
+      ./lib/podman.nix
     ];
 
   system.stateVersion = "19.03";
@@ -41,13 +46,17 @@ in
     shell = pkgs.zsh;
     hashedPassword = literals.password;
     openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGHwoKCn9k47dD+AiLD757nRkHtjoZV0FZ6vQtujdc5J"];
-    extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "cdrom" "audio" "camera" "video" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "cdrom" "audio" "camera" "video" "input" ];
+    subUidRanges = [{ startUid = 100000; count = 65536; }];
+    subGidRanges = [{ startGid = 100000; count = 65536; }];
   };
 
   networking = {
     firewall.allowedTCPPorts = [ 22 80 8080 22000 65353 ];
     networkmanager.enable = true;
-    extraHosts = ''127.0.0.1 self'';
+    extraHosts = ''
+      127.0.0.1 self node-0 node-1 node-2 node-3 node-4 node-5 node-6 node-7 node-8 node-9
+    '';
   };
 
   environment.etc."resolv.conf.head".text = ''nameserver 1.1.1.1'';
@@ -86,11 +95,6 @@ in
     xserver = {
       enable = true;
       layout = "lv";
-
-      synaptics.enable = true;
-      synaptics.twoFingerScroll = true;
-      synaptics.palmDetect = true;
-      synaptics.tapButtons = true;
 
       autoRepeatDelay = 200;
       autoRepeatInterval = 25;

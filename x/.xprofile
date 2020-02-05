@@ -21,12 +21,15 @@ autocutsel -selection PRIMARY -fork   &
 unclutter -jitter 2 -noevents -idle 2 &
 xsetroot -cursor_name left_prt        &
 
-hostname | grep -q inspiron && xss-lock lock &
+xss-lock lock &
 
 #udiskie        &
 xbindkeys -v    &
 dunst           &
 urxvtd          &
 nm-applet       &
+libinput-gestures &
+
+xrandr --output eDP-1 --primary
 
 ~/code/desktop/symbols/make &

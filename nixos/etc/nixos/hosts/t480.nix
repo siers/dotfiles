@@ -4,8 +4,9 @@
   imports =
   [
     ./inspiron-hardware.nix
-    ../lib/steam.nix
     <nixos-hardware/lenovo/thinkpad/t480s>
+    ../lib/steam.nix
+    ../lib/libinput.nix
   ];
 
   networking.hostName = "t480";
@@ -46,8 +47,6 @@
           autoLogin.user = "s";
         };
       };
-
-      libinput.enable = false; # due to nixos-hardware
 
       extraConfig = ''
         Section "Device"

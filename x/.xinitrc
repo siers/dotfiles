@@ -1,5 +1,7 @@
 set -x
 
+## unused, I guess
+
 exec &> /tmp/x
 
 . ~/.config/zsh/env
@@ -26,6 +28,7 @@ xbindkeys        &
 dunst            &
 urxvtd           &
 #udiskie          &
+libinput-gestures &
 
 ~/code/desktop/symbols/make &
 
