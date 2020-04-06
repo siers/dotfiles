@@ -1,7 +1,7 @@
 ;(load-option 'synchronous-subprocess)
 ;(run-shell-command "rev < ~/.zshrc | head -n1")
 
-(xbindkey '(Mod4 Shift e) "rofimoji")
+(xbindkey '(Mod4 Shift e) "rofimoji -s medium-light")
 
 ;; ;; ;;
 

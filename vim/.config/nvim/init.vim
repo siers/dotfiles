@@ -85,9 +85,10 @@ Plug 'https://github.com/isRuslan/vim-es6'
 Plug 'derekwyatt/vim-scala'
 
 " The Plugs below don't mean much to me.
+Plug 'https://github.com/HerringtonDarkholme/yats.vim', {'for': ['typescript', 'typescript.jsx']}
 Plug 'https://github.com/SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'https://github.com/vim-scripts/vis' " :'<,'>B s/// for visual blocks
+Plug 'https://github.com/vim-scripts/vis' " :'<,'>B s/// for visual blocks in ruby
 Plug 'https://github.com/thiagoalessio/rainbow_levels.vim'
 Plug 'https://github.com/nixprime/cpsm'
 " Plug 'https://github.com/mattn/emmet-vim' " div#foo<C-y>, => <div id=foo>
@@ -285,6 +286,8 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 exec 'command! -range=% Share :<line1>,<line2>write !pasty'
 
 command! Config :tabedit ~/.config/nvim/init.vim
+command! NF :tabedit notes
+command! NN :tabedit notes/notes
 command! -range=% Sum :<line1>,<line2>!paste -sd+ | bc
 
 function! s:MoveLine(direction) " Move line <count> lines higher/lower.

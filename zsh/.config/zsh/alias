@@ -50,7 +50,6 @@ alias th=touch
 
 alias vim=v
 [ -z "$ZSH_DARWIN" ] && alias cal='cal -m'
-alias frg='find . | rg'
 alias grep='grep --colour'
 alias watch='watch -n.5'
 alias hexdump='hexdump -C'
@@ -65,7 +64,7 @@ alias gwd='git diff --word-diff'
 alias gk='git checkout'
 alias gr='git reset'
 alias grhu='git reset --hard @{u}'
-alias grem='git remote'
+alias grm='git remote'
 alias grb='git rebase'
 alias gbs='git bisect'
 alias gls='git ls-files'
@@ -89,6 +88,7 @@ alias rsp="$RAILS_PREFIX rspec"
 alias rdm="$RAILS_PREFIX rake db:migrate"
 alias rgm="$RAILS_PREFIX rails generate migration"
 
+de-nix() { > .envrc <<< "use nix" }
 alias dea='direnv allow'
 alias ded='direnv deny'
 alias rn='react-native'

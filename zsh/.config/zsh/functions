@@ -24,13 +24,15 @@ no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
 
 tmx-sel() { tmx $(tmux ls -F '#{session_name}' | fzf); }
 tda() { tmux detach -a; }
-tmux-term() { unset TMUX; run urxvt -e tmx "$(tmux display-message -p '#S')" }
+tmux-term() {  run urxvt -e term specific "$(tmux display-message -p '#S')" }
 
 zns() { nix-shell "$@" --run zsh }
 direnv-unload() { pushd /; _direnv_hook; popd; }
 dau() { direnv-unload; }
 
 url-decode() { ruby -ne 'require "cgi"; puts(CGI.unescape($_))' }
+
+c_() { cd ~/code/cache; }
 
 ## GIT
 
@@ -48,10 +50,22 @@ gbrdf() { git branch -D "$2" && git push --delete "$1" "$2" }
 
 gahead() { ! gst --porcelain=2 -b | grep -q 'branch.ab +0'; }
 
+clone() {
+    cd ~/code/cache;
+    # remove trailing segments
+    url="$(ruby -e 'u = $<.read; puts(u =~ /github.com/ ? u.match(%r{https?://github.com/[^/]+/[^/]+})[0] : u)' <<< "$1")"
+    dir="$(basename "$url")"
+    [ -e "$dir" ] || git clone $url
+    cd "$dir"
+}
+
 rgsample() { rg -l "$@" | sample; }
 rgsample-v() { vim $(rg -l "$@" | sample); }
 rgedit() { vim $(rg -l "$@"); }
 rgsel() { rg -l "$@" | fzf -m --preview="$previewer" | c; }
+
+frg() { find . | rg "$@"; }
+frgedit() { find . | rg "$@" | xargs -r vim -p; }
 
 ## MISC
 

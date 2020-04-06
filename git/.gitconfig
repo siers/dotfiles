@@ -26,6 +26,7 @@
 	rhu = reset --hard @{u}
 	r = reset
 	s = stash
+	vc = verify-commit
 [push]
 	default = current
 [core]
@@ -38,3 +39,5 @@
 [commit]
 	cleanup = scissors
 	verbose = true
+[user]
+	signingkey = D58EB6183E211B335B23ED5A5C1B1DF079F39C4B
