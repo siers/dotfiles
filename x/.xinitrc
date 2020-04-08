@@ -18,6 +18,9 @@ if [ "$(hostname)" == 'spiral' ]; then
     xrandr -s 3840x2160 || exit
 fi
 
+# set any first output as --primary
+xrandr --output "$(xrandr | grep ' connected' | awk ' {if (!(NR-1)) print $1}')" --primary
+
 autocutsel -fork                      &
 autocutsel -selection PRIMARY -fork   &
 unclutter -jitter 2 -noevents -idle 2 &

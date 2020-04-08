@@ -1,7 +1,18 @@
-(map
-  (dir: {
-    mountPoint = "/home/s/" + dir;
-    device = "/home/s/.syncthing/shares/home/" + dir;
-    options = ["bind"];
-  })
-  ["audio" "bin" "code" "data" "foto" "hack" "http" "log" "pdf"])
+{ excluding ? [] }:
+
+let
+  homemount = from: to: {
+    mountPoint = "/home/s/" + to;
+    device = "/home/s/" + from;
+    options = ["bind" "nofail"];
+  };
+
+  syncmount = dir: homemount (".syncthing/shares/home/" + dir) dir;
+
+  syncmounts = map syncmount ["code" "data" "log"];
+
+  rest = builtins.concatLists [
+    (if (builtins.elem "pdf" excluding) then [] else [(homemount ".syncthing/shares/pdf" "pdf")])
+  ];
+in
+  syncmounts ++ rest

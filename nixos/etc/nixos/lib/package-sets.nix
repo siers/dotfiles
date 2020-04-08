@@ -24,7 +24,7 @@ let
 
     graphical = [
       alacritty
-      chromium
+      google-chrome
       dunst
       evince
       geeqie
@@ -44,11 +44,11 @@ let
       filezilla
       firefox
       gimp
-      google-chrome # has netflix, so let's have both chromes
       inkscape
       k3b
       libreoffice
       tigervnc
+      imagemagick
       #texlive.combined.scheme-full
     ];
 
@@ -57,7 +57,9 @@ let
       dmenu
       go-upower-notify
       intel-brightness-script
-      # rofi
+      (callPackage (import /home/s/code/nix/packages/footswitch) {})
+      (callPackage (import /home/s/code/nix/packages/rofimoji.nix) {})
+      rofi
       unclutter
       xbindkeys
       xcalib
@@ -104,15 +106,12 @@ let
       fzf
       # geoipWithDatabase
       gnupg
-      haskellPackages.pandoc
-      haskellPackages.ShellCheck
       iftop
       jq
       libnotify
       massren
       (neovim.override { vimAlias = true; withPython = true; })
       nmap
-      perkeep
       ranger
       ripgrep
       sshpass
@@ -120,6 +119,12 @@ let
       units
       weechat
       youtube-dl
+    ];
+
+    termtoolsOptional = [
+      haskellPackages.pandoc
+      haskellPackages.ShellCheck
+      perkeep
     ];
 
     termtoolsLinux = [
@@ -141,6 +146,7 @@ let
       manpages
       nix-prefetch-git
       xxd
+      nodejs
     ];
 
     audio = [
@@ -162,9 +168,9 @@ let
   };
 
   derived = with sets; rec {
-    simple = termtoolsEssential ++ termtoolsFancy;
-    simple-linux = simple ++ termtoolsLinux;
-    simple-darwin = simple ++ darwin;
+    simple-cross = termtoolsEssential ++ termtoolsFancy ++ aliases;
+    simple-darwin = simple-cross ++ darwin;
+    simple = simple-cross ++ termtoolsLinux;
 
     most = builtins.concatLists [
       audio
@@ -174,9 +180,9 @@ let
       x
     ];
 
-    large = nonessential ++ aliases;
+    large = nonessential;
 
-    live = builtins.concatLists [ simple most ];
+    live = builtins.concatLists [ simple dev graphical x ];
 
     everything = simple ++ most ++ large;
   };
