@@ -11,13 +11,13 @@ nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=live
 
 let
   deviceName = "/dev/disk/by-id/usb-_USB_DISK_2.0_07035CAF1846F268-0:0";
-  imageOffset = "29410455552";
-  imageSize = "2147483648";
+  imageOffset = "28886167552";
+  imageSize = "2671771648";
 
   stow-home = pkgs.writeShellScriptBin "stow-home" ''
     chown s:users ~s
     cd ~s/code/desktop/dotfiles
-    ${pkgs.utillinux}/bin/runuser -u s stow -t ~s ack git nix shells ssh tmux vim x zsh
+    ${pkgs.utillinux}/bin/runuser -u s -- ${pkgs.stow}/bin/stow -t ~s ack git nix shells ssh tmux vim x zsh
   '';
 in
 

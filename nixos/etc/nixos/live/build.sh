@@ -6,12 +6,6 @@ export device=/dev/sdc
 export image=image
 XXX="\e[1;33mXXX\e[0m"
 
-# run this in terminal via copypasting
-build-home() {
-    [ -e /tmp/password ] || (cd /tmp; vim password-nl; echo -n "$(cat password-nl)" > password)
-    ALLOC=100M KEY_FILE=/tmp/password ./live/build-home.sh
-}
-
 calc-sizes() {
     of_seek=$(sudo device=$device live/find-image-offset.rb)
 
@@ -20,7 +14,17 @@ calc-sizes() {
 }
 
 # run this in terminal via copypasting
+build-home() {
+    [ -e /tmp/password ] || (cd /tmp; vim password-nl; echo -n "$(cat password-nl)" > password)
+    ALLOC=2.5G KEY_FILE=/tmp/password ./live/build-home.sh
+
+    calc-sizes
+}
+
+# run this in terminal via copypasting
 burn-home() {
+    calc-sizes
+
     ! [ -f "$device" ] && sudo \
         dd oflag=seek_bytes if=image bs=1M of="$device" seek="$of_seek" status=progress
 
@@ -28,10 +32,10 @@ burn-home() {
         dd oflag=seek_bytes if=image bs=1M of=stick seek=5GB conv=notrunc
 }
 
-# has the patch for removing compression for mksquashfs
-export NIX_PATH=nixpkgs=$HOME/code/cache/nixpkgs
-
 build-iso() {
+    # has the patch for removing compression for mksquashfs
+    export NIX_PATH=nixpkgs=$HOME/code/cache/nixpkgs
+
     nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=live/live.nix
     [ -e stick ] && dd if="$(find-iso)" of=stick bs=1M conv=notrunc status=progress
 }
@@ -58,6 +62,21 @@ burn-iso() {
 
     ! [ -f "$device" ]
     sudo dd if="$iso" of="$device" bs=4M status=progress
+}
+
+reburn-home() {
+    build-home
+    burn-home
+}
+
+reburn-iso() {
+    build-iso
+    burn-iso
+}
+
+reburn() {
+    reburn-home # might change image offset/size, so goe sfirst
+    reburn-iso
 }
 
 cleanup-store-images() {
