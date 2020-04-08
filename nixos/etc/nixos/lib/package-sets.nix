@@ -104,15 +104,12 @@ let
       fzf
       # geoipWithDatabase
       gnupg
-      haskellPackages.pandoc
-      haskellPackages.ShellCheck
       iftop
       jq
       libnotify
       massren
       (neovim.override { vimAlias = true; withPython = true; })
       nmap
-      perkeep
       ranger
       ripgrep
       sshpass
@@ -120,6 +117,12 @@ let
       units
       weechat
       youtube-dl
+    ];
+
+    termtoolsOptional = [
+      haskellPackages.pandoc
+      haskellPackages.ShellCheck
+      perkeep
     ];
 
     termtoolsLinux = [
@@ -162,7 +165,7 @@ let
   };
 
   derived = with sets; rec {
-    simple = termtoolsEssential ++ termtoolsFancy;
+    simple = termtoolsEssential ++ termtoolsFancy ++ aliases;
     simple-linux = simple ++ termtoolsLinux;
     simple-darwin = simple ++ darwin;
 
@@ -174,9 +177,9 @@ let
       x
     ];
 
-    large = nonessential ++ aliases;
+    large = nonessential;
 
-    live = builtins.concatLists [ simple most ];
+    live = builtins.concatLists [ simple graphical x ];
 
     everything = simple ++ most ++ large;
   };
