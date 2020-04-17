@@ -22,10 +22,10 @@ cd "$SUDO_USER_HOME"
 
 rsync -vaR \
     "--exclude-from=$excludes" \
-    .config/google-chrome \
+    .config/{google-chrome,syncthing/config.xml} \
     .weechat/^*logs \
     {.ssh,.gnupg,.histfile} \
-    .syncthing/shares/home/{bin,code,log} \
+    .syncthing/shares/home \
     "$STORE"
 
 with-dirs() {
@@ -33,4 +33,4 @@ with-dirs() {
     chown "${ORIG_USER}:users" "$@"
 }
 
-with-dirs "$STORE/"{audio,bin,code,data,foto,hack,http,log,pdf}
+with-dirs "$STORE/"{code,data,log}

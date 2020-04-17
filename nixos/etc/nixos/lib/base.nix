@@ -5,11 +5,11 @@ let
 
   # also update NUR in lib/package-sets.nix
   nixpkgs = fetchTarball {
-    url = "https://nixos.org/channels/nixos-19.09/nixexprs.tar.xz?2020-04-05";
-    sha256 = "05sxakvk3g7sqmifglsddk678w4863mskv2dlniyxmg2g3zbx84j";
+    url = "https://nixos.org/channels/nixos-19.09/nixexprs.tar.xz?2020-04-14";
+    sha256 = "1xbs2fdzgw5lkwly523aiqdw9q4qq6x4nyl69rq1pc5hm7ifk14y";
   };
   nixos-hardware = fetchTarball {
-    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2020-04-05";
+    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2020-04-14";
     sha256 = "00r28jglx47wd2gd1bcs8m44z7a6hs5d8j48f0xjvc6s512359bm";
   };
 in

@@ -50,5 +50,5 @@ unmount_image() {
 
 allocate_image
 format_image
-./live/build-image-contents.sh || :
+./live/build-home-contents.sh || :
 unmount_image

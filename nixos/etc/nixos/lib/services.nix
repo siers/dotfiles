@@ -45,6 +45,7 @@ in
     };
 
     syncthing = {
+      enable = true;
       user = "s";
       dataDir = "/home/s";
     };
@@ -57,5 +58,7 @@ in
       reflector = true;
       allowPointToPoint = true;
     };
+
+    keybase.enable = true;
   };
 }

@@ -24,7 +24,7 @@ let
 
     graphical = [
       alacritty
-      chromium
+      google-chrome
       dunst
       evince
       geeqie
@@ -44,7 +44,6 @@ let
       filezilla
       firefox
       gimp
-      google-chrome # has netflix, so let's have both chromes
       inkscape
       k3b
       libreoffice
@@ -57,7 +56,9 @@ let
       dmenu
       go-upower-notify
       intel-brightness-script
-      # rofi
+      (callPackage (import /home/s/code/nix/packages/footswitch) {})
+      (callPackage (import /home/s/code/nix/packages/rofimoji.nix) {})
+      rofi
       unclutter
       xbindkeys
       xcalib
@@ -144,6 +145,7 @@ let
       manpages
       nix-prefetch-git
       xxd
+      nodejs
     ];
 
     audio = [

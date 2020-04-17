@@ -1,7 +1,16 @@
-(map
-  (dir: {
-    mountPoint = "/home/s/" + dir;
-    device = "/home/s/.syncthing/shares/home/" + dir;
+let
+  homemount = from: to: {
+    mountPoint = "/home/s/" + to;
+    device = "/home/s/" + from;
     options = ["bind" "nofail"];
-  })
-  ["audio" "bin" "code" "data" "foto" "hack" "http" "log" "pdf"])
+  };
+
+  syncmount = dir: homemount (".syncthing/shares/home/" + dir) dir;
+
+  syncmounts = map syncmount ["code" "data" "log"];
+
+  rest = [
+    (homemount ".syncthing/shares/pdf" "pdf")
+  ];
+in
+  syncmounts ++ rest
