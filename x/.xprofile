@@ -5,7 +5,6 @@ exec &> /tmp/xsession-output
 . ~/.config/zsh/env
 
 xset -b            &
-xset r rate 200 25 &
 
 if [ "$(hostname)" == 'spiral' ]; then
     export GDK_SCALE=2
@@ -18,7 +17,7 @@ fi
 
 autocutsel -fork                      &
 autocutsel -selection PRIMARY -fork   &
-unclutter -jitter 2 -noevents -idle 2 &
+# unclutter -jitter 2 -noevents -idle 2 -grab &
 xsetroot -cursor_name left_prt        &
 
 xss-lock lock &
@@ -30,6 +29,7 @@ urxvtd          &
 nm-applet       &
 libinput-gestures &
 
-xrandr --output eDP-1 --primary
+# set any first output as --primary
+xrandr --output "$(xrandr | grep ' connected' | awk ' {if (!(NR-1)) print $1}')" --primary
 
-~/code/desktop/symbols/make &
+~/code/df/symbols/make &

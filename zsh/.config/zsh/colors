@@ -2,15 +2,14 @@ the first one takes precedence
 
 # pwd, git, user
 
-plaknis 033 039
-inspiron 213 229 200
-toshiba 210 174 198
-spiral 115 155 135
-siers-mbp.local 115 155 135
-siers-mbp.local 033 039
-siers-mbp.local 210 174 198
-
 fallback 115 155 135
+
+t480 033 039
+t480 115 155 135
+t480 210 174 198
+t480 213 229 200
+
+toshiba 210 174 198
 
 # 027 075
 # 033 039

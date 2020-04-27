@@ -1,0 +1,54 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p inotify-tools
+# vim: ft=sh
+
+set -e
+
+cd "$(dirname "$0")/../secrets"
+
+er="$(which easyrsa)"
+ran=0
+easyrsa() {
+    ran=1
+    "$er" "--vars=$(pwd)/vars" "$@"
+}
+
+ifexists() {
+    if ! [ -e "$1" ]; then
+        shift
+        "$@"
+    fi
+}
+
+donealready() {
+    if [ "$ran" -eq 0 ]; then
+        echo >&2 "everything's generated already"
+    fi
+}
+
+# https://openvpn.net/community-resources/setting-up-your-own-certificate-authority-ca/
+
+# from: https://www.openssl.org/docs/man1.1.1/man1/ca.html
+# /usr/local/ssl/lib/openssl.cnf - master configuration file
+# ./demoCA                       - main CA directory
+# ./demoCA/cacert.pem            - CA certificate
+# ./demoCA/private/cakey.pem     - CA private key
+# ./demoCA/serial                - CA serial number file
+# ./demoCA/serial.old            - CA serial number backup file
+# ./demoCA/index.txt             - CA text database file
+# ./demoCA/index.txt.old         - CA text database backup file
+# ./demoCA/certs                 - certificate output file
+# ./demoCA/.rnd                  - CA random seed information
+
+ifexists pki                    easyrsa init-pki
+ifexists pki/private/ca.key     easyrsa build-ca nopass
+ifexists pki/dh.pem             easyrsa gen-dh
+ifexists pki/private/server.key easyrsa build-server-full server nopass
+
+for client in t480 rv-p53; do
+    ifexists pki/private/"$client.key" easyrsa build-client-full "$client" nopass
+done
+
+find pki -name '*.req' -exec rm {} ';'
+
+donealready

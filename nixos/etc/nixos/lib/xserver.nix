@@ -19,8 +19,6 @@ rec {
 
   xfce-i3 = {
     xserver = {
-      libinput.enable = false;
-
       windowManager.default = "i3";
       windowManager.i3.enable = true;
 
@@ -58,6 +56,21 @@ rec {
           EndSection
       '';
     };
+  };
+
+  gnome-backlight = {
+    xserver.enable = true;
+    xserver.displayManager.gdm.enable = true;
+    xserver.desktopManager.gnome3.enable = true;
+
+    xserver.extraConfig = ''
+        Section "Device"
+          Identifier  "card0"
+          Driver      "intel"
+          Option      "Backlight"  "intel_backlight"
+          BusID       "PCI:0:2:0"
+        EndSection
+    '';
   };
 
   dm = dm: {

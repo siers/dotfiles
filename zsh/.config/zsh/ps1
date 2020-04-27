@@ -16,6 +16,8 @@ if [ -z "$ZSH_NESTED" ]; then
     export ZSH_NESTED=$$
 fi
 
+__PS1_HOSTNAME="$(hostname | cut -b-6)"
+
 # PS1
 precmd() {
     __ps1_succ="$?"
@@ -29,7 +31,8 @@ precmd() {
     [ "$(id -u)" = "0" ] && sep=')' || sep='|'
     read fst snd thd <<< "$(precmd-color)"
     fst="${fst:-105}"; snd="${snd:-105}"; thd="${thd:-105}"
-    PS1="%F{$thd}%n$sep%F{$fst}%B$(precmd-realm)%b%F{default} "
+    # PS1="%F{$thd}%n$sep${__PS1_HOSTNAME}$sep%F{$fst}%B$(precmd-realm)%b%F{default} "
+    PS1="%F{$thd}${__PS1_HOSTNAME}$sep%F{$fst}%B$(precmd-realm)%b%F{default} "
 
     if [ -n "$git" ] && [ -z "$PS1_OMMIT_BRANCH" ]; then
         PS1="$PS1%F{$snd}$git "

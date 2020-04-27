@@ -24,7 +24,7 @@ no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
 
 tmx-sel() { tmx $(tmux ls -F '#{session_name}' | fzf); }
 tda() { tmux detach -a; }
-tmux-term() {  run urxvt -e term specific "$(tmux display-message -p '#S')" }
+# tmux-term() {  run urxvt -e term specific "$(tmux display-message -p '#S')" }
 
 zns() { nix-shell "$@" --run zsh }
 direnv-unload() { pushd /; _direnv_hook; popd; }
@@ -34,14 +34,21 @@ url-decode() { ruby -ne 'require "cgi"; puts(CGI.unescape($_))' }
 
 c_() { cd ~/code/cache; }
 
+sample() { shuf | head "-n${1:-1}"; }
+
+tmpchrome() { dir="$(mktemp -d /tmp/chrome-XXX)"; google-chrome-stable --user-data-dir="$dir" "$@"; }
+
 ## GIT
+
+alias cgr='cd "$(git rev-parse --show-toplevel)"'
 
 local previewer="git diff {} | tee >(grep -q . || cat {})"
 gsel() { git ls-files -mo --exclude-standard | sort -u | fzf -m --preview="$previewer" | tee >(c); }
 gma() { git ls-files -mo --exclude-standard | fzf -m --preview="$previewer" | xargs -r git add; }
-grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
-gbrsel() { git checkout "$(git for-each-ref --format='%(refname:short)' refs/heads | fzf)"; }
+gbrsel() { git for-each-ref --format='%(refname:short)' refs/heads | fzf; }
 gksel() { git checkout "$(git for-each-ref --format='%(refname:short)' | fzf)"; }
+gstsel() { gst --porcelain | sed 's/^...//' | fzf; }
+gkc() { git checkout "$(c -o)"; }
 
 git-parent() { git rev-list --ancestry-path HEAD.."$1" | tail -n1; }
 
@@ -50,27 +57,62 @@ gbrdf() { git branch -D "$2" && git push --delete "$1" "$2" }
 
 gahead() { ! gst --porcelain=2 -b | grep -q 'branch.ab +0'; }
 
+gwhat() { g rev-parse --abbrev-ref HEAD; }
+gwhatc() { gwhat | xclip -sel clipboard; }
+gbu() { git branch -u "${1:-origin}/$(gwhat)"; }
+
+grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
+
+gmb() { git merge-base HEAD "${branch:-master}"; };
+gdmb() { git diff "$(gmb)" "$@"; }
+glmb() { git l HEAD..."$(gmb)" "$@"; }
+grbib() { git rebase -i "$(git merge-base HEAD "${base:-master}")" "$@"; }
+git-feat-edit() { feat="${1:-HEAD}"; git diff -z --name-only "$feat" "$(git merge-base "$feat" master)" | xargs -r0 vim -np; }
+
+gtmp() { name="tmp-$(date "+%Y%m%d-%H%M")-${1:-draft}" && git checkout -b "$name" && g-ac && gk -; }
+grr() { git reset HEAD~; }
+
+gprev() { file=$1; out="trash/prev/$(basename "$file")"; mkdir trash/prev -p; git show "${branch:-master}:$file" > $out; vim $out; }
+
+gpmr() { g pf -o merge_request.create 2> >(tee >(rg -o 'http\S*' | c)); }
+
 clone() {
-    cd ~/code/cache;
+    cldir="${dir:-$HOME/code/cache}"
+    cd "$cldir";
+
     # remove trailing segments
-    url="$(ruby -e 'u = $<.read; puts(u =~ /github.com/ ? u.match(%r{https?://github.com/[^/]+/[^/]+})[0] : u)' <<< "$1")"
-    dir="$(basename "$url")"
-    [ -e "$dir" ] || git clone $url
+    url="$(ruby -e 'u = $<.read; puts(u =~ /git(lab|hub).*com/ ? u.match(%r{(ssh|https)?://(git@)?(github|gitlab.[^\.]+).com/[^/]+/[^/]+})[0] : u)' <<< "$1")"
+    dir="${2:-$(basename "$url")}"
+
+    [ -e "$dir" ] || git clone $url "$dir"
     cd "$dir"
+}
+
+ccc() {
+    clone "$(xclip -o clipboard)"
+}
+
+wclone() {
+    1="$(sed 's!https!ssh!; s!gitlab!git@gitlab!' <<< "$1")"
+    dir=$HOME/work clone "$@"
 }
 
 rgsample() { rg -l "$@" | sample; }
 rgsample-v() { vim $(rg -l "$@" | sample); }
-rgedit() { vim $(rg -l "$@"); }
+rgedit() { vim -n $(rg -l "$@"); }
 rgsel() { rg -l "$@" | fzf -m --preview="$previewer" | c; }
+
+rgm() { rg "$@" **/src/main; }
 
 frg() { find . | rg "$@"; }
 frgedit() { find . | rg "$@" | xargs -r vim -p; }
+grg() { g ls | rg "$@"; }
 
 ## MISC
 
 wait() { interval=0.1 wait-diff > /dev/null 2>&1 sh -c 'ls /tmp/flag'; }
 slq() { clip-pipe sh "echo -n \"\\\`\\\`\\\`\$(cat)\\\`\\\`\\\`\""; } # slack quotes
+ft() { date "+%F:%T" }
 
 ## ARGUMENT DEBUG
 

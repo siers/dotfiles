@@ -8,30 +8,25 @@
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/328d221c-b57e-493d-8577-b57804065e28";
-      fsType = "ext4";
-    };
+  boot.initrd.luks.devices = {
+    enc-vg = { device = "/dev/disk/by-uuid/a4ee2444-0bc4-4d6c-9754-c7f2353cca35"; preLVM = true; allowDiscards = true; }; # /dev/sda3
+    enc-home = { device = "/dev/disk/by-uuid/79e9c6d6-6c41-4951-95c2-a98dafe11507"; preLVM = true; allowDiscards = true; }; # /dev/sda4
+  };
 
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/68ca596f-f812-4977-84f0-68b7585d2641";
-      fsType = "ext4";
-    };
+  fileSystems = pkgs.lib.recursiveUpdate {
+    "/" = { device = "/dev/vg/root"; fsType = "ext4"; options = ["noatime"]; };
+    "/boot" = { device = "/dev/sda2"; fsType = "vfat"; options = ["noatime" "nofail"]; };
+    "/home" = { device = "/dev/mapper/enc-home"; fsType = "ext4"; options = ["noatime" "nofail"]; };
+    "/tmp" = { device = "tmpfs"; fsType = "tmpfs"; options = ["nosuid" "nodev" "relatime"]; };
+  } (import ../lib/syncthing.nix { inherit (pkgs.lib) recursiveUpdate; });
 
-  boot.initrd.luks.devices."two".device = "/dev/disk/by-uuid/79e9c6d6-6c41-4951-95c2-a98dafe11507";
-
-  fileSystems."/home/s/code" =
-    { device = "/home/s/.syncthing/shares/home/code";
-      fsType = "none";
-      options = [ "bind" ];
-    };
-
-  swapDevices = [ ];
+  swapDevices = [ { device = "/var/swapfile"; size = 4000; } ];
 
   nix.maxJobs = lib.mkDefault 4;
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  hardware.cpu.intel.updateMicrocode = true;
+  powerManagement.cpuFreqGovernor = "powersave";
 }

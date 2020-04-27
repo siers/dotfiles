@@ -34,6 +34,7 @@ bindsym $mod+Return exec urxvt
 
 # kill focused window
 bindsym $mod+c kill
+bindsym --release button2 kill
 
 # start dmenu (a program launcher)
 #bindsym $mod+space exec dmenu_run
@@ -153,4 +154,4 @@ bar {
     tray_output primary
 }
 
-exec ~/bin/wrappers/term in-tag
+exec ~/code/bin/wrappers/term in-tag

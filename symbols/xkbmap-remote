@@ -1,0 +1,20 @@
+// Info at /usr/share/X11/xkb/symbols/lv
+//
+// For the product:
+// Name: RF 2 4GHz Wireless Presenter USB Remote Control Presentation Mouse Pointer Black
+// Seller: niceol at ebay.
+//
+// setxkbmap xkbmap-remote -print | xkbcomp -I$HOME/code/desktop - $DISPLAY -i 25
+
+partial alphanumeric_keys
+xkb_symbols "basic" {
+    // top row
+    key <PGUP> {[XF86AudioLowerVolume]};
+    key <PGDN> {[XF86AudioRaiseVolume]};
+
+    // bottom row with the left btn alternating between ESC and F5
+    key <ESC> {[asciitilde]};
+    key <FK05> {[asciitilde]};
+
+    key <AB05> {[space]};
+};

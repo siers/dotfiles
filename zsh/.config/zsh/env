@@ -1,7 +1,10 @@
 #!/usr/bin/env zsh
 
-#export MANPAGER=vimpager PAGER=vimpager; alias less=$PAGER
+export MANPAGER='nvim -R "+setf man" -'
+# export PAGER='nvim -R -'
 export EDITOR=vim
+# export TERM=alacritty
+export TERM=rxvt-unicode-256color
 
 if tty | grep -qE '^/dev/tty[0-9]+$'; then
     TMOUT=$(( 60 * 20 ))
@@ -12,8 +15,8 @@ if [ -z "$ZSH_PATH_INIT" ] || command -v ruby &> /dev/null
 then
     export ZSH_PATH_INIT=1
 
-    [ -e ~/bin ] &&
-        export PATH="$(find -L ~/bin -type d | tr '\n' :)$PATH"
+    [ -e ~/code/bin ] &&
+        export PATH="$(find -L ~/code/bin -type d -not -path '*/\.*' | tr '\n' :)$PATH"
 
     [ -e ~/.local/bin ] &&
         export PATH="$HOME/.local/bin:$PATH"

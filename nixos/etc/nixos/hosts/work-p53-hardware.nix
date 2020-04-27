@@ -13,23 +13,23 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems = [
-    { mountPoint = "/"; device = "/dev/mapper/enc-root"; fsType = "ext4"; options = ["noatime"]; }
-    { mountPoint = "/boot"; device = "/dev/disk/by-partlabel/EFI\\x20system\\x20partition"; fsType = "vfat"; options = ["noatime" "nofail"]; }
-    { mountPoint = "/tmp"; device = "tmpfs"; fsType = "tmpfs"; options = ["nosuid" "nodev" "relatime"]; }
-  ] ++ (import ../lib/syncthing.nix { excluding = [ "pdf" ]; });
-
   boot.initrd.luks.devices.enc-root.device = "/dev/disk/by-label/enc-part";
+
+  fileSystems = pkgs.lib.recursiveUpdate {
+    "/" = { device = "/dev/mapper/enc-root"; fsType = "ext4"; options = ["noatime"]; };
+    "/boot" = { device = "/dev/disk/by-partlabel/EFI\\x20system\\x20partition"; fsType = "vfat"; options = ["noatime" "nofail"]; };
+    "/tmp" = { device = "tmpfs"; fsType = "tmpfs"; options = ["nosuid" "nodev" "relatime"]; };
+  } (import ../lib/syncthing.nix { inherit (pkgs.lib) recursiveUpdate; excluding = [ "pdf" ]; });
 
   swapDevices = [ { device = "/var/swapfile"; size = 4000; } ];
 
   nix.maxJobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  hardware.cpu.intel.updateMicrocode = true;
 
   services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
 
   # hardware.nvidia.prime.sync.enable = true;
   # hardware.nvidia.prime.nvidiaBusId = "PCI:60:0:0";
   # hardware.nvidia.prime.intelBusId = "PCI:0:2:0";
-
 }

@@ -11,16 +11,28 @@ venv
 gnore-*
 *-gign
 
-.tf-version
+# vim
+.vim
+/.*.swp
 .session*.vim
 .*envrc*
 
-/docker-compose.yml
+# nix
 /gemset.nix
 /shell-*.nix
 /shell*.nix
-/node_modules
+
+# development
+/.tf-version
 /.ruby-version
-/config/initializers/development_includes.rb
-/.*.swp
+/node_modules
 *.dot
+.ghc.environment.*
+.bloop
+.metals
+.bsp
+project/metals.sbt
+
+# temporary
+/project/project
+.scalafmt.conf

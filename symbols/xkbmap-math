@@ -1,0 +1,76 @@
+// vim: ts=8
+// From /usr/share/X11/xkb/symbols/lv
+//
+// setxkbmap -I $HOME/code/desktop xkbmap-custom -print | xkbcomp -I$HOME/code/desktop - $DISPLAY
+// /usr/share/X11/xkb/rules/base.lst
+//
+// keys follow a regular language, so use this vim-regex
+// with set hlsearch for debugging malformed expressions:
+// ^\tkey <.\{4\}> {\[[\t ]*[^,]\+,[\t ]*[^,]\+,[\t ]*[^,]\+,[\t ]*[^,]\+[\t  ]*\]};
+
+// https://en.wikipedia.org/wiki/Arrow_(symbol)
+// http://unicode-table.com/en/sets/arrows-symbols/
+
+// 2261 = triple bar
+
+default partial alphanumeric_keys modifier_keys
+xkb_symbols "basic" {
+
+	name[Group1]= "Latvian";
+
+	key <TLDE> {[ asciitilde,	grave,		0x10025cf,		notsign			]};
+	key <AE01> {[ 1,		exclam,		adiaeresis,		Adiaeresis		]};
+	key <AE02> {[ 2,		at,		udiaeresis,		Udiaeresis		]};
+	key <AE03> {[ 3,		numbersign,	0x10000eb,		0x10000cb		]};
+	key <AE04> {[ 4,		dollar,		section,		0x10000c6		]};
+	key <AE05> {[ 5,		percent,	EuroSign,		degree			]};
+	key <AE06> {[ 6,		asciicircum,	0x1002261,		0x1002262		]};
+	key <AE07> {[ 7,		ampersand,	onesuperior,		0x1002190		]};
+	key <AE08> {[ 8,		asterisk,	twosuperior,		0x1002193		]};
+	key <AE09> {[ 9,		parenleft,	threesuperior,		0x1002191		]};
+	key <AE10> {[ 0,		parenright,	onehalf,		0x1002192		]};
+	key <AE11> {[ minus,		underscore,	emdash,			endash			]};
+	key <AE12> {[ 0x1002261,	0x1002194,	0x10021D4,		0x1002234		]};
+
+	key <AD01> {[ q,		Q,		acircumflex,		Acircumflex		]};
+	key <AD02> {[ w,		W,		abreve,			Abreve			]};
+	key <AD03> {[ Greek_epsilon,	Greek_EPSILON,	emacron,		0x1002208		]};
+	key <AD04> {[ r,		R,		rcedilla,		Rcedilla		]};
+	key <AD05> {[ t,		T,		t,			T			]};
+	key <AD06> {[ y,		Y,		ydiaeresis,		Ydiaeresis		]};
+	key <AD07> {[ u,		U,		umacron,		Umacron			]};
+	key <AD08> {[ i,		I,		imacron,		Imacron			]};
+	key <AD09> {[ o,		O,		omacron,		Omacron			]};
+	key <AD10> {[ p,		P,		p,			paragraph		]};
+	key <AD11> {[ bracketleft,	braceleft,	guillemotleft,		leftdoublequotemark	]};
+	key <AD12> {[ bracketright,	braceright,	guillemotright,		rightdoublequotemark	]};
+	key <AD13> {[ bracketright,	braceright,	guillemotright,		rightdoublequotemark	]};
+
+	key <AC01> {[ 0x1002227,	0x1002200,	amacron,		Amacron			]};
+	key <AC02> {[ s,		S,		scaron,			Scaron			]};
+	key <AC03> {[ d,		D,		d,			D			]};
+	key <AC04> {[ 0x10022A5,	F,		f,			0x10000a7		]};
+	key <AC05> {[ g,		G,		gcedilla,		Gcedilla		]};
+	key <AC06> {[ h,		H,		h,			H			]};
+	key <AC07> {[ j,		J,		icircumflex,		Icircumflex		]};
+	key <AC08> {[ k,		K,		kcedilla,		Kcedilla		]};
+	key <AC09> {[ Greek_lambda,	Greek_LAMBDA,	lcedilla,		Lcedilla		]};
+	key <AC10> {[ semicolon,	colon,		doublelowquotemark,	doublelowquotemark	]};
+	key <AC11> {[ apostrophe,	quotedbl,	leftdoublequotemark,	doublelowquotemark	]};
+
+	key <AB01> {[ z,		Z,		zcaron,			Zcaron			]};
+	key <AB02> {[ x,		X,		x,			X			]};
+	key <AB03> {[ c,		C,		ccaron,			Ccaron			]};
+	key <AB04> {[ v,		V,		v,			V			]};
+	key <AB05> {[ b,		B,		b,			B			]};
+	key <AB06> {[ n,		N,		ncedilla,		Ncedilla		]};
+	key <AB07> {[ m,		M,		m,			M			]};
+	key <AB08> {[ comma,		less,		horizconnector,		multiply		]};
+	key <AB09> {[ period,		greater,	periodcentered,		ellipsis		]};
+	key <AB10> {[ slash,		question,	notsign,		abovedot		]};
+	key <BKSL> {[ backslash,	bar,		grave,			breve			]};
+
+	key <SPCE> {[ space,		space,		space,			space			]};
+
+	include "level3(ralt_switch)"
+};

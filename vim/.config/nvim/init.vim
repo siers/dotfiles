@@ -1,11 +1,3 @@
-" configure haskell properly for god's sakes!
-" https://www.reddit.com/r/haskell/comments/a4lr0h/haskell_programming_set_up_in_vim/
-
-" http://ix.io/1BXY
-" cinoremap <Space>ex.. <C-r>=fnameescape(expand('%:.'))<CR>
-" cnoremap <Space>ex.h <C-r>=fnameescape(expand('%:.:h'))<CR>
-" cnoremap <Space>ex.t <C-r>=expand('%:t')<CR>
-
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://github.com/junegunn/vim-plug/raw/master/plug.vim
 
@@ -19,116 +11,128 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
     augroup END
 endif
 
-" ==============================================================================
+" Settings {{{
+filetype plugin indent on
+syntax on
 
 set dir=/var/tmp nobackup
 set encoding=utf-8
 set ffs=unix,dos,mac
 set history=10000
-set undofile
+set undofile hidden
 
+set list listchars=tab:»·,tab:→\ ,trail:·,nbsp:·
 set expandtab shiftround smarttab autoindent
+set laststatus=2 tabstop=2 shiftwidth=2 showtabline=2 softtabstop=2
+set bs=indent,eol,start
+set cursorline number
 set nofoldenable foldmethod=indent
-set laststatus=2 tabstop=4 shiftwidth=4 showtabline=4 softtabstop=4
+set breakindent showbreak=\|- showbreak=\\_
 
-set ignorecase smartcase
-set incsearch hlsearch
-set wildmenu wildmode=longest,full completeopt=menu,menuone,preview
+set ignorecase smartcase incsearch hlsearch
+set wildmenu wildmode=longest,full
+set completeopt=menu,menuone,preview
+set shortmess+=cfilmnxrI
+set splitbelow splitright
 
 set showcmd
-set bs=indent,eol,start
 set clipboard=unnamedplus
-set cursorline number
 set mouse=a
-set shortmess+=I
-set splitbelow splitright
-set statusline=%f%m%r%h%w\ [%n:%{&ff}/%Y]%=[0x\%04.4B][%03v][%p%%\ line\ %l]
+"set statusline=%f%m%r%h%w\ [%n:%{&ff}/%Y]%=[0x\%04.4B][%03v][%p%%\ line\ %l]
 
 let g:mapleader = "\<Space>"
+" }}}
 
-" ==============================================================================
-
-" curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-"    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" Plugins {{{
 call plug#begin('~/.config/nvim/plugged')
 
+" Plug 'https://github.com/drewtempelmeyer/palenight.vim'
 Plug 'https://github.com/guns/jellyx.vim'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 Plug 'https://github.com/vim-airline/vim-airline'
-Plug 'https://github.com/ervandew/supertab'
 Plug 'https://github.com/Yggdroot/indentLine'
-Plug 'https://github.com/junegunn/vim-easy-align'
-Plug 'https://github.com/AndrewRadev/splitjoin.vim'
-Plug 'https://github.com/AndrewRadev/sideways.vim' " argument swapping
-Plug 'https://github.com/sjl/gundo.vim'
-Plug 'https://github.com/tpope/vim-obsession'
+Plug 'https://github.com/sjl/gundo.vim' " Gi
+Plug 'https://github.com/tpope/vim-obsession' " Session files
 Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
 Plug 'https://github.com/benekastah/neomake'
-
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/tpope/vim-abolish' " Subvert, crs.
 Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
+Plug 'https://github.com/vim-syntastic/syntastic'
+Plug 'https://github.com/honza/vim-snippets'
+Plug 'https://github.com/tpope/vim-surround'
+Plug 'https://github.com/kshenoy/vim-signature' " Marks of all kind.
+" Plug 'https://github.com/liuchengxu/vista.vim'
 
 Plug 'https://github.com/tpope/vim-fugitive' " Git.
+Plug 'https://github.com/shumphrey/fugitive-gitlab.vim'
 Plug 'https://github.com/tpope/vim-rhubarb'
 Plug 'https://github.com/tommcdo/vim-fubitive'
 
-Plug 'https://github.com/hashivim/vim-terraform'
-Plug 'https://github.com/ekalinin/Dockerfile.vim'
+Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
+Plug 'https://github.com/neoclide/coc-json', {'do': 'yarn install --frozen-lockfile --force'}
+Plug 'https://github.com/neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile --force'}
+Plug 'https://github.com/scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile --force'}
+" Plug 'https://github.com/puremourning/vimspector'
+Plug 'https://github.com/neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile --force'}
+Plug 'https://github.com/iamcco/coc-actions', {'do': 'yarn install --frozen-lockfile --force'}
+
 Plug 'https://github.com/LnL7/vim-nix'
-Plug 'https://github.com/gisraptor/vim-lilypond-integrator'
-Plug 'https://github.com/cakebaker/scss-syntax.vim'
-Plug 'https://github.com/bronson/vim-ruby-block-conv'
-Plug 'https://github.com/posva/vim-vue'
 Plug 'https://github.com/isRuslan/vim-es6'
-Plug 'derekwyatt/vim-scala'
+Plug 'https://github.com/derekwyatt/vim-scala'
+Plug 'https://github.com/jamessan/vim-gnupg'
+Plug 'https://github.com/hashivim/vim-terraform'
+Plug 'https://github.com/gisraptor/vim-lilypond-integrator'
+Plug 'https://github.com/posva/vim-vue'
+Plug 'https://github.com/cakebaker/scss-syntax.vim'
+Plug 'https://github.com/ekalinin/Dockerfile.vim'
 
 " The Plugs below don't mean much to me.
+Plug 'https://github.com/wsdjeg/vim-fetch'
 Plug 'https://github.com/HerringtonDarkholme/yats.vim', {'for': ['typescript', 'typescript.jsx']}
-Plug 'https://github.com/SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'https://github.com/vim-scripts/vis' " :'<,'>B s/// for visual blocks in ruby
-Plug 'https://github.com/thiagoalessio/rainbow_levels.vim'
 Plug 'https://github.com/nixprime/cpsm'
+Plug 'https://github.com/junegunn/fzf.vim'
 " Plug 'https://github.com/mattn/emmet-vim' " div#foo<C-y>, => <div id=foo>
-
-Plug 'junegunn/fzf'
-" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-" Plug 'roxma/nvim-completion-manager'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-let g:deoplete#enable_at_startup = 1
-Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
-Plug 'vim-syntastic/syntastic'
-
-if ! exists("vimpager")
-    " No commands below this comment will be executed in vimpager,
-    Plug 'https://github.com/tpope/vim-surround'
-    Plug 'https://github.com/kshenoy/vim-signature' " Marks of all kind.
-endif
+" Plug 'https://github.com/ervandew/supertab'
+" Plug 'https://github.com/AndrewRadev/splitjoin.vim'
+" Plug 'https://github.com/AndrewRadev/sideways.vim' " argument swapping
+" Plug 'https://github.com/junegunn/vim-easy-align'
+" Plug 'https://github.com/severin-lemaignan/vim-minimap'
 
 call plug#end()
+"}}}
 
-" Plugin settings ==============================================================================
+" Plugin settings {{{
+silent! colorscheme jellyx
+" silent! colorscheme palenight
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_mode_map = { "mode": "active",
                            \ "active_filetypes": [],
                            \ "passive_filetypes": ["scala"] }
 
-"
-
 let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null']
 let g:ctrlp_map = ''
 
-" Expand snippet under the cursor.
-" See: .config/nvim/UltiSnips/*.snippets
-let g:UltiSnipsExpandTrigger = "<C-s>"
-" let g:UltiSnipsJumpForwardTrigger="<c-b>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"xmap ga <Plug>(EasyAlign) | nmap ga <Plug>(EasyAlign)
 
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+" Just like standard f/F except it works on multiple lines.
+nmap f <Plug>Sneak_f
+nmap F <Plug>Sneak_F
+vmap f <Plug>Sneak_f
+vmap F <Plug>Sneak_F
+
+" Keeps s/S original functionality.
+" https://github.com/justinmk/vim-sneak/issues/87
+nmap <Plug>(Go_away_Sneak_s) <Plug>Sneak_s
+nmap <Plug>(Go_away_Sneak_S) <Plug>Sneak_S
+
+nnoremap <Backspace> :Vista!!<CR>
+
+let g:vista_default_executive = 'coc'
+let g:vista_close_on_jump = 1
+let g:vista_sidebar_width = 60
 
 function! CtrlP()
   if (getcwd() == $HOME)
@@ -144,152 +148,275 @@ endfunction
 
 nnoremap <C-p> :call CtrlP()<CR>
 
-" let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
-" ERROR: cpsm built with version of Python not supported by Vim
+Plug 'https://gist.github.com/drasill/ff9b94025dc8aa7e404f',
+    \ { 'dir': g:plug_home.'/vim-fzf-git-ls-files/plugin', 'rtp': '..' }
 
-xmap ga <Plug>(EasyAlign) | nmap ga <Plug>(EasyAlign)
+" }}}
 
-nnoremap <Leader>eh :SidewaysLeft<CR>
-nnoremap <Leader>el :SidewaysRight<CR>
-nnoremap <leader>er :RainbowLevelsToggle<cr>
+" Language servers {{{
+call coc#config('coc.preferences', {
+      \ 'diagnostic.errorSign': 'E',
+      \ 'diagnostic.warningSign': 'W',
+      \ 'diagnostic.infoSign': 'I',
+      \ 'diagnostic.hintSign': 'H',
+      \ })
 
-command! Session :Obsession .session.vim
+call coc#config('diagnostic', {
+      \ 'refreshAfterSave': 0,
+      \ 'maxWindowHeight': 16,
+      \ })
 
-" Just like standard f/F except it works on multiple lines.
-nmap f <Plug>Sneak_f
-nmap F <Plug>Sneak_F
-vmap f <Plug>Sneak_f
-vmap F <Plug>Sneak_F
+call coc#config('explorer', {
+      \ 'keyMappings.<tab>': 'quit',
+      \ 'keyMappings.<cr>': ['expandable?', 'expandOrCollapse', 'open'],
+      \ 'openAction.changeDirectory': 0,
+      \ 'quitOnOpen': 1,
+      \ 'sources': [{'name': 'file', 'expand': 1}],
+      \ 'file.columns': ['git', 'indent', 'icon', 'filename', 'readonly', ['fullpath'], ['size'], ['created'], ['modified']],
+      \ 'file.showHiddenFiles': 1,
+      \ 'width': 60,
+      \ 'icon.enableNerdfont': 1,
+      \ 'previewAction.onHover': 0,
+      \ })
 
-" Keeps s/S original functionality.
-" https://github.com/justinmk/vim-sneak/issues/87
-nmap <Plug>(Go_away_Sneak_s) <Plug>Sneak_s
-nmap <Plug>(Go_away_Sneak_S) <Plug>Sneak_S
+call coc#config('languageserver.haskell', {
+      \ 'command': 'hie-wraper',
+      \ 'args': ['--lsp'],
+      \ "rootPatterns": ["stack.yaml", "cabal.config", "package.yaml"],
+      \ "filetypes": ["hs", "lhs", "haskell" ],
+      \ "initializationOptions.languageServerHaskell": {},
+      \ })
 
-let g:rainbow_levels = [
-    \{'ctermbg': 232, 'guibg': '#121212'},
-    \{'ctermbg': 233, 'guibg': '#1c1c1c'},
-    \{'ctermbg': 234, 'guibg': '#262626'},
-    \{'ctermbg': 235, 'guibg': '#303030'},
-    \{'ctermbg': 236, 'guibg': '#3a3a3a'},
-    \{'ctermbg': 237, 'guibg': '#444444'},
-    \{'ctermbg': 238, 'guibg': '#4e4e4e'},
-    \{'ctermbg': 239, 'guibg': '#585858'},
-    \{'ctermbg': 240, 'guibg': '#626262'}]
+call coc#config("coc.preferences.formatOnSaveFiletypes", ["scala"])
 
-" ==============================================================================
+" call coc#config("metals.serverVersion", "0.9.0") " downgrade
 
-filetype plugin indent on
-syntax on
-silent! colorscheme jellyx
+" nnoremap <Tab> :CocCommand explorer<CR>
+let g:vimspector_enable_mappings = 'HUMAN'
+" packadd! vimspector
+" }}}
 
-if ! exists("vimpager")
-    set list lcs=tab:»·,trail:·
-else
-    set nonumber
-endif
+" Autocmds {{{
+augroup vimrc
+    autocmd!
+augroup END
 
 " When reading a file, jump to the last cursor position.
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-au FileType go         setlocal noet
-au FileType vim        nnoremap <buffer> <F9> :source %<CR>
-au FileType haskell    setlocal sw=4 ts=4
-au FileType ruby,terraform,yaml,javascript,nix,scss,vim,vue,css,erb,haskell setlocal sw=2 ts=2
-au FileType erb setlocal sw=2 ts=2
-autocmd BufWritePre * %s/\s\+$//e
-map <silent> <leader>st :set ts=2 sw=2<CR>
+autocmd vimrc FileType go setlocal noet
+autocmd vimrc FileType vim nnoremap <buffer> <F9> :source %<CR>
+autocmd vimrc FileType vim setlocal foldmethod=marker
+autocmd vimrc FileType ruby,terraform,yaml,javascript,nix,scss,vim,vue,css,erb,haskell,scala setlocal sw=2 ts=2
+autocmd vimrc FileType erb setlocal sw=2 ts=2
 
-" ==============================================================================
+autocmd vimrc BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+autocmd vimrc BufWritePre * %s/\s\+$//e
+
+function! AuFocusLost()
+    " Save when losing focus.
+    exe ':silent! update'
+
+    " Go back to normal mode from insert mode.
+    if mode() == 'i'
+      exe ':stopinsert'
+    endif
+
+    if getbufvar(bufnr('%'), '&filetype') == 'fzf'
+      exe ':q'
+    endif
+endfunction
+autocmd vimrc FocusLost * call AuFocusLost()
+" }}}
+
+" Commands {{{
+command! Config :tabedit ~/.config/nvim/init.vim
+command! NF :tabedit notes
+command! NN :tabedit notes/notes
+command! -range=% Sum :<line1>,<line2>!paste -sd+ | bc
+command! CL :tabedit %
+command! RMNL :%g/^$/d
+
+command! Session :Obsession .session.vim
+command! PI :PlugInstall
+command! PC :PlugClean
+
+" :Share to sprunge.us
+exec 'command! -range=% Share :<line1>,<line2>write !pasty'
+" }}}
+
+" Intellisense maps {{{
+" You will have a bad experience with diagnostic messages with the default of 4000.
+set updatetime=300
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> <leader>gr <Plug>(coc-references)
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>F  <Plug>(coc-format)
+
+" Toggle panel with Tree Views
+nnoremap <silent> <space>t :<C-u>CocCommand metals.tvp<CR>
+" Toggle Tree View 'metalsBuild'
+nnoremap <silent> <space>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
+" Toggle Tree View 'metalsCompile'
+nnoremap <silent> <space>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
+" Reveal current current class (trait or object) in Tree View 'metalsBuild'
+" nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
+nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsPackages<CR>
+
+" Use K to either doHover or show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" My own mappings
+nmap <space>e :CocCommand explorer<CR>
+"
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by another plugin.
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+" Used in the tab autocompletion for coc
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+imap <C-l> <Plug>(coc-snippets-expand-jump)
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Show all diagnostics
+nnoremap <silent> <space>D  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
+nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
+" }}}
+
+" Creative maps {{{
+map <Leader>SF :s/_/-/g<CR>^gu$ " lowercase + _→-
+map <Leader>S :%s/\s\+$//<CR>
+map <Leader>x :%s/>/>\r/g<CR>gg=G " turn single line tags into multi-line
+map <Leader>y ggVG
+map <Leader>v vip!sort<CR>:w<CR>
+
+map <Leader>P :!realpath % \| tr -d '\n' \| xclip -sel clip<CR><CR>
+map <Leader>O :!realpath --relative-to=. % \| tr -d '\n' \| xclip -sel clip<CR><CR>
+map <Leader>I :!echo -n "$(basename %)" \| cut -f1 -d . \| tr -d '\n' \| xclip -sel clip<CR><CR>
+map <Leader>R :setlocal relativenumber!<CR>
+map <Leader>X :!run tmux-term<CR><CR>
+map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR> " show commit
+" :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
+cnoremap mk. !mkdir -p <c-r>=expand("%:h")<cr>/
+nnoremap <F9> :!./%<CR>
+nnoremap <F10> :!make clean &<CR><CR>
+nnoremap <F11> :!make &<CR><CR>
+nnoremap <Leader>z :setlocal spell<CR>z= " Suggest word under/after the cursor.
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]' " Reselect last pasted text.
+
+inoremap <F2> <C-R>=expand("%:t:r")<CR>
+nnoremap <F4>      =strftime("%b %-d")<CR>P
+inoremap <F4> <C-R>=strftime("%b %-d")<CR>
+nnoremap <F5>     "=strftime("%c")<CR>P
+inoremap <F5> <C-R>=strftime("%c")<CR>
+nnoremap <F6>     "=strftime("%F-%T")<CR>P
+inoremap <F6> <C-R>=strftime("%F-%T")<CR>
+" }}}
+
+" Remaps {{{
+map <Leader>gb :Gblame<CR>
+map <Leader>gd :Gdiff<CR>
+map <Leader>gu :Gbrowse!<CR>
+map <C-j> :noh<CR>:<ESC>
+imap <silent> <C-j> <ESC>:noh<CR>i
+imap <silent> <C-_> <ESC>:undo<CR>a
+map <Leader>W :setlocal nowrap!<CR>
+map <Leader>T :set paste!<CR>
+"map <Leader>N :set relativenumber!<CR>
+map <silent> <M-m> :tabm +1<CR>
+map <silent> <M-n> :tabm -1<CR>
+
+" map <Leader>q :wq<CR>
+" map <Leader>w :w<CR>
+
+" Indent visually selected text.
+vnoremap < <gv
+vnoremap > >gv
+
+" Visually select word under the cursor without moving.
+nmap * g*N
+nmap # g#N
 
 ca te tabedit
 ca W w
 ca E e
 ca Q q
-
-"   <Leader>standard filenames
-map <Leader>sf :s/_/-/g<CR>^gu$
-map <Leader>s :%s/\s\+$//<CR>
-map <Leader>x :%s/>/>\r/g<CR>gg=G
-map <Leader>y myggVG"+y`ymyzz
-map <Leader>l :setlocal nowrap!<CR>
-map <Leader>t :set paste!<CR>
-map <Leader>N :set relativenumber!<CR>
-
-" map <Leader>h vip!hs-import-sort<CR>:w<CR>
-map <Leader>i ?^import <CR>:noh<CR>
-map <Leader>i ?^import <CR>:noh<CR>
-map <Leader>v vip!sort<CR>:w<CR>
-
-map <Leader>p :!realpath % \| tr -d '\n' \| xclip<CR><CR>
-map <Leader>o :!realpath --relative-to=. % \| tr -d '\n' \| xclip<CR><CR>
-map <Leader>O :!echo -n "$(basename %)" \| xclip<CR><CR>
-map <Leader>r :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-" git show
-map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR>
-map <silent> gr :tabm +1<CR>
-map <silent> gR :tabm -1<CR>
-
-" map <Leader>b :ls<CR>:b
-map <Leader>gb :Gblame<CR>
-map <Leader>gd :Gdiff<CR>
-map <Leader>gu :Gbrowse!<CR>
-map <Leader>q :wq<CR>
-map <Leader>w :w<CR>
-map <Leader>e :e<CR>
-map <C-n> gT
-map <C-m> gt
-map <M-a> gT
-map <M-s> gt
-map <C-t> :tabnew<CR>
-map <M-r> :tabnew<CR>gR
-map <M-z> :q<CR>
-
-nnoremap <M-n> ^
-nnoremap <M-m> $
-map [o O<ESC>
-map ]o o<ESC>
 map <M-h> <C-w>h
 map <M-j> <C-w>j
 map <M-k> <C-w>k
 map <M-l> <C-w>l
 map <M-q> <C-w>s
 map <M-w> <C-w>v
-nmap <Down> gj
-nmap <Up> gk
-map <C-j> :noh<CR>:<ESC>
-imap <silent> <C-j> <ESC>:noh<CR>i
-imap <silent> <C-_> <ESC>:undo<CR>a
+map <C-n> gT
+map <C-m> gt
+map <C-t> :tabnew %<CR><C-o>zz
+map <Leader><C-t> :-tabnew %<CR><C-o>zz
+nnoremap <Leader>N :-tabnew<CR>
+nnoremap <Leader>M :tabnew<CR>
+map â :q<CR>
+" }}}
 
-cnoremap mk. !mkdir -p <c-r>=expand("%:h")<cr>/
-nnoremap zh 10zh
-nnoremap zl 10zl
-
-map <silent> <F1> :NERDTreeToggle<CR>
-nnoremap <F4> <C-R>=strftime("%b %-d")<CR>P
-inoremap <F4> <C-R>=strftime("%b %-d")<CR>
-nnoremap <F5> "=strftime("%c")<CR>P
-inoremap <F5> <C-R>=strftime("%c")<CR>
-nnoremap <F6> "=strftime("%F-%T")<CR>P
-inoremap <F6> <C-R>=strftime("%F.%T")<CR>
-nmap <F9> :!./%<CR>
-map <F10> :!make clean &<CR><CR>
-map <F11> :!make &<CR><CR>
-map <silent> <leader>c :%!rufo 2> /dev/null \|\| :<CR>
-inoremap <F6> <C-R>=strftime("%F-%T")<CR>
-
-" Reselect last pasted text.
-nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
-
-" ==============================================================================
-
-" :Share to sprunge.us
-exec 'command! -range=% Share :<line1>,<line2>write !pasty'
-
-command! Config :tabedit ~/.config/nvim/init.vim
-command! NF :tabedit notes
-command! NN :tabedit notes/notes
-command! -range=% Sum :<line1>,<line2>!paste -sd+ | bc
-
+" Maps with functions {{{
 function! s:MoveLine(direction) " Move line <count> lines higher/lower.
     if a:direction == 'k'
         let s:much  = -v:count1 - 1
@@ -309,3 +436,36 @@ function! s:CharacterDelta(delta) " Char analog of C-{x,a}
 endf
 map <M-x> :call <SID>CharacterDelta(1)<CR>
 map <M-c> :call <SID>CharacterDelta(-1)<CR>
+
+function! s:ScalaSpecOpen()
+  if @% !~# '/\(main\|test\)/'
+    echoerr "unrecognizable filename pattern"
+    return
+  endif
+
+  if @% =~# '/main/'
+    let l:test = substitute(@%, '/main/', '/test/', '')
+    let l:spec = substitute(l:test, '\.scala$', 'Spec.scala', '')
+  else
+    let l:test = substitute(@%, '/test/', '/main/', '')
+    let l:spec = substitute(l:test, 'Spec\.scala$', '.scala', '')
+  end
+
+  execute 'edit '. l:spec
+endf
+autocmd vimrc FileType scala nnoremap <buffer> <Leader>E :call <SID>ScalaSpecOpen()<CR>
+" }}}
+
+" Functions {{{
+function! SaveTrash(...)
+  if a:0 == 0
+    let suffix = ""
+  else
+    let suffix = "." . a:1
+  end
+  echo a:
+  exe printf("write! trash/%s%s", strftime("%F.%H:%M"), suffix)
+endf
+
+command! -nargs=? Trash :call SaveTrash(<f-args>)
+" }}}

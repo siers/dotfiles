@@ -4,15 +4,19 @@
   fonts = {
     fontconfig.enable = true;
     fonts = with pkgs; [
-      dejavu_fonts
       liberation_ttf
-      material-icons
+      corefonts
+      ubuntu_font_family
+
+      dejavu_fonts
       source-code-pro
       source-sans-pro
 
       emojione
       noto-fonts
       noto-fonts-emoji
+      # material-icons
+      (pkgs.callPackage ./font-myriad-pro.nix {})
     ];
   };
 }

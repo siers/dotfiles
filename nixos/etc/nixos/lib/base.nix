@@ -1,16 +1,14 @@
 { config, pkgs, ... }:
 
 let
-  literals = import ./literals.nix pkgs;
-
   # also update NUR in lib/package-sets.nix
   nixpkgs = fetchTarball {
-    url = "https://channels.nixos.org/nixos-20.03/nixexprs.tar.xz?2020-04-25";
-    sha256 = "13jfqal1l9sgdap9599rv9azvprqb1xp6fqa2qx9pnx02mxvnq7m";
+    url = "https://channels.nixos.org/nixos-20.09/nixexprs.tar.xz?2020-12-10";
+    sha256 = "0rrcysadwrlw2iqrqr9lpbraqrqsdbgp9yccn8b0vyfn4fxpf8ki";
   };
   nixos-hardware = fetchTarball {
-    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2020-04-25";
-    sha256 = "0mgsyahm4w8ngl50fajbnjg8vw6v6pjxcjk4a7zfnnyrhfiykpqv";
+    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2020-12-10";
+    sha256 = "1zdky8vv7aznvmkkf53f5bm73n19a7728m33hhs8dg1psrb9lkx1";
   };
 in
 
@@ -18,21 +16,29 @@ in
 #assert builtins.readFile <nixpkgs/.version> == builtins.readFile (nixpkgs + "/.version");
 
 {
-  system.stateVersion = "19.03";
+  system.stateVersion = "20.09";
   system.autoUpgrade.enable = true;
 
   # grouped by singlelinedness
   security.sudo.extraConfig = "Defaults timestamp_timeout=30";
-  security.sudo.configFile = literals.sudoConf;
+  security.sudo.configFile = config.literals.sudoConf;
   boot.blacklistedKernelModules = [ "pcspkr" ];
   time.timeZone = "Europe/Riga";
 
   nix = {
     nixPath = ["nixpkgs=${nixpkgs}:nixos-hardware=${nixos-hardware}:nixos-config=/etc/nixos/configuration.nix"];
-    binaryCaches = [ "https://cache.nixos.org/" ];
     daemonNiceLevel = 19;
     daemonIONiceLevel = 19;
     # gc = { automatic = true; dates = "00:00"; }; # interesting, but no
+
+    binaryCaches = [
+      "https://cache.nixos.org/"
+      "https://all-hies.cachix.org"
+    ];
+    binaryCachePublicKeys = [
+      "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
+    ];
+    trustedUsers = [ "root" "s" ];
   };
 
   nixpkgs.config = {
@@ -40,10 +46,12 @@ in
   };
 
   networking = {
-    firewall.allowedTCPPorts = [ 22 80 8080 22000 65353 ];
+    firewall.enable = false;
+    firewall.allowedTCPPorts = [ 22 80 8080 65353 ];
     networkmanager.enable = true;
     extraHosts = ''
       127.0.0.1 self
+      ${config.literals.privateExtraHosts}
     '';
   };
 
@@ -53,7 +61,7 @@ in
     isNormalUser = true;
     uid = 1000;
     shell = pkgs.zsh;
-    hashedPassword = literals.password;
+    hashedPassword = config.literals.password;
     openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGHwoKCn9k47dD+AiLD757nRkHtjoZV0FZ6vQtujdc5J"];
     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "cdrom" "audio" "camera" "video" "input" ];
     subUidRanges = [{ startUid = 100000; count = 65536; }];

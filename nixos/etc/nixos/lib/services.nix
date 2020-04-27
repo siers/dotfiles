@@ -1,13 +1,8 @@
 { config, pkgs, ... }:
 
-let
-  literals = import ./literals.nix pkgs;
-in
-
 {
   sound.enable = true;
 
-  hardware.brightnessctl.enable = true;
   hardware.bluetooth.enable = true;
 
   programs = {
@@ -15,11 +10,17 @@ in
     zsh.enable = true;
 
     ssh.startAgent = true;
-    ssh.knownHosts = literals.knownHosts;
+    ssh.knownHosts = config.literals.knownHosts;
 
     chromium = {
       enable = true;
-      extensions = literals.chromiumExtensions;
+      extensions = config.literals.chromiumExtensions;
+    };
+
+    gnupg.agent = {
+      enable = true;
+      enableBrowserSocket = true;
+      pinentryFlavor = "gtk2";
     };
 
     gphoto2.enable = true;
@@ -52,6 +53,7 @@ in
       enable = true;
       user = "s";
       dataDir = "/home/s";
+      openDefaultPorts = true;
     };
 
     avahi = {

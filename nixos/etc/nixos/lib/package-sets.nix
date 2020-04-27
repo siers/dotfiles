@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
 with pkgs;
-with (import ./packages.nix pkgs);
 
 let
   nur = fetchTarball {
@@ -10,9 +9,11 @@ let
     sha256 = "04387gzgl8y555b3lkz9aiw9xsldfg4zmzp930m62qw8zbrvrshd";
   };
 
+  siers = import ./packages.nix pkgs;
+
   sets = {
     aliases = [
-      (alias [systemd] "systemctl" "sc")
+      (siers.alias [systemd] "systemctl" "sc")
     ];
 
     services = [
@@ -37,11 +38,12 @@ let
       rxvt_unicode
       #virtmanager
       vlc
+      pinentry_gnome
+      spotify
     ];
 
     # an uncategory for all things large
     nonessential = [
-      filezilla
       firefox
       gimp
       inkscape
@@ -49,6 +51,7 @@ let
       libreoffice
       tigervnc
       imagemagick
+      ffmpeg-full
       #texlive.combined.scheme-full
     ];
 
@@ -56,10 +59,9 @@ let
       autocutsel
       dmenu
       go-upower-notify
-      intel-brightness-script
-      (callPackage (import /home/s/code/nix/packages/footswitch) {})
-      (callPackage (import /home/s/code/nix/packages/rofimoji.nix) {})
       rofi
+      siers.footswitch
+      siers.rofimoji
       unclutter
       xbindkeys
       xcalib
@@ -87,7 +89,9 @@ let
       ncdu
       p7zip
       pass
+      pv
       python
+      pwgen
       ruby
       socat
       tmux
@@ -98,11 +102,11 @@ let
       wget
       which
       zip
+      zstd
     ];
 
     termtoolsFancy = [
       direnv
-      ffmpeg
       fzf
       # geoipWithDatabase
       gnupg
@@ -141,12 +145,24 @@ let
       unrar
     ];
 
-    dev = [
-      docker_compose
+    dev = [ # also work
+      slack
+      tdesktop
+
+      cachix
+      gitAndTools.diff-so-fancy
       manpages
       nix-prefetch-git
       xxd
+
+      # ((import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {}).
+      #   selection { selector = p: { inherit (p) ghc864 ghc843; }; })
+
       nodejs
+      yarn
+
+      docker_compose
+      kubectl
     ];
 
     audio = [
@@ -154,6 +170,7 @@ let
       frescobaldi
       lilypond-unstable
       musescore
+      pasystray
       sox
     ];
 
@@ -163,7 +180,7 @@ let
       findutils
       musescore
       syncthing
-      xclip-for-mac
+      siers.xclip-for-mac
     ];
   };
 
@@ -182,7 +199,7 @@ let
 
     large = nonessential;
 
-    live = builtins.concatLists [ simple dev graphical x ];
+    live = builtins.concatLists [ simple graphical x ];
 
     everything = simple ++ most ++ large;
   };

@@ -51,8 +51,11 @@ alias th=touch
 alias vim=v
 [ -z "$ZSH_DARWIN" ] && alias cal='cal -m'
 alias grep='grep --colour'
+alias gl='grep --line-buffered'
 alias watch='watch -n.5'
 alias hexdump='hexdump -C'
+alias jqu='jq --unbuffered 2>/dev/null'
+alias scsus='systemctl suspend'
 
 alias tmux-alt-shell='tmux bind-key v new-window'
 
@@ -60,12 +63,14 @@ alias g=git
 alias gst='git status'
 alias ga='git add'
 alias gd='git diff'
+alias gb='git checkout -'
 alias gwd='git diff --word-diff'
 alias gk='git checkout'
 alias gr='git reset'
 alias grhu='git reset --hard @{u}'
 alias grm='git remote'
 alias grb='git rebase'
+alias grbc='git rebase --continue'
 alias gbs='git bisect'
 alias gls='git ls-files'
 alias gf='git fetch'
@@ -81,12 +86,12 @@ alias g-='git revert'
 alias be='bundle exec'
 alias b='bundle'
 
-local RAILS_PREFIX="bundle exec"
-alias r="$RAILS_PREFIX rails"
-alias rk="$RAILS_PREFIX rake"
-alias rsp="$RAILS_PREFIX rspec"
-alias rdm="$RAILS_PREFIX rake db:migrate"
-alias rgm="$RAILS_PREFIX rails generate migration"
+# local RAILS_PREFIX="bundle exec"
+# alias r="$RAILS_PREFIX rails"
+# alias rk="$RAILS_PREFIX rake"
+# alias rsp="$RAILS_PREFIX rspec"
+# alias rdm="$RAILS_PREFIX rake db:migrate"
+# alias rgm="$RAILS_PREFIX rails generate migration"
 
 de-nix() { > .envrc <<< "use nix" }
 alias dea='direnv allow'
@@ -95,3 +100,5 @@ alias rn='react-native'
 
 alias dc='docker-compose'
 alias kctl='kubectl'
+alias kctl_='kubectl --context="$KUBECTL_CONTEXT" --namespace="$KUBECTL_NAMESPACE"'
+alias tf='terraform'
