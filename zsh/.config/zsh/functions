@@ -24,7 +24,7 @@ no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
 
 tmx-sel() { tmx $(tmux ls -F '#{session_name}' | fzf); }
 tda() { tmux detach -a; }
-tmux-term() {  run urxvt -e term specific "$(tmux display-message -p '#S')" }
+# tmux-term() {  run urxvt -e term specific "$(tmux display-message -p '#S')" }
 
 zns() { nix-shell "$@" --run zsh }
 direnv-unload() { pushd /; _direnv_hook; popd; }
@@ -51,12 +51,20 @@ gbrdf() { git branch -D "$2" && git push --delete "$1" "$2" }
 gahead() { ! gst --porcelain=2 -b | grep -q 'branch.ab +0'; }
 
 clone() {
-    cd ~/code/cache;
+    cldir="${dir:-$HOME/code/cache}"
+    cd "$cldir";
+
     # remove trailing segments
-    url="$(ruby -e 'u = $<.read; puts(u =~ /github.com/ ? u.match(%r{https?://github.com/[^/]+/[^/]+})[0] : u)' <<< "$1")"
-    dir="$(basename "$url")"
-    [ -e "$dir" ] || git clone $url
+    url="$(ruby -e 'u = $<.read; puts(u =~ /git(lab|hub).*com/ ? u.match(%r{(ssh|https)?://(git@)?(github|gitlab.[^\.]+).com/[^/]+/[^/]+})[0] : u)' <<< "$1")"
+    dir="${2:-$(basename "$url")}"
+
+    [ -e "$dir" ] || git clone $url "$dir"
     cd "$dir"
+}
+
+wclone() {
+    1="$(sed 's/https/ssh/; s!/gitlab!git@gitlab!' <<< "$1")"
+    dir=$HOME/work clone "$@"
 }
 
 rgsample() { rg -l "$@" | sample; }
@@ -71,6 +79,7 @@ frgedit() { find . | rg "$@" | xargs -r vim -p; }
 
 wait() { interval=0.1 wait-diff > /dev/null 2>&1 sh -c 'ls /tmp/flag'; }
 slq() { clip-pipe sh "echo -n \"\\\`\\\`\\\`\$(cat)\\\`\\\`\\\`\""; } # slack quotes
+ft() { date "+%F:%T" }
 
 ## ARGUMENT DEBUG
 

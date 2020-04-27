@@ -95,3 +95,4 @@ alias rn='react-native'
 
 alias dc='docker-compose'
 alias kctl='kubectl'
+alias tf='terraform'
