@@ -1,0 +1,13 @@
+snippet wpkgs
+with (import <nixpkgs> {});
+
+$1
+endsnippet
+
+snippet mksh
+with (import <nixpkgs> {});
+
+mkShell {
+  buildInputs = [$1];
+}
+endsnippet

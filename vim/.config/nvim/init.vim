@@ -6,6 +6,9 @@
 " cnoremap <Space>ex.h <C-r>=fnameescape(expand('%:.:h'))<CR>
 " cnoremap <Space>ex.t <C-r>=expand('%:t')<CR>
 
+" jump to file:
+" ~/.config/nvim/plugin/coc-mappings.vim
+
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://github.com/junegunn/vim-plug/raw/master/plug.vim
 
@@ -55,7 +58,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'https://github.com/guns/jellyx.vim'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 Plug 'https://github.com/vim-airline/vim-airline'
-Plug 'https://github.com/ervandew/supertab'
+" Plug 'https://github.com/ervandew/supertab'
 Plug 'https://github.com/Yggdroot/indentLine'
 Plug 'https://github.com/junegunn/vim-easy-align'
 Plug 'https://github.com/AndrewRadev/splitjoin.vim'
@@ -94,12 +97,12 @@ Plug 'https://github.com/nixprime/cpsm'
 " Plug 'https://github.com/mattn/emmet-vim' " div#foo<C-y>, => <div id=foo>
 
 Plug 'junegunn/fzf'
-" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-" Plug 'roxma/nvim-completion-manager'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-let g:deoplete#enable_at_startup = 1
-Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 Plug 'vim-syntastic/syntastic'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
+Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
+Plug 'liuchengxu/vista.vim'
 
 if ! exists("vimpager")
     " No commands below this comment will be executed in vimpager,
@@ -151,9 +154,6 @@ xmap ga <Plug>(EasyAlign) | nmap ga <Plug>(EasyAlign)
 
 nnoremap <Leader>eh :SidewaysLeft<CR>
 nnoremap <Leader>el :SidewaysRight<CR>
-nnoremap <leader>er :RainbowLevelsToggle<cr>
-
-command! Session :Obsession .session.vim
 
 " Just like standard f/F except it works on multiple lines.
 nmap f <Plug>Sneak_f
@@ -166,16 +166,26 @@ vmap F <Plug>Sneak_F
 nmap <Plug>(Go_away_Sneak_s) <Plug>Sneak_s
 nmap <Plug>(Go_away_Sneak_S) <Plug>Sneak_S
 
-let g:rainbow_levels = [
-    \{'ctermbg': 232, 'guibg': '#121212'},
-    \{'ctermbg': 233, 'guibg': '#1c1c1c'},
-    \{'ctermbg': 234, 'guibg': '#262626'},
-    \{'ctermbg': 235, 'guibg': '#303030'},
-    \{'ctermbg': 236, 'guibg': '#3a3a3a'},
-    \{'ctermbg': 237, 'guibg': '#444444'},
-    \{'ctermbg': 238, 'guibg': '#4e4e4e'},
-    \{'ctermbg': 239, 'guibg': '#585858'},
-    \{'ctermbg': 240, 'guibg': '#626262'}]
+nnoremap <Tab> :CocCommand explorer<CR>
+
+call coc#config('explorer', {
+      \ 'keyMappings.<tab>': 'quit',
+      \ 'keyMappings.<cr>': ['expandable?', 'expandOrCollapse', 'open'],
+      \ 'openAction.changeDirectory': 0,
+      \ 'quitOnOpen': 1,
+      \ 'sources': [{'name': 'file', 'expand': 1}],
+      \ 'file.columns': ['git', 'indent', 'icon', 'filename', 'readonly', ['fullpath'], ['size'], ['created'], ['modified']],
+      \ 'file.showHiddenFiles': 1,
+      \ 'width': 60,
+      \ 'icon.enableNerdfont': 1,
+      \ 'previewAction.onHover': 0,
+      \ })
+
+nnoremap <Backspace> :Vista!!<CR>
+
+let g:vista_default_executive = 'coc'
+let g:vista_close_on_jump = 1
+let g:vista_sidebar_width = 60
 
 " ==============================================================================
 
@@ -183,23 +193,30 @@ filetype plugin indent on
 syntax on
 silent! colorscheme jellyx
 
-if ! exists("vimpager")
-    set list lcs=tab:»·,trail:·
-else
-    set nonumber
-endif
-
 " When reading a file, jump to the last cursor position.
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 au FileType go         setlocal noet
 au FileType vim        nnoremap <buffer> <F9> :source %<CR>
-au FileType haskell    setlocal sw=4 ts=4
-au FileType ruby,terraform,yaml,javascript,nix,scss,vim,vue,css,erb,haskell setlocal sw=2 ts=2
+au FileType ruby,terraform,yaml,javascript,nix,scss,vim,vue,css,erb,haskell,scala setlocal sw=2 ts=2
 au FileType erb setlocal sw=2 ts=2
 autocmd BufWritePre * %s/\s\+$//e
-map <silent> <leader>st :set ts=2 sw=2<CR>
 
 " ==============================================================================
+
+" :Share to sprunge.us
+exec 'command! -range=% Share :<line1>,<line2>write !pasty'
+
+command! Config :tabedit ~/.config/nvim/init.vim
+command! NF :tabedit notes
+command! NN :tabedit notes/notes
+command! -range=% Sum :<line1>,<line2>!paste -sd+ | bc
+command! CL :tabedit %
+
+command! Session :Obsession .session.vim
+command! PI :PlugInstall
+command! PC :PlugClean
+
+"
 
 ca te tabedit
 ca W w
@@ -212,7 +229,7 @@ map <Leader>s :%s/\s\+$//<CR>
 map <Leader>x :%s/>/>\r/g<CR>gg=G
 map <Leader>y myggVG"+y`ymyzz
 map <Leader>l :setlocal nowrap!<CR>
-map <Leader>t :set paste!<CR>
+map <Leader>T :set paste!<CR>
 map <Leader>N :set relativenumber!<CR>
 
 " map <Leader>h vip!hs-import-sort<CR>:w<CR>
@@ -220,22 +237,21 @@ map <Leader>i ?^import <CR>:noh<CR>
 map <Leader>i ?^import <CR>:noh<CR>
 map <Leader>v vip!sort<CR>:w<CR>
 
-map <Leader>p :!realpath % \| tr -d '\n' \| xclip<CR><CR>
-map <Leader>o :!realpath --relative-to=. % \| tr -d '\n' \| xclip<CR><CR>
-map <Leader>O :!echo -n "$(basename %)" \| xclip<CR><CR>
-map <Leader>r :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+map <Leader>P :!realpath % \| tr -d '\n' \| xclip<CR><CR>
+map <Leader>O :!realpath --relative-to=. % \| tr -d '\n' \| xclip<CR><CR>
+map <Leader>I :!echo -n "$(basename %)" \| xclip<CR><CR>
+map <Leader>R :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 " git show
+map <Leader>X :!run tmux-term<CR>
 map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR>
 map <silent> gr :tabm +1<CR>
 map <silent> gR :tabm -1<CR>
 
-" map <Leader>b :ls<CR>:b
-map <Leader>gb :Gblame<CR>
-map <Leader>gd :Gdiff<CR>
+" map <Leader>GB :Gblame<CR>
+" map <Leader>GD :Gdiff<CR>
 map <Leader>gu :Gbrowse!<CR>
-map <Leader>q :wq<CR>
-map <Leader>w :w<CR>
-map <Leader>e :e<CR>
+" map <Leader>q :wq<CR>
+" map <Leader>w :w<CR>
 map <C-n> gT
 map <C-m> gt
 map <M-a> gT
@@ -246,8 +262,6 @@ map <M-z> :q<CR>
 
 nnoremap <M-n> ^
 nnoremap <M-m> $
-map [o O<ESC>
-map ]o o<ESC>
 map <M-h> <C-w>h
 map <M-j> <C-w>j
 map <M-k> <C-w>k
@@ -264,7 +278,6 @@ cnoremap mk. !mkdir -p <c-r>=expand("%:h")<cr>/
 nnoremap zh 10zh
 nnoremap zl 10zl
 
-map <silent> <F1> :NERDTreeToggle<CR>
 nnoremap <F4> <C-R>=strftime("%b %-d")<CR>P
 inoremap <F4> <C-R>=strftime("%b %-d")<CR>
 nnoremap <F5> "=strftime("%c")<CR>P
@@ -274,21 +287,12 @@ inoremap <F6> <C-R>=strftime("%F.%T")<CR>
 nmap <F9> :!./%<CR>
 map <F10> :!make clean &<CR><CR>
 map <F11> :!make &<CR><CR>
-map <silent> <leader>c :%!rufo 2> /dev/null \|\| :<CR>
 inoremap <F6> <C-R>=strftime("%F-%T")<CR>
 
 " Reselect last pasted text.
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
-" ==============================================================================
-
-" :Share to sprunge.us
-exec 'command! -range=% Share :<line1>,<line2>write !pasty'
-
-command! Config :tabedit ~/.config/nvim/init.vim
-command! NF :tabedit notes
-command! NN :tabedit notes/notes
-command! -range=% Sum :<line1>,<line2>!paste -sd+ | bc
+" maps with functions
 
 function! s:MoveLine(direction) " Move line <count> lines higher/lower.
     if a:direction == 'k'
@@ -309,3 +313,11 @@ function! s:CharacterDelta(delta) " Char analog of C-{x,a}
 endf
 map <M-x> :call <SID>CharacterDelta(1)<CR>
 map <M-c> :call <SID>CharacterDelta(-1)<CR>
+
+" vimpager fix
+
+if ! exists("vimpager")
+    set list lcs=tab:»·,trail:·
+else
+    set nonumber
+endif
