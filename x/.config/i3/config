@@ -153,4 +153,4 @@ bar {
     tray_output primary
 }
 
-exec ~/bin/wrappers/term in-tag
+exec ~/code/bin/wrappers/term in-tag

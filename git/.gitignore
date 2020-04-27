@@ -24,3 +24,7 @@ gnore-*
 /config/initializers/development_includes.rb
 /.*.swp
 *.dot
+
+.bloop
+.metals
+project/metals.sbt

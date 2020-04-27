@@ -33,6 +33,6 @@ urxvtd           &
 #udiskie          &
 libinput-gestures &
 
-~/code/desktop/symbols/make &
+~/code/df/symbols/make &
 
 exec herbstluftwm

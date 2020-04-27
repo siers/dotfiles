@@ -6,7 +6,7 @@
 ;; ;; ;;
 
 (xbindkey '(Mod4 Control Shift f)   "sudo /root/iptables.sh")
-(xbindkey '(Mod4 Control Shift x)   "sleep 0.1; pkill xbindkeys; xbindkeys && click || alert")
+(xbindkey '(Mod4 Control Shift x)   "sleep 0.1; pkill xbindkeys; xbindkeys && (click && notify-send 'xbindkeys restarted') || alert")
 
 (xbindkey '(Mod4 Return)            "term || urxvt")
 (xbindkey '(Mod4 Shift Return)      "term in-tag")
@@ -66,7 +66,7 @@
 
 ; all the keypad binds
 
-(xbindkey '(KP_Home)                "chromium")
+(xbindkey '(Mod4 shift f)           "google-chrome-stable")
 (xbindkey '(Shift KP_Home)          "chromium --incognito")
 (xbindkey '(Control KP_Home)        "chromium hide random")
 (xbindkey '(Shift Control KP_Home)  "chromium hide random proxy")
