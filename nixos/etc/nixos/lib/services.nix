@@ -40,8 +40,12 @@ in
       enable = true;
       layout = "lv";
 
-      autoRepeatDelay = 200;
+      autoRepeatDelay = 175;
       autoRepeatInterval = 25;
+
+      displayManager.sessionCommands = ''
+        ${pkgs.xorg.xset}/bin/xset r rate 175 25
+      '';
     };
 
     syncthing = {

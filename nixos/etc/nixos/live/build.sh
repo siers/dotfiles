@@ -75,7 +75,7 @@ reburn-iso() {
 }
 
 reburn() {
-    reburn-home # might change image offset/size, so goe sfirst
+    reburn-home # might change image offset/size, so goes first
     reburn-iso
 }
 

@@ -48,6 +48,7 @@ let
       k3b
       libreoffice
       tigervnc
+      imagemagick
       #texlive.combined.scheme-full
     ];
 
@@ -167,9 +168,9 @@ let
   };
 
   derived = with sets; rec {
-    simple = termtoolsEssential ++ termtoolsFancy ++ aliases;
-    simple-linux = simple ++ termtoolsLinux;
-    simple-darwin = simple ++ darwin;
+    simple-cross = termtoolsEssential ++ termtoolsFancy ++ aliases;
+    simple-darwin = simple-cross ++ darwin;
+    simple = simple-cross ++ termtoolsLinux;
 
     most = builtins.concatLists [
       audio
@@ -181,7 +182,7 @@ let
 
     large = nonessential;
 
-    live = builtins.concatLists [ simple graphical x ];
+    live = builtins.concatLists [ simple dev graphical x ];
 
     everything = simple ++ most ++ large;
   };

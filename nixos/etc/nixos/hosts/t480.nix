@@ -23,7 +23,7 @@
     { mountPoint = "/boot"; device = "/dev/sda2"; fsType = "vfat"; options = ["noatime" "nofail"]; }
     { mountPoint = "/home"; device = "/dev/mapper/enc-home"; fsType = "ext4"; options = ["noatime" "nofail"]; }
     { mountPoint = "/tmp"; device = "tmpfs"; fsType = "tmpfs"; options = ["nosuid" "nodev" "relatime"]; }
-  ] ++ import ../lib/syncthing.nix;
+  ] ++ import ../lib/syncthing.nix {};
 
   swapDevices = [ { device = "/dev/vg/swap"; } ];
 

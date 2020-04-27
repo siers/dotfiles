@@ -5,17 +5,17 @@ let
 
   # also update NUR in lib/package-sets.nix
   nixpkgs = fetchTarball {
-    url = "https://nixos.org/channels/nixos-19.09/nixexprs.tar.xz?2020-04-14";
-    sha256 = "1xbs2fdzgw5lkwly523aiqdw9q4qq6x4nyl69rq1pc5hm7ifk14y";
+    url = "https://channels.nixos.org/nixos-20.03/nixexprs.tar.xz?2020-04-25";
+    sha256 = "13jfqal1l9sgdap9599rv9azvprqb1xp6fqa2qx9pnx02mxvnq7m";
   };
   nixos-hardware = fetchTarball {
-    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2020-04-14";
-    sha256 = "00r28jglx47wd2gd1bcs8m44z7a6hs5d8j48f0xjvc6s512359bm";
+    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2020-04-25";
+    sha256 = "0mgsyahm4w8ngl50fajbnjg8vw6v6pjxcjk4a7zfnnyrhfiykpqv";
   };
 in
 
 # I hope this makes sense... not sure any more
-assert builtins.readFile <nixpkgs/.version> == builtins.readFile (nixpkgs + "/.version");
+#assert builtins.readFile <nixpkgs/.version> == builtins.readFile (nixpkgs + "/.version");
 
 {
   system.stateVersion = "19.03";
@@ -43,7 +43,7 @@ assert builtins.readFile <nixpkgs/.version> == builtins.readFile (nixpkgs + "/.v
     firewall.allowedTCPPorts = [ 22 80 8080 22000 65353 ];
     networkmanager.enable = true;
     extraHosts = ''
-      127.0.0.1 self node-0 node-1 node-2 node-3 node-4 node-5 node-6 node-7 node-8 node-9
+      127.0.0.1 self
     '';
   };
 

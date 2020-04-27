@@ -1,3 +1,5 @@
+{ excluding ? [] }:
+
 let
   homemount = from: to: {
     mountPoint = "/home/s/" + to;
@@ -9,8 +11,8 @@ let
 
   syncmounts = map syncmount ["code" "data" "log"];
 
-  rest = [
-    (homemount ".syncthing/shares/pdf" "pdf")
+  rest = builtins.concatLists [
+    (if (builtins.elem "pdf" excluding) then [] else [(homemount ".syncthing/shares/pdf" "pdf")])
   ];
 in
   syncmounts ++ rest
