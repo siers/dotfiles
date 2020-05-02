@@ -8,30 +8,10 @@
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/328d221c-b57e-493d-8577-b57804065e28";
-      fsType = "ext4";
-    };
-
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/68ca596f-f812-4977-84f0-68b7585d2641";
-      fsType = "ext4";
-    };
-
-  boot.initrd.luks.devices."two".device = "/dev/disk/by-uuid/79e9c6d6-6c41-4951-95c2-a98dafe11507";
-
-  fileSystems."/home/s/code" =
-    { device = "/home/s/.syncthing/shares/home/code";
-      fsType = "none";
-      options = [ "bind" ];
-    };
-
-  swapDevices = [ ];
-
   nix.maxJobs = lib.mkDefault 4;
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  # powerManagement.cpuFreqGovernor = "powersave"; # because of musnix
 }

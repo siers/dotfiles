@@ -7,7 +7,6 @@ in
 {
   sound.enable = true;
 
-  hardware.brightnessctl.enable = true;
   hardware.bluetooth.enable = true;
 
   programs = {

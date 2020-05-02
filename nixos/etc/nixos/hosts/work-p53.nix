@@ -26,6 +26,6 @@
     headless = true;
   };
 
-  environment.systemPackages =
-    (with pkgs; [ sbt openjdk nodejs yarn jetbrains.idea-community ]);
+  environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything ++
+    (with pkgs; [ sbt openjdk11 nodejs yarn jetbrains.idea-community ]);
 }

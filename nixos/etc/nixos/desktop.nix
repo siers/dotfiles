@@ -11,5 +11,6 @@ in
       ./lib/audio.nix
       ./lib/services.nix
       ./lib/dev.nix
+      ./lib/gnome-support.nix
     ];
 }

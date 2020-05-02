@@ -147,6 +147,7 @@ let
       nix-prefetch-git
       xxd
       nodejs
+      yarn
     ];
 
     audio = [

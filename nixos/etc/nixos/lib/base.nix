@@ -5,8 +5,8 @@ let
 
   # also update NUR in lib/package-sets.nix
   nixpkgs = fetchTarball {
-    url = "https://channels.nixos.org/nixos-20.03/nixexprs.tar.xz?2020-04-25";
-    sha256 = "13jfqal1l9sgdap9599rv9azvprqb1xp6fqa2qx9pnx02mxvnq7m";
+    url = "https://channels.nixos.org/nixos-20.03/nixexprs.tar.xz?2020-04-30";
+    sha256 = "06frjsyzfcak6glxaiiayh0wp0l7nwps29f06j3d318wdk822vdq";
   };
   nixos-hardware = fetchTarball {
     url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2020-04-25";
@@ -44,6 +44,7 @@ in
     networkmanager.enable = true;
     extraHosts = ''
       127.0.0.1 self
+      ${literals.privateExtraHosts}
     '';
   };
 

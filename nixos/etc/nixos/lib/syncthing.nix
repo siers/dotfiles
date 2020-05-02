@@ -1,10 +1,11 @@
-{ excluding ? [] }:
+{ excluding ? [], recursiveUpdate }:
 
 let
   homemount = from: to: {
-    mountPoint = "/home/s/" + to;
-    device = "/home/s/" + from;
-    options = ["bind" "nofail"];
+    "/home/s/${to}" = {
+      device = "/home/s/" + from;
+      options = ["bind" "nofail"];
+    };
   };
 
   syncmount = dir: homemount (".syncthing/shares/home/" + dir) dir;
@@ -14,5 +15,7 @@ let
   rest = builtins.concatLists [
     (if (builtins.elem "pdf" excluding) then [] else [(homemount ".syncthing/shares/pdf" "pdf")])
   ];
+
+  foldMounts = builtins.foldl' recursiveUpdate {};
 in
-  syncmounts ++ rest
+  foldMounts (syncmounts ++ rest)
