@@ -6,6 +6,7 @@
     ./t480-hardware.nix
     <nixos-hardware/lenovo/thinkpad/t480s>
     ../lib/libinput.nix
+    ../lib/printing.nix
     # ../lib/packages/steam.nix
   ];
 

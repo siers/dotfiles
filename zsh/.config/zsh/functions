@@ -62,6 +62,10 @@ clone() {
     cd "$dir"
 }
 
+ccc() {
+    clone "$(xclip -o clipboard)"
+}
+
 wclone() {
     1="$(sed 's/https/ssh/; s!/gitlab!git@gitlab!' <<< "$1")"
     dir=$HOME/work clone "$@"

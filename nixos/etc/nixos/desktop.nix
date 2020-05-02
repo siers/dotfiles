@@ -12,5 +12,6 @@ in
       ./lib/services.nix
       ./lib/dev.nix
       ./lib/gnome-support.nix
+      ./lib/fonts.nix
     ];
 }
