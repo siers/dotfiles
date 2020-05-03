@@ -1,9 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  literals = import ./literals.nix pkgs;
-in
-
 {
   sound.enable = true;
 
@@ -14,11 +10,11 @@ in
     zsh.enable = true;
 
     ssh.startAgent = true;
-    ssh.knownHosts = literals.knownHosts;
+    ssh.knownHosts = config.literals.knownHosts;
 
     chromium = {
       enable = true;
-      extensions = literals.chromiumExtensions;
+      extensions = config.literals.chromiumExtensions;
     };
 
     gphoto2.enable = true;

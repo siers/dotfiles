@@ -8,6 +8,7 @@
     ../lib/libinput.nix
     ../lib/printing.nix
     # ../lib/packages/steam.nix
+    ../lib/openvpn.nix
   ];
 
   networking.hostName = "t480";

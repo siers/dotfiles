@@ -1,8 +1,6 @@
 { config, pkgs, ... }:
 
 let
-  literals = import ./literals.nix pkgs;
-
   # also update NUR in lib/package-sets.nix
   nixpkgs = fetchTarball {
     url = "https://channels.nixos.org/nixos-20.03/nixexprs.tar.xz?2020-04-30";
@@ -23,7 +21,7 @@ in
 
   # grouped by singlelinedness
   security.sudo.extraConfig = "Defaults timestamp_timeout=30";
-  security.sudo.configFile = literals.sudoConf;
+  security.sudo.configFile = config.literals.sudoConf;
   boot.blacklistedKernelModules = [ "pcspkr" ];
   time.timeZone = "Europe/Riga";
 
@@ -44,7 +42,7 @@ in
     networkmanager.enable = true;
     extraHosts = ''
       127.0.0.1 self
-      ${literals.privateExtraHosts}
+      ${config.literals.privateExtraHosts}
     '';
   };
 
@@ -54,7 +52,7 @@ in
     isNormalUser = true;
     uid = 1000;
     shell = pkgs.zsh;
-    hashedPassword = literals.password;
+    hashedPassword = config.literals.password;
     openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGHwoKCn9k47dD+AiLD757nRkHtjoZV0FZ6vQtujdc5J"];
     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "cdrom" "audio" "camera" "video" "input" ];
     subUidRanges = [{ startUid = 100000; count = 65536; }];
