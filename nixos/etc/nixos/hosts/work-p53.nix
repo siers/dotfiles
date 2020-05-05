@@ -5,7 +5,10 @@
   [
     ./work-p53-hardware.nix
     <nixos-hardware/lenovo/thinkpad/p53>
+
     ../lib/libinput.nix
+    ../lib/openvpn.nix
+    ../lib/printing.nix
   ];
 
   networking.hostName = "rv-p53";
@@ -16,10 +19,6 @@
   #
 
   services = (import ../lib/xserver.nix).xfce-i3-backlight;
-
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  hardware.cpu.intel.updateMicrocode = true;
 
   virtualisation.virtualbox.host = {
     enable = true;
