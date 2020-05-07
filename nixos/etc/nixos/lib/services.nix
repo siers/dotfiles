@@ -47,6 +47,7 @@
       enable = true;
       user = "s";
       dataDir = "/home/s";
+      openDefaultPorts = true;
     };
 
     avahi = {

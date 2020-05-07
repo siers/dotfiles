@@ -141,13 +141,19 @@ let
       unrar
     ];
 
-    dev = [
-      docker_compose
+    dev = [ # also work
+      slack
+      tdesktop
+
       manpages
       nix-prefetch-git
       xxd
+
       nodejs
       yarn
+
+      docker_compose
+      kubectl
     ];
 
     audio = [
@@ -183,7 +189,7 @@ let
 
     large = nonessential;
 
-    live = builtins.concatLists [ simple dev graphical x ];
+    live = builtins.concatLists [ simple graphical x ];
 
     everything = simple ++ most ++ large;
   };

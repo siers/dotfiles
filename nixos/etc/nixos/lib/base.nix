@@ -38,7 +38,7 @@ in
   };
 
   networking = {
-    firewall.allowedTCPPorts = [ 22 80 8080 22000 65353 ];
+    firewall.allowedTCPPorts = [ 22 80 8080 65353 ];
     networkmanager.enable = true;
     extraHosts = ''
       127.0.0.1 self

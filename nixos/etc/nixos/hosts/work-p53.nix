@@ -26,5 +26,5 @@
   };
 
   environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything ++
-    (with pkgs; [ sbt openjdk11 nodejs yarn jetbrains.idea-community ]);
+    (with pkgs; [ sbt openjdk11 jetbrains.idea-community ]);
 }

@@ -13,7 +13,7 @@ then
     export ZSH_PATH_INIT=1
 
     [ -e ~/code/bin ] &&
-        export PATH="$(find -L ~/code/bin -type d | tr '\n' :)$PATH"
+        export PATH="$(find -L ~/code/bin -type d -not -path '*/\.*' | tr '\n' :)$PATH"
 
     [ -e ~/.local/bin ] &&
         export PATH="$HOME/.local/bin:$PATH"
