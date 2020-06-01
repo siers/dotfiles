@@ -45,6 +45,7 @@ let g:mapleader = "\<Space>"
 " Plugins {{{
 call plug#begin('~/.config/nvim/plugged')
 
+" Plug 'https://github.com/drewtempelmeyer/palenight.vim'
 Plug 'https://github.com/guns/jellyx.vim'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 Plug 'https://github.com/vim-airline/vim-airline'
@@ -89,7 +90,7 @@ Plug 'https://github.com/ekalinin/Dockerfile.vim'
 Plug 'https://github.com/wsdjeg/vim-fetch'
 Plug 'https://github.com/HerringtonDarkholme/yats.vim', {'for': ['typescript', 'typescript.jsx']}
 Plug 'https://github.com/nixprime/cpsm'
-Plug 'https://github.com/junegunn/fzf'
+Plug 'https://github.com/junegunn/fzf.vim'
 " Plug 'https://github.com/mattn/emmet-vim' " div#foo<C-y>, => <div id=foo>
 " Plug 'https://github.com/ervandew/supertab'
 " Plug 'https://github.com/AndrewRadev/splitjoin.vim'
@@ -101,33 +102,7 @@ call plug#end()
 
 " Plugin settings {{{
 silent! colorscheme jellyx
-
-nnoremap <Tab> :CocCommand explorer<CR>
-
-call coc#config('coc.preferences', {
-      \ 'diagnostic.errorSign': 'E',
-      \ 'diagnostic.warningSign': 'W',
-      \ 'diagnostic.infoSign': 'I',
-      \ 'diagnostic.hintSign': 'H',
-      \ })
-
-call coc#config('diagnostic', {
-      \ 'refreshAfterSave': 0,
-      \ 'maxWindowHeight': 16,
-      \ })
-
-call coc#config('explorer', {
-      \ 'keyMappings.<tab>': 'quit',
-      \ 'keyMappings.<cr>': ['expandable?', 'expandOrCollapse', 'open'],
-      \ 'openAction.changeDirectory': 0,
-      \ 'quitOnOpen': 1,
-      \ 'sources': [{'name': 'file', 'expand': 1}],
-      \ 'file.columns': ['git', 'indent', 'icon', 'filename', 'readonly', ['fullpath'], ['size'], ['created'], ['modified']],
-      \ 'file.showHiddenFiles': 1,
-      \ 'width': 60,
-      \ 'icon.enableNerdfont': 1,
-      \ 'previewAction.onHover': 0,
-      \ })
+" silent! colorscheme palenight
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_mode_map = { "mode": "active",
@@ -172,6 +147,47 @@ function! CtrlP()
 endfunction
 
 nnoremap <C-p> :call CtrlP()<CR>
+
+Plug 'https://gist.github.com/drasill/ff9b94025dc8aa7e404f',
+    \ { 'dir': g:plug_home.'/vim-fzf-git-ls-files/plugin', 'rtp': '..' }
+
+" }}}
+
+" Language servers {{{
+call coc#config('coc.preferences', {
+      \ 'diagnostic.errorSign': 'E',
+      \ 'diagnostic.warningSign': 'W',
+      \ 'diagnostic.infoSign': 'I',
+      \ 'diagnostic.hintSign': 'H',
+      \ })
+
+call coc#config('diagnostic', {
+      \ 'refreshAfterSave': 0,
+      \ 'maxWindowHeight': 16,
+      \ })
+
+call coc#config('explorer', {
+      \ 'keyMappings.<tab>': 'quit',
+      \ 'keyMappings.<cr>': ['expandable?', 'expandOrCollapse', 'open'],
+      \ 'openAction.changeDirectory': 0,
+      \ 'quitOnOpen': 1,
+      \ 'sources': [{'name': 'file', 'expand': 1}],
+      \ 'file.columns': ['git', 'indent', 'icon', 'filename', 'readonly', ['fullpath'], ['size'], ['created'], ['modified']],
+      \ 'file.showHiddenFiles': 1,
+      \ 'width': 60,
+      \ 'icon.enableNerdfont': 1,
+      \ 'previewAction.onHover': 0,
+      \ })
+
+call coc#config('languageserver.haskell', {
+      \ 'command': 'hie-wraper',
+      \ 'args': ['--lsp'],
+      \ "rootPatterns": ["stack.yaml", "cabal.config", "package.yaml"],
+      \ "filetypes": ["hs", "lhs", "haskell" ],
+      \ "initializationOptions.languageServerHaskell": {},
+      \ })
+
+" nnoremap <Tab> :CocCommand explorer<CR>
 " }}}
 
 " Autocmds {{{
@@ -211,6 +227,7 @@ command! NF :tabedit notes
 command! NN :tabedit notes/notes
 command! -range=% Sum :<line1>,<line2>!paste -sd+ | bc
 command! CL :tabedit %
+command! RMNL :%g/^$/d
 
 command! Session :Obsession .session.vim
 command! PI :PlugInstall
@@ -233,7 +250,7 @@ map <Leader>P :!realpath % \| tr -d '\n' \| xclip<CR><CR>
 map <Leader>O :!realpath --relative-to=. % \| tr -d '\n' \| xclip<CR><CR>
 map <Leader>I :!echo -n "$(basename %)" \| xclip<CR><CR>
 map <Leader>R :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-map <Leader>X :!run tmux-term<CR>
+map <Leader>X :!run tmux-term<CR><CR>
 map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR> " show commit
 
 cnoremap mk. !mkdir -p <c-r>=expand("%:h")<cr>/
@@ -272,15 +289,13 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Visually select word under the cursor without moving.
-nmap * g*<C-o>
-nmap # g#<C-o>
+nmap * g*N
+nmap # g#N
 
 ca te tabedit
 ca W w
 ca E e
 ca Q q
-nnoremap <M-n> ^
-nnoremap <M-m> $
 map <M-h> <C-w>h
 map <M-j> <C-w>j
 map <M-k> <C-w>k
@@ -289,10 +304,9 @@ map <M-q> <C-w>s
 map <M-w> <C-w>v
 map <C-n> gT
 map <C-m> gt
-map <M-a> gT
-map <M-s> gt
 map <C-t> :tabnew %<CR><C-o>zz
-map <M-r> :tabnew<CR>gR
+nnoremap <Leader>N :tabnew<CR>:tabm -1<CR>
+nnoremap <Leader>M :tabnew<CR>
 map <M-z> :q<CR>
 " }}}
 
@@ -316,4 +330,12 @@ function! s:CharacterDelta(delta) " Char analog of C-{x,a}
 endf
 map <M-x> :call <SID>CharacterDelta(1)<CR>
 map <M-c> :call <SID>CharacterDelta(-1)<CR>
+" }}}
+
+" Functions {{{
+function! SaveTrash(...)
+  exe printf("write! trash/%s", strftime("%F-%H-%M"))
+endf
+
+command! Trash :call SaveTrash()
 " }}}
