@@ -37,6 +37,7 @@ let
       rxvt_unicode
       #virtmanager
       vlc
+      pinentry_gnome
     ];
 
     # an uncategory for all things large
@@ -49,6 +50,7 @@ let
       libreoffice
       tigervnc
       imagemagick
+      ffmpeg-full
       #texlive.combined.scheme-full
     ];
 
@@ -102,7 +104,6 @@ let
 
     termtoolsFancy = [
       direnv
-      ffmpeg
       fzf
       # geoipWithDatabase
       gnupg
@@ -145,9 +146,13 @@ let
       slack
       tdesktop
 
+      cachix
       manpages
       nix-prefetch-git
       xxd
+
+      ((import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {}).
+        selection { selector = p: { inherit (p) ghc864 ghc863 ghc843; }; })
 
       nodejs
       yarn

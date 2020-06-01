@@ -27,10 +27,18 @@ in
 
   nix = {
     nixPath = ["nixpkgs=${nixpkgs}:nixos-hardware=${nixos-hardware}:nixos-config=/etc/nixos/configuration.nix"];
-    binaryCaches = [ "https://cache.nixos.org/" ];
     daemonNiceLevel = 19;
     daemonIONiceLevel = 19;
     # gc = { automatic = true; dates = "00:00"; }; # interesting, but no
+
+    binaryCaches = [
+      "https://cache.nixos.org/"
+      "https://all-hies.cachix.org"
+    ];
+    binaryCachePublicKeys = [
+      "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
+    ];
+    trustedUsers = [ "root" "s" ];
   };
 
   nixpkgs.config = {
@@ -38,6 +46,7 @@ in
   };
 
   networking = {
+    firewall.enable = false;
     firewall.allowedTCPPorts = [ 22 80 8080 65353 ];
     networkmanager.enable = true;
     extraHosts = ''

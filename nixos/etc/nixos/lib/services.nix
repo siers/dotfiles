@@ -17,6 +17,12 @@
       extensions = config.literals.chromiumExtensions;
     };
 
+    gnupg.agent = {
+      enable = true;
+      enableBrowserSocket = true;
+      pinentryFlavor = "gtk2";
+    };
+
     gphoto2.enable = true;
   };
 

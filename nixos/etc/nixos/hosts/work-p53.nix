@@ -26,5 +26,10 @@
   };
 
   environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything ++
-    (with pkgs; [ sbt openjdk11 jetbrains.idea-community ]);
+    (with pkgs; [
+      (sbt.override { jre = openjdk11; })
+      openjdk11
+      jetbrains.idea-community
+      teams
+    ]);
 }
