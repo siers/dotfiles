@@ -147,12 +147,13 @@ let
       tdesktop
 
       cachix
+      gitAndTools.diff-so-fancy
       manpages
       nix-prefetch-git
       xxd
 
-      ((import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {}).
-        selection { selector = p: { inherit (p) ghc864 ghc863 ghc843; }; })
+      # ((import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {}).
+      #   selection { selector = p: { inherit (p) ghc864 ghc843; }; })
 
       nodejs
       yarn
@@ -166,6 +167,7 @@ let
       frescobaldi
       lilypond-unstable
       musescore
+      pasystray
       sox
     ];
 

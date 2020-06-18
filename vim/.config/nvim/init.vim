@@ -21,12 +21,13 @@ set ffs=unix,dos,mac
 set history=10000
 set undofile
 
-set list lcs=tab:»·,trail:·
+set list listchars=tab:»·,tab:→\ ,trail:·,nbsp:·
 set expandtab shiftround smarttab autoindent
 set laststatus=2 tabstop=4 shiftwidth=4 showtabline=4 softtabstop=4
 set bs=indent,eol,start
 set cursorline number
 set nofoldenable foldmethod=indent
+set breakindent showbreak=\|- showbreak=\\_
 
 set ignorecase smartcase incsearch hlsearch
 set wildmenu wildmode=longest,full
@@ -70,11 +71,12 @@ Plug 'https://github.com/shumphrey/fugitive-gitlab.vim'
 Plug 'https://github.com/tpope/vim-rhubarb'
 Plug 'https://github.com/tommcdo/vim-fubitive'
 
-Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
+Plug 'https://github.com/neoclide/coc.nvim' ", {'branch': 'release'}
 Plug 'https://github.com/neoclide/coc-json', {'do': 'yarn install --frozen-lockfile --force'}
 Plug 'https://github.com/neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile --force'}
 Plug 'https://github.com/scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile --force'}
 Plug 'https://github.com/weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile --force'}
+" Plug 'https://github.com/puremourning/vimspector'
 
 Plug 'https://github.com/LnL7/vim-nix'
 Plug 'https://github.com/isRuslan/vim-es6'
@@ -187,7 +189,12 @@ call coc#config('languageserver.haskell', {
       \ "initializationOptions.languageServerHaskell": {},
       \ })
 
+call coc#config("coc.preferences.formatOnSaveFiletypes", ["scala"])
+call coc#config("coc.preferences.formatOnSaveFiletypes", [])
+
 " nnoremap <Tab> :CocCommand explorer<CR>
+let g:vimspector_enable_mappings = 'HUMAN'
+" packadd! vimspector
 " }}}
 
 " Autocmds {{{
@@ -237,7 +244,92 @@ command! PC :PlugClean
 exec 'command! -range=% Share :<line1>,<line2>write !pasty'
 " }}}
 
-" Jump to file: ~/.config/nvim/plugin/coc-mappings.vim
+" Intellisense maps {{{
+" You will have a bad experience with diagnostic messages with the default of 4000.
+set updatetime=300
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> <leader>gr <Plug>(coc-references)
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Toggle panel with Tree Views
+nnoremap <silent> <space>t :<C-u>CocCommand metals.tvp<CR>
+" Toggle Tree View 'metalsBuild'
+nnoremap <silent> <space>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
+" Toggle Tree View 'metalsCompile'
+nnoremap <silent> <space>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
+" Reveal current current class (trait or object) in Tree View 'metalsBuild'
+nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
+
+" Use K to either doHover or show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" My own mappings
+nmap <space>e :CocCommand explorer<CR>
+"
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by another plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" Used in the tab autocompletion for coc
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" }}}
 
 " Creative maps {{{
 map <Leader>sf :s/_/-/g<CR>^gu$ " lowercase + _→-
@@ -249,9 +341,10 @@ map <Leader>v vip!sort<CR>:w<CR>
 map <Leader>P :!realpath % \| tr -d '\n' \| xclip<CR><CR>
 map <Leader>O :!realpath --relative-to=. % \| tr -d '\n' \| xclip<CR><CR>
 map <Leader>I :!echo -n "$(basename %)" \| xclip<CR><CR>
-map <Leader>R :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+map <Leader>R :setlocal relativenumber!<CR>
 map <Leader>X :!run tmux-term<CR><CR>
 map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR> " show commit
+" :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
 cnoremap mk. !mkdir -p <c-r>=expand("%:h")<cr>/
 nnoremap <F9> :!./%<CR>
@@ -334,7 +427,8 @@ map <M-c> :call <SID>CharacterDelta(-1)<CR>
 
 " Functions {{{
 function! SaveTrash(...)
-  exe printf("write! trash/%s", strftime("%F-%H-%M"))
+  let suffix = get(a:, 0, "123")
+  exe printf("write! trash/%s%s", strftime("%F-%H-%M"), suffix)
 endf
 
 command! Trash :call SaveTrash()

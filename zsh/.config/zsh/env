@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-#export MANPAGER=vimpager PAGER=vimpager; alias less=$PAGER
+export MANPAGER='nvim -R "+setf man" -'
 export EDITOR=vim
 
 if tty | grep -qE '^/dev/tty[0-9]+$'; then

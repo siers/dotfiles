@@ -19,6 +19,7 @@ urxvt.urlLauncher: chromium
 urxvt.iso14755: false
 urxvt.iso14755_52: false
 urxvt.meta8: false
+urxvt.termName: rxvt-unicode
 
 ! black: 0, 8; red: 1, 9; green: 2, 10; yellow: 3, 11; blue: 4, 12; magenta: 5, 13; cyan: 6, 14; white: 7, 15
 *foreground:    #cccccf
