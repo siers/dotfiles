@@ -36,4 +36,8 @@
       kafkacat
       openjdk11
     ]);
+
+  fonts = {
+    fonts = [ pkgs.google-fonts ];
+  };
 }

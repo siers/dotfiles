@@ -15,10 +15,8 @@ in {
     ln -s "$where" "$out/bin/${alias}"
   '';
 
-  intel-brightness-script = createCommandPackage "intel-brightness-script" ''
-    #! /usr/bin/env bash
-    echo "$1" > /sys/class/backlight/intel_backlight/brightness
-  '';
-
   xclip-for-mac = haskellPackages.callPackage ./packages/xclip-for-mac.nix {};
+
+  footswitch = callPackage ./packages/footswitch.nix {};
+  rofimoji = callPackage ./packages/rofimoji.nix {};
 }

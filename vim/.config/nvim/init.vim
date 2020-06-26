@@ -19,7 +19,7 @@ set dir=/var/tmp nobackup
 set encoding=utf-8
 set ffs=unix,dos,mac
 set history=10000
-set undofile
+set undofile hidden
 
 set list listchars=tab:»·,tab:→\ ,trail:·,nbsp:·
 set expandtab shiftround smarttab autoindent
@@ -189,8 +189,8 @@ call coc#config('languageserver.haskell', {
       \ "initializationOptions.languageServerHaskell": {},
       \ })
 
-call coc#config("coc.preferences.formatOnSaveFiletypes", ["scala"])
 call coc#config("coc.preferences.formatOnSaveFiletypes", [])
+" call coc#config("coc.preferences.formatOnSaveFiletypes", ["scala"])
 
 " nnoremap <Tab> :CocCommand explorer<CR>
 let g:vimspector_enable_mappings = 'HUMAN'

@@ -60,6 +60,7 @@ alias g=git
 alias gst='git status'
 alias ga='git add'
 alias gd='git diff'
+alias gb='git checkout -'
 alias gwd='git diff --word-diff'
 alias gk='git checkout'
 alias gr='git reset'
