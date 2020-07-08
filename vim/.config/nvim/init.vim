@@ -23,7 +23,7 @@ set undofile hidden
 
 set list listchars=tab:»·,tab:→\ ,trail:·,nbsp:·
 set expandtab shiftround smarttab autoindent
-set laststatus=2 tabstop=4 shiftwidth=4 showtabline=4 softtabstop=4
+set laststatus=2 tabstop=2 shiftwidth=2 showtabline=2 softtabstop=2
 set bs=indent,eol,start
 set cursorline number
 set nofoldenable foldmethod=indent
@@ -76,6 +76,7 @@ Plug 'https://github.com/neoclide/coc-json', {'do': 'yarn install --frozen-lockf
 Plug 'https://github.com/neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile --force'}
 Plug 'https://github.com/scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile --force'}
 Plug 'https://github.com/weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile --force'}
+" Plug 'https://github.com//coc-', {'do': 'yarn install --frozen-lockfile --force'}
 " Plug 'https://github.com/puremourning/vimspector'
 
 Plug 'https://github.com/LnL7/vim-nix'
@@ -189,8 +190,8 @@ call coc#config('languageserver.haskell', {
       \ "initializationOptions.languageServerHaskell": {},
       \ })
 
+call coc#config("coc.preferences.formatOnSaveFiletypes", ["scala"])
 call coc#config("coc.preferences.formatOnSaveFiletypes", [])
-" call coc#config("coc.preferences.formatOnSaveFiletypes", ["scala"])
 
 " nnoremap <Tab> :CocCommand explorer<CR>
 let g:vimspector_enable_mappings = 'HUMAN'
@@ -264,6 +265,7 @@ nmap <leader>rn <Plug>(coc-rename)
 " Remap for format selected region
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>F  <Plug>(coc-format)
 
 " Toggle panel with Tree Views
 nnoremap <silent> <space>t :<C-u>CocCommand metals.tvp<CR>
@@ -332,10 +334,10 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " }}}
 
 " Creative maps {{{
-map <Leader>sf :s/_/-/g<CR>^gu$ " lowercase + _→-
-map <Leader>s :%s/\s\+$//<CR>
+map <Leader>SF :s/_/-/g<CR>^gu$ " lowercase + _→-
+map <Leader>S :%s/\s\+$//<CR>
 map <Leader>x :%s/>/>\r/g<CR>gg=G " turn single line tags into multi-line
-map <Leader>y myggVG"+y`ymyzz " yank file
+map <Leader>y ggVG
 map <Leader>v vip!sort<CR>:w<CR>
 
 map <Leader>P :!realpath % \| tr -d '\n' \| xclip<CR><CR>
@@ -423,6 +425,24 @@ function! s:CharacterDelta(delta) " Char analog of C-{x,a}
 endf
 map <M-x> :call <SID>CharacterDelta(1)<CR>
 map <M-c> :call <SID>CharacterDelta(-1)<CR>
+
+function! s:ScalaSpecOpen()
+  if @% !~# '/\(main\|test\)/'
+    echo "unrecognizable filename pattern"
+    return
+  endif
+
+  if @% =~# '/main/'
+    let l:test = substitute(@%, '/main/', '/test/', '')
+    let l:spec = substitute(l:test, '\.scala$', 'Spec.scala', '')
+  else
+    let l:test = substitute(@%, '/test/', '/main/', '')
+    let l:spec = substitute(l:test, 'Spec\.scala$', '.scala', '')
+  end
+
+  execute 'edit '. l:spec
+endf
+autocmd vimrc FileType scala nnoremap <buffer> <Leader>Z :call <SID>ScalaSpecOpen()<CR>
 " }}}
 
 " Functions {{{

@@ -13,7 +13,7 @@
       <property name="Primary" type="bool" value="true"/>
       <property name="Position" type="empty">
         <property name="X" type="int" value="0"/>
-        <property name="Y" type="int" value="136"/>
+        <property name="Y" type="int" value="0"/>
       </property>
     </property>
     <property name="HDMI-2" type="string" value="AOC International 27&quot;">

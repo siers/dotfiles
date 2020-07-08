@@ -9,6 +9,7 @@
     ../lib/libinput.nix
     ../lib/openvpn.nix
     ../lib/printing.nix
+    ../lib/backlight.nix
   ];
 
   networking.hostName = "rv-p53";
@@ -18,7 +19,7 @@
 
   #
 
-  services = (import ../lib/xserver.nix).xfce-i3-backlight;
+  services = (import ../lib/xserver.nix).xfce-i3;
 
   virtualisation.virtualbox.host = {
     enable = true;

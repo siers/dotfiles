@@ -28,4 +28,4 @@ gnore-*
 .bloop
 .metals
 project/metals.sbt
-.scalafmt.conf
+.vim

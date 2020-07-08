@@ -78,6 +78,7 @@ alias gcam='git commit -am'
 alias gam='git commit --amend'
 alias g+='git commit --amend -C HEAD'
 alias g-='git revert'
+alias gmb='git merge-base HEAD master'
 
 alias be='bundle exec'
 alias b='bundle'
