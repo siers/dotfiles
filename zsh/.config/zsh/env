@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 export MANPAGER='nvim -R "+setf man" -'
+# export PAGER='nvim -R -'
 export EDITOR=vim
 
 if tty | grep -qE '^/dev/tty[0-9]+$'; then

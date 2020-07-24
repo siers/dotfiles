@@ -60,24 +60,23 @@ Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/tpope/vim-abolish' " Subvert, crs.
 Plug 'https://github.com/justinmk/vim-sneak' " f/t for double chars
 Plug 'https://github.com/vim-syntastic/syntastic'
-Plug 'https://github.com/SirVer/ultisnips'
 Plug 'https://github.com/honza/vim-snippets'
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/kshenoy/vim-signature' " Marks of all kind.
-Plug 'https://github.com/liuchengxu/vista.vim'
+" Plug 'https://github.com/liuchengxu/vista.vim'
 
 Plug 'https://github.com/tpope/vim-fugitive' " Git.
 Plug 'https://github.com/shumphrey/fugitive-gitlab.vim'
 Plug 'https://github.com/tpope/vim-rhubarb'
 Plug 'https://github.com/tommcdo/vim-fubitive'
 
-Plug 'https://github.com/neoclide/coc.nvim' ", {'branch': 'release'}
+Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
 Plug 'https://github.com/neoclide/coc-json', {'do': 'yarn install --frozen-lockfile --force'}
 Plug 'https://github.com/neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile --force'}
 Plug 'https://github.com/scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile --force'}
-Plug 'https://github.com/weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile --force'}
-" Plug 'https://github.com//coc-', {'do': 'yarn install --frozen-lockfile --force'}
 " Plug 'https://github.com/puremourning/vimspector'
+Plug 'https://github.com/neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile --force'}
+Plug 'https://github.com/iamcco/coc-actions', {'do': 'yarn install --frozen-lockfile --force'}
 
 Plug 'https://github.com/LnL7/vim-nix'
 Plug 'https://github.com/isRuslan/vim-es6'
@@ -89,7 +88,7 @@ Plug 'https://github.com/posva/vim-vue'
 Plug 'https://github.com/cakebaker/scss-syntax.vim'
 Plug 'https://github.com/ekalinin/Dockerfile.vim'
 
-" The Plugs below don'https://github.com/t mean much to me.
+" The Plugs below don't mean much to me.
 Plug 'https://github.com/wsdjeg/vim-fetch'
 Plug 'https://github.com/HerringtonDarkholme/yats.vim', {'for': ['typescript', 'typescript.jsx']}
 Plug 'https://github.com/nixprime/cpsm'
@@ -114,9 +113,6 @@ let g:syntastic_mode_map = { "mode": "active",
 
 let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null']
 let g:ctrlp_map = ''
-
-let g:UltiSnipsExpandTrigger = "<C-s>"
-let g:UltiSnipsEditSplit = "vertical"
 
 "xmap ga <Plug>(EasyAlign) | nmap ga <Plug>(EasyAlign)
 
@@ -192,6 +188,8 @@ call coc#config('languageserver.haskell', {
 
 call coc#config("coc.preferences.formatOnSaveFiletypes", ["scala"])
 call coc#config("coc.preferences.formatOnSaveFiletypes", [])
+
+" call coc#config("metals.serverVersion", "0.9.0") " downgrade
 
 " nnoremap <Tab> :CocCommand explorer<CR>
 let g:vimspector_enable_mappings = 'HUMAN'
@@ -274,7 +272,8 @@ nnoremap <silent> <space>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
 " Toggle Tree View 'metalsCompile'
 nnoremap <silent> <space>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
 " Reveal current current class (trait or object) in Tree View 'metalsBuild'
-nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
+" nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
+nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsPackages<CR>
 
 " Use K to either doHover or show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -292,17 +291,24 @@ nmap <space>e :CocCommand explorer<CR>
 "
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by another plugin.
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Used in the tab autocompletion for coc
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+imap <C-l> <Plug>(coc-snippets-expand-jump)
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position.
@@ -316,7 +322,7 @@ command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <space>D  :<C-u>CocList diagnostics<cr>
 " Manage extensions
 nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
 " Show commands
@@ -331,6 +337,9 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
+nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
 " }}}
 
 " Creative maps {{{
@@ -342,7 +351,7 @@ map <Leader>v vip!sort<CR>:w<CR>
 
 map <Leader>P :!realpath % \| tr -d '\n' \| xclip<CR><CR>
 map <Leader>O :!realpath --relative-to=. % \| tr -d '\n' \| xclip<CR><CR>
-map <Leader>I :!echo -n "$(basename %)" \| xclip<CR><CR>
+map <Leader>I :!echo -n "$(basename %)" \| cut -f1 -d . \| tr -d '\n' \| xclip<CR><CR>
 map <Leader>R :setlocal relativenumber!<CR>
 map <Leader>X :!run tmux-term<CR><CR>
 map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR> " show commit
@@ -428,7 +437,7 @@ map <M-c> :call <SID>CharacterDelta(-1)<CR>
 
 function! s:ScalaSpecOpen()
   if @% !~# '/\(main\|test\)/'
-    echo "unrecognizable filename pattern"
+    echoerr "unrecognizable filename pattern"
     return
   endif
 
@@ -442,14 +451,19 @@ function! s:ScalaSpecOpen()
 
   execute 'edit '. l:spec
 endf
-autocmd vimrc FileType scala nnoremap <buffer> <Leader>Z :call <SID>ScalaSpecOpen()<CR>
+autocmd vimrc FileType scala nnoremap <buffer> <Leader>E :call <SID>ScalaSpecOpen()<CR>
 " }}}
 
 " Functions {{{
 function! SaveTrash(...)
-  let suffix = get(a:, 0, "123")
-  exe printf("write! trash/%s%s", strftime("%F-%H-%M"), suffix)
+  if a:0 == 0
+    let suffix = ""
+  else
+    let suffix = "." . a:1
+  end
+  echo a:
+  exe printf("write! trash/%s%s", strftime("%F.%H:%M"), suffix)
 endf
 
-command! Trash :call SaveTrash()
+command! -nargs=? Trash :call SaveTrash(<f-args>)
 " }}}

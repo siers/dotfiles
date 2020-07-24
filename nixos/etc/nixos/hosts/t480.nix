@@ -9,6 +9,7 @@
     ../lib/libinput.nix
     ../lib/openvpn.nix
     ../lib/printing.nix
+    ../lib/backlight.nix
   ];
 
   networking.hostName = "t480";

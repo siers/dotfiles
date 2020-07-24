@@ -16,6 +16,7 @@
       noto-fonts
       noto-fonts-emoji
       material-icons
+      (pkgs.callPackage ./font-myriad-pro.nix {})
     ];
   };
 }
