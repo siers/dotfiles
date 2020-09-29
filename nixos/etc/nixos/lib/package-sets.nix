@@ -43,7 +43,6 @@ let
 
     # an uncategory for all things large
     nonessential = [
-      filezilla
       firefox
       gimp
       inkscape
@@ -100,6 +99,7 @@ let
       wget
       which
       zip
+      zstd
     ];
 
     termtoolsFancy = [
@@ -152,8 +152,8 @@ let
       nix-prefetch-git
       xxd
 
-      ((import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {}).
-        selection { selector = p: { inherit (p) ghc864 ghc843; }; })
+      # ((import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {}).
+      #   selection { selector = p: { inherit (p) ghc864 ghc843; }; })
 
       nodejs
       yarn

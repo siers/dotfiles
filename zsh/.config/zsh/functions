@@ -34,6 +34,8 @@ url-decode() { ruby -ne 'require "cgi"; puts(CGI.unescape($_))' }
 
 c_() { cd ~/code/cache; }
 
+sample() { shuf | head "-n${1:-1}"; }
+
 ## GIT
 
 alias cgr='cd "$(git rev-parse --show-toplevel)"'
@@ -53,7 +55,9 @@ gbrdf() { git branch -D "$2" && git push --delete "$1" "$2" }
 
 gahead() { ! gst --porcelain=2 -b | grep -q 'branch.ab +0'; }
 
-gbu() { git branch -u "${1:-origin}/$(g rev-parse --abbrev-ref HEAD)"; }
+gwhat() { g rev-parse --abbrev-ref HEAD; }
+gwhatc() { gwhat | xclip -sel clipboard; }
+gbu() { git branch -u "${1:-origin}/$(gwhat)"; }
 
 grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
 
@@ -88,11 +92,14 @@ wclone() {
 
 rgsample() { rg -l "$@" | sample; }
 rgsample-v() { vim $(rg -l "$@" | sample); }
-rgedit() { vim $(rg -l "$@"); }
+rgedit() { vim -n $(rg -l "$@"); }
 rgsel() { rg -l "$@" | fzf -m --preview="$previewer" | c; }
+
+rgm() { rg "$@" **/src/main; }
 
 frg() { find . | rg "$@"; }
 frgedit() { find . | rg "$@" | xargs -r vim -p; }
+grg() { g ls | rg -i "$@"; }
 
 ## MISC
 

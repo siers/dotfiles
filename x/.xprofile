@@ -17,7 +17,7 @@ fi
 
 autocutsel -fork                      &
 autocutsel -selection PRIMARY -fork   &
-unclutter -jitter 2 -noevents -idle 2 -grab &
+# unclutter -jitter 2 -noevents -idle 2 -grab &
 xsetroot -cursor_name left_prt        &
 
 xss-lock lock &

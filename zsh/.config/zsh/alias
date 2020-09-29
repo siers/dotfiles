@@ -83,12 +83,12 @@ alias gmb='git merge-base HEAD master'
 alias be='bundle exec'
 alias b='bundle'
 
-local RAILS_PREFIX="bundle exec"
-alias r="$RAILS_PREFIX rails"
-alias rk="$RAILS_PREFIX rake"
-alias rsp="$RAILS_PREFIX rspec"
-alias rdm="$RAILS_PREFIX rake db:migrate"
-alias rgm="$RAILS_PREFIX rails generate migration"
+# local RAILS_PREFIX="bundle exec"
+# alias r="$RAILS_PREFIX rails"
+# alias rk="$RAILS_PREFIX rake"
+# alias rsp="$RAILS_PREFIX rspec"
+# alias rdm="$RAILS_PREFIX rake db:migrate"
+# alias rgm="$RAILS_PREFIX rails generate migration"
 
 de-nix() { > .envrc <<< "use nix" }
 alias dea='direnv allow'

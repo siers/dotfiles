@@ -98,6 +98,7 @@ Plug 'https://github.com/junegunn/fzf.vim'
 " Plug 'https://github.com/AndrewRadev/splitjoin.vim'
 " Plug 'https://github.com/AndrewRadev/sideways.vim' " argument swapping
 " Plug 'https://github.com/junegunn/vim-easy-align'
+" Plug 'https://github.com/severin-lemaignan/vim-minimap'
 
 call plug#end()
 "}}}
@@ -187,7 +188,6 @@ call coc#config('languageserver.haskell', {
       \ })
 
 call coc#config("coc.preferences.formatOnSaveFiletypes", ["scala"])
-call coc#config("coc.preferences.formatOnSaveFiletypes", [])
 
 " call coc#config("metals.serverVersion", "0.9.0") " downgrade
 
@@ -349,9 +349,9 @@ map <Leader>x :%s/>/>\r/g<CR>gg=G " turn single line tags into multi-line
 map <Leader>y ggVG
 map <Leader>v vip!sort<CR>:w<CR>
 
-map <Leader>P :!realpath % \| tr -d '\n' \| xclip<CR><CR>
-map <Leader>O :!realpath --relative-to=. % \| tr -d '\n' \| xclip<CR><CR>
-map <Leader>I :!echo -n "$(basename %)" \| cut -f1 -d . \| tr -d '\n' \| xclip<CR><CR>
+map <Leader>P :!realpath % \| tr -d '\n' \| xclip -sel clip<CR><CR>
+map <Leader>O :!realpath --relative-to=. % \| tr -d '\n' \| xclip -sel clip<CR><CR>
+map <Leader>I :!echo -n "$(basename %)" \| cut -f1 -d . \| tr -d '\n' \| xclip -sel clip<CR><CR>
 map <Leader>R :setlocal relativenumber!<CR>
 map <Leader>X :!run tmux-term<CR><CR>
 map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR> " show commit
@@ -364,6 +364,7 @@ nnoremap <F11> :!make &<CR><CR>
 nnoremap <Leader>z :setlocal spell<CR>z= " Suggest word under/after the cursor.
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]' " Reselect last pasted text.
 
+inoremap <F2> <C-R>=expand("%:t:r")<CR>
 nnoremap <F4>      =strftime("%b %-d")<CR>P
 inoremap <F4> <C-R>=strftime("%b %-d")<CR>
 nnoremap <F5>     "=strftime("%c")<CR>P
@@ -382,8 +383,8 @@ imap <silent> <C-_> <ESC>:undo<CR>a
 map <Leader>W :setlocal nowrap!<CR>
 map <Leader>T :set paste!<CR>
 "map <Leader>N :set relativenumber!<CR>
-map <silent> gr :tabm +1<CR>
-map <silent> gR :tabm -1<CR>
+map <silent> <M-m> :tabm +1<CR>
+map <silent> <M-n> :tabm -1<CR>
 
 " map <Leader>q :wq<CR>
 " map <Leader>w :w<CR>
@@ -409,9 +410,10 @@ map <M-w> <C-w>v
 map <C-n> gT
 map <C-m> gt
 map <C-t> :tabnew %<CR><C-o>zz
-nnoremap <Leader>N :tabnew<CR>:tabm -1<CR>
+map <Leader><C-t> :-tabnew %<CR><C-o>zz
+nnoremap <Leader>N :-tabnew<CR>
 nnoremap <Leader>M :tabnew<CR>
-map <M-z> :q<CR>
+map â :q<CR>
 " }}}
 
 " Maps with functions {{{

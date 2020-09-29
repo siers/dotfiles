@@ -25,6 +25,7 @@
     enable = true;
     headless = true;
   };
+  users.extraGroups.vboxusers.members = [ "s" ];
 
   environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything;
 }
