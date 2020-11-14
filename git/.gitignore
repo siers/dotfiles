@@ -25,12 +25,13 @@ gnore-*
 # development
 /.tf-version
 /.ruby-version
-.bloop
-.metals
-project/metals.sbt
 /node_modules
 *.dot
 .ghc.environment.*
+.bloop
+.metals
+.bsp
+project/metals.sbt
 
 # temporary
 /project/project

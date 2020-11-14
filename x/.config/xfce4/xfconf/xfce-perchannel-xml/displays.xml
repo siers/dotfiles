@@ -16,16 +16,16 @@
         <property name="Y" type="int" value="0"/>
       </property>
     </property>
-    <property name="HDMI-2" type="string" value="Samsung 40&quot;">
+    <property name="HDMI-2" type="string" value="AOC International 27&quot;">
       <property name="Active" type="bool" value="true"/>
-      <property name="EDID" type="string" value="a21ab4fc7dc849c2e3a12af5311719b930f9abfd"/>
-      <property name="Resolution" type="string" value="1920x1080"/>
-      <property name="RefreshRate" type="double" value="60.000000"/>
+      <property name="EDID" type="string" value="20d5d247f970a184d898ddfc9143aa072a3d379c"/>
+      <property name="Resolution" type="string" value="2560x1440"/>
+      <property name="RefreshRate" type="double" value="59.950550"/>
       <property name="Rotation" type="int" value="0"/>
       <property name="Reflection" type="string" value="0"/>
       <property name="Primary" type="bool" value="false"/>
       <property name="Position" type="empty">
-        <property name="X" type="int" value="0"/>
+        <property name="X" type="int" value="1920"/>
         <property name="Y" type="int" value="0"/>
       </property>
     </property>
@@ -54,7 +54,7 @@
       <property name="Primary" type="bool" value="true"/>
       <property name="Position" type="empty">
         <property name="X" type="int" value="0"/>
-        <property name="Y" type="int" value="183"/>
+        <property name="Y" type="int" value="177"/>
       </property>
     </property>
     <property name="HDMI-2" type="string" value="HP 27&quot;">
@@ -73,4 +73,32 @@
   </property>
   <property name="Notify" type="bool" value="true"/>
   <property name="AutoEnableProfiles" type="bool" value="true"/>
+  <property name="e83249bd3ba79932e16fb1fb5100dafade9954c2" type="string" value="home">
+    <property name="eDP-1" type="string" value="Laptop">
+      <property name="Active" type="bool" value="true"/>
+      <property name="EDID" type="string" value="baf4ce4e310d5c2ba568b7ba673d3cf1b8b4e47c"/>
+      <property name="Resolution" type="string" value="1920x1080"/>
+      <property name="RefreshRate" type="double" value="60.020425"/>
+      <property name="Rotation" type="int" value="0"/>
+      <property name="Reflection" type="string" value="0"/>
+      <property name="Primary" type="bool" value="true"/>
+      <property name="Position" type="empty">
+        <property name="X" type="int" value="0"/>
+        <property name="Y" type="int" value="140"/>
+      </property>
+    </property>
+    <property name="HDMI-2" type="string" value="AOC International 27&quot;">
+      <property name="Active" type="bool" value="true"/>
+      <property name="EDID" type="string" value="20d5d247f970a184d898ddfc9143aa072a3d379c"/>
+      <property name="Resolution" type="string" value="2560x1440"/>
+      <property name="RefreshRate" type="double" value="59.950550"/>
+      <property name="Rotation" type="int" value="0"/>
+      <property name="Reflection" type="string" value="0"/>
+      <property name="Primary" type="bool" value="false"/>
+      <property name="Position" type="empty">
+        <property name="X" type="int" value="1920"/>
+        <property name="Y" type="int" value="0"/>
+      </property>
+    </property>
+  </property>
 </channel>

@@ -69,6 +69,10 @@ git-feat-edit() { feat="${1:-HEAD}"; git diff -z --name-only "$feat" "$(git merg
 gtmp() { name="tmp-$(date "+%Y%m%d-%H%M")-${1:-draft}" && git checkout -b "$name" && g-ac && gk -; }
 grr() { git reset HEAD~; }
 
+gprev() { file=$1; out="trash/prev/$(basename "$file")"; git show "${branch:-master}:$file" > $out; vim $out; }
+
+gpmr() { g pf -o merge_request.create 2> >(tee >(rg -o 'http\S*' | c)); }
+
 clone() {
     cldir="${dir:-$HOME/code/cache}"
     cd "$cldir";
@@ -99,7 +103,7 @@ rgm() { rg "$@" **/src/main; }
 
 frg() { find . | rg "$@"; }
 frgedit() { find . | rg "$@" | xargs -r vim -p; }
-grg() { g ls | rg -i "$@"; }
+grg() { g ls | rg "$@"; }
 
 ## MISC
 
