@@ -3,12 +3,12 @@
 let
   # also update NUR in lib/package-sets.nix
   nixpkgs = fetchTarball {
-    url = "https://channels.nixos.org/nixos-20.03/nixexprs.tar.xz?2020-04-30";
-    sha256 = "06frjsyzfcak6glxaiiayh0wp0l7nwps29f06j3d318wdk822vdq";
+    url = "https://channels.nixos.org/nixos-20.09/nixexprs.tar.xz?2020-12-10";
+    sha256 = "0rrcysadwrlw2iqrqr9lpbraqrqsdbgp9yccn8b0vyfn4fxpf8ki";
   };
   nixos-hardware = fetchTarball {
-    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2020-04-25";
-    sha256 = "0mgsyahm4w8ngl50fajbnjg8vw6v6pjxcjk4a7zfnnyrhfiykpqv";
+    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2020-12-10";
+    sha256 = "1zdky8vv7aznvmkkf53f5bm73n19a7728m33hhs8dg1psrb9lkx1";
   };
 in
 
@@ -16,7 +16,7 @@ in
 #assert builtins.readFile <nixpkgs/.version> == builtins.readFile (nixpkgs + "/.version");
 
 {
-  system.stateVersion = "19.03";
+  system.stateVersion = "20.09";
   system.autoUpgrade.enable = true;
 
   # grouped by singlelinedness

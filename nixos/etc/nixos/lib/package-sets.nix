@@ -39,6 +39,7 @@ let
       #virtmanager
       vlc
       pinentry_gnome
+      spotify
     ];
 
     # an uncategory for all things large
@@ -88,7 +89,9 @@ let
       ncdu
       p7zip
       pass
+      pv
       python
+      pwgen
       ruby
       socat
       tmux

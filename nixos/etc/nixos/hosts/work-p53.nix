@@ -11,6 +11,7 @@
     ../lib/printing.nix
     ../lib/backlight.nix
     ../lib/prometheus.nix
+    ../lib/evolution.nix
   ];
 
   networking.hostName = "rv-p53";
@@ -51,20 +52,10 @@
     headless = true;
   };
 
-  environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything ++
-    (with pkgs; [
-      (sbt.override { jre = openjdk11; })
-
-      teams
-      jetbrains.idea-community
-
-      dbeaver
-      kafkacat
-      openjdk11
-      cassandra
-    ]);
+  environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything ++ [
+  ];
 
   fonts = {
-    fonts = [ pkgs.google-fonts ];
+    # fonts = [ pkgs.google-fonts ];
   };
 }

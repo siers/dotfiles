@@ -15,7 +15,7 @@
       emojione
       noto-fonts
       noto-fonts-emoji
-      material-icons
+      # material-icons
       (pkgs.callPackage ./font-myriad-pro.nix {})
     ];
   };

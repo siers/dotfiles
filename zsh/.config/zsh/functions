@@ -36,6 +36,8 @@ c_() { cd ~/code/cache; }
 
 sample() { shuf | head "-n${1:-1}"; }
 
+tmpchrome() { dir="$(mktemp -d /tmp/chrome-XXX)"; google-chrome-stable --user-data-dir="$dir" "$@"; }
+
 ## GIT
 
 alias cgr='cd "$(git rev-parse --show-toplevel)"'
@@ -61,15 +63,16 @@ gbu() { git branch -u "${1:-origin}/$(gwhat)"; }
 
 grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
 
-# gmb = git merge-base HEAD master in .config/zsh/alias
-gdmb() { git diff "$@" "$(gmb)"; }
-grbib() { git rebase -i "$(git merge-base HEAD "${base:-master}")"; }
+gmb() { git merge-base HEAD "${branch:-master}"; };
+gdmb() { git diff "$(gmb)" "$@"; }
+glmb() { git l HEAD..."$(gmb)" "$@"; }
+grbib() { git rebase -i "$(git merge-base HEAD "${base:-master}")" "$@"; }
 git-feat-edit() { feat="${1:-HEAD}"; git diff -z --name-only "$feat" "$(git merge-base "$feat" master)" | xargs -r0 vim -np; }
 
 gtmp() { name="tmp-$(date "+%Y%m%d-%H%M")-${1:-draft}" && git checkout -b "$name" && g-ac && gk -; }
 grr() { git reset HEAD~; }
 
-gprev() { file=$1; out="trash/prev/$(basename "$file")"; git show "${branch:-master}:$file" > $out; vim $out; }
+gprev() { file=$1; out="trash/prev/$(basename "$file")"; mkdir trash/prev -p; git show "${branch:-master}:$file" > $out; vim $out; }
 
 gpmr() { g pf -o merge_request.create 2> >(tee >(rg -o 'http\S*' | c)); }
 

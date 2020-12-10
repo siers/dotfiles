@@ -51,8 +51,11 @@ alias th=touch
 alias vim=v
 [ -z "$ZSH_DARWIN" ] && alias cal='cal -m'
 alias grep='grep --colour'
+alias gl='grep --line-buffered'
 alias watch='watch -n.5'
 alias hexdump='hexdump -C'
+alias jqu='jq --unbuffered 2>/dev/null'
+alias scsus='systemctl suspend'
 
 alias tmux-alt-shell='tmux bind-key v new-window'
 
@@ -67,6 +70,7 @@ alias gr='git reset'
 alias grhu='git reset --hard @{u}'
 alias grm='git remote'
 alias grb='git rebase'
+alias grbc='git rebase --continue'
 alias gbs='git bisect'
 alias gls='git ls-files'
 alias gf='git fetch'
@@ -78,7 +82,6 @@ alias gcam='git commit -am'
 alias gam='git commit --amend'
 alias g+='git commit --amend -C HEAD'
 alias g-='git revert'
-alias gmb='git merge-base HEAD master'
 
 alias be='bundle exec'
 alias b='bundle'
@@ -97,4 +100,5 @@ alias rn='react-native'
 
 alias dc='docker-compose'
 alias kctl='kubectl'
+alias kctl_='kubectl --context="$KUBECTL_CONTEXT" --namespace="$KUBECTL_NAMESPACE"'
 alias tf='terraform'
