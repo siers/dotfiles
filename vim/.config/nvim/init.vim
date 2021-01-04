@@ -187,6 +187,13 @@ call coc#config('languageserver.haskell', {
       \ "initializationOptions.languageServerHaskell": {},
       \ })
 
+call coc#config('languageserver.haskell', {
+      \ "command": "haskell-language-server-wrapper",
+      \ "args": ["--lsp", "-l", "/tmp/hlsp.log"],
+      \ "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
+      \ "filetypes": ["haskell", "lhaskell"]
+      \ })
+
 call coc#config("coc.preferences.formatOnSaveFiletypes", ["scala"])
 
 " call coc#config("metals.serverVersion", "0.9.0") " downgrade
@@ -392,6 +399,8 @@ map <silent> <M-n> :tabm -1<CR>
 " Indent visually selected text.
 vnoremap < <gv
 vnoremap > >gv
+" ^R in visual does :%s/SELECTED/
+vnoremap <C-r> "hy:%s/<C-r>h/
 
 " Visually select word under the cursor without moving.
 nmap * g*N

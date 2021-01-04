@@ -58,6 +58,7 @@ gbrdf() { git branch -D "$2" && git push --delete "$1" "$2" }
 gahead() { ! gst --porcelain=2 -b | grep -q 'branch.ab +0'; }
 
 gwhat() { g rev-parse --abbrev-ref HEAD; }
+gsha() { g rev-parse --short HEAD; }
 gwhatc() { gwhat | xclip -sel clipboard; }
 gbu() { git branch -u "${1:-origin}/$(gwhat)"; }
 
