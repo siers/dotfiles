@@ -3,7 +3,6 @@
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, ... }:
 
-with (import (../lib/private.nix) {});
 {
   imports =
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
@@ -13,23 +12,14 @@ with (import (../lib/private.nix) {});
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  boot.initrd.luks.devices = {
-    enc-vg = {
-      device = "/dev/disk/by-uuid/a4ee2444-0bc4-4d6c-9754-c7f2353cca35"; preLVM = true; allowDiscards = true;
-      inherit keyFile keyFileOffset keyFileSize; fallbackToPassword = true;
-    }; # /dev/sda3
-    enc-home = {
-      device = "/dev/disk/by-uuid/79e9c6d6-6c41-4951-95c2-a98dafe11507"; preLVM = true; allowDiscards = true;
-      inherit keyFile keyFileOffset keyFileSize; fallbackToPassword = true;
-    }; # /dev/sda4
-  };
+  boot.loader.grub.enable = true;
+  boot.loader.grub.version = 2;
+  boot.loader.grub.device = "/dev/sda";
 
-  fileSystems = pkgs.lib.recursiveUpdate {
+  fileSystems = {
     "/" = { device = "/dev/vg/root"; fsType = "ext4"; options = ["noatime"]; };
-    "/boot" = { device = "/dev/sda2"; fsType = "vfat"; options = ["noatime" "nofail"]; };
-    "/home" = { device = "/dev/mapper/enc-home"; fsType = "ext4"; options = ["noatime" "nofail"]; };
     "/tmp" = { device = "tmpfs"; fsType = "tmpfs"; options = ["nosuid" "nodev" "relatime"]; };
-  } (import ../lib/syncthing.nix { inherit (pkgs.lib) recursiveUpdate; });
+  };
 
   swapDevices = [ { device = "/var/swapfile"; size = 4000; } ];
 

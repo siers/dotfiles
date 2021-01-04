@@ -17,7 +17,7 @@ in
       config = ''
         client
 
-        dev tun
+        dev tun0
         remote 209.97.130.188
 
         # ifconfig 10.8.0.2 10.8.0.1

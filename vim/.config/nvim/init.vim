@@ -41,6 +41,7 @@ set mouse=a
 "set statusline=%f%m%r%h%w\ [%n:%{&ff}/%Y]%=[0x\%04.4B][%03v][%p%%\ line\ %l]
 
 let g:mapleader = "\<Space>"
+let g:vimspector_enable_mappings = 'HUMAN'
 " }}}
 
 " Plugins {{{
@@ -63,7 +64,8 @@ Plug 'https://github.com/vim-syntastic/syntastic'
 Plug 'https://github.com/honza/vim-snippets'
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/kshenoy/vim-signature' " Marks of all kind.
-" Plug 'https://github.com/liuchengxu/vista.vim'
+Plug 'https://github.com/eugen0329/vim-esearch'
+Plug 'https://github.com/iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install --frozen-lockfile --force'}
 
 Plug 'https://github.com/tpope/vim-fugitive' " Git.
 Plug 'https://github.com/shumphrey/fugitive-gitlab.vim'
@@ -74,9 +76,9 @@ Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
 Plug 'https://github.com/neoclide/coc-json', {'do': 'yarn install --frozen-lockfile --force'}
 Plug 'https://github.com/neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile --force'}
 Plug 'https://github.com/scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile --force'}
-" Plug 'https://github.com/puremourning/vimspector'
+Plug 'https://github.com/puremourning/vimspector'
 Plug 'https://github.com/neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile --force'}
-Plug 'https://github.com/iamcco/coc-actions', {'do': 'yarn install --frozen-lockfile --force'}
+" Plug 'https://github.com/iamcco/coc-actions', {'do': 'yarn install --frozen-lockfile --force'}
 
 Plug 'https://github.com/LnL7/vim-nix'
 Plug 'https://github.com/isRuslan/vim-es6'
@@ -87,11 +89,14 @@ Plug 'https://github.com/gisraptor/vim-lilypond-integrator'
 Plug 'https://github.com/posva/vim-vue'
 Plug 'https://github.com/cakebaker/scss-syntax.vim'
 Plug 'https://github.com/ekalinin/Dockerfile.vim'
+Plug 'https://github.com/derekelkins/agda-vim'
 
 " The Plugs below don't mean much to me.
+Plug 'https://github.com/preservim/nerdtree'
 Plug 'https://github.com/wsdjeg/vim-fetch'
 Plug 'https://github.com/HerringtonDarkholme/yats.vim', {'for': ['typescript', 'typescript.jsx']}
 Plug 'https://github.com/nixprime/cpsm'
+Plug 'https://github.com/junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'https://github.com/junegunn/fzf.vim'
 " Plug 'https://github.com/mattn/emmet-vim' " div#foo<C-y>, => <div id=foo>
 " Plug 'https://github.com/ervandew/supertab'
@@ -99,6 +104,8 @@ Plug 'https://github.com/junegunn/fzf.vim'
 " Plug 'https://github.com/AndrewRadev/sideways.vim' " argument swapping
 " Plug 'https://github.com/junegunn/vim-easy-align'
 " Plug 'https://github.com/severin-lemaignan/vim-minimap'
+Plug 'https://github.com/weirongxu/coc-calc' " doesn't seem to work
+" Plug 'https://github.com/liuchengxu/vista.vim'
 
 call plug#end()
 "}}}
@@ -187,12 +194,24 @@ call coc#config('languageserver.haskell', {
       \ "initializationOptions.languageServerHaskell": {},
       \ })
 
+call coc#config('languageserver.haskell', {
+      \ "command": "haskell-language-server-wrapper",
+      \ "args": ["--lsp", "-l", "/tmp/hlsp.log"],
+      \ "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
+      \ "filetypes": ["haskell", "lhaskell"]
+      \ })
+
 call coc#config("coc.preferences.formatOnSaveFiletypes", ["scala"])
 
-" call coc#config("metals.serverVersion", "0.9.0") " downgrade
+call coc#config("metals", {
+  \ "metals.showImplicitArguments": "true",
+  \ "metals.showImplicitConversionsAndClasses": "true",
+  \ })
+" \ "metals.serverVersion": "0.10.7",
+
+call coc#config("codeLens.enable", "true")
 
 " nnoremap <Tab> :CocCommand explorer<CR>
-let g:vimspector_enable_mappings = 'HUMAN'
 " packadd! vimspector
 " }}}
 
@@ -229,13 +248,14 @@ autocmd vimrc FocusLost * call AuFocusLost()
 
 " Commands {{{
 command! Config :tabedit ~/.config/nvim/init.vim
-command! NF :tabedit notes
-command! NN :tabedit notes/notes
+command! NF :-tabedit notes
+command! NN :-tabedit notes/notes
 command! -range=% Sum :<line1>,<line2>!paste -sd+ | bc
 command! CL :tabedit %
 command! RMNL :%g/^$/d
 
 command! Session :Obsession .session.vim
+command! PU :PlugUpdate
 command! PI :PlugInstall
 command! PC :PlugClean
 
@@ -243,7 +263,7 @@ command! PC :PlugClean
 exec 'command! -range=% Share :<line1>,<line2>write !pasty'
 " }}}
 
-" Intellisense maps {{{
+" Coc.nvim / LSP maps {{{
 " You will have a bad experience with diagnostic messages with the default of 4000.
 set updatetime=300
 
@@ -265,15 +285,11 @@ xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>F  <Plug>(coc-format)
 
-" Toggle panel with Tree Views
-nnoremap <silent> <space>t :<C-u>CocCommand metals.tvp<CR>
-" Toggle Tree View 'metalsBuild'
-nnoremap <silent> <space>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
-" Toggle Tree View 'metalsCompile'
-nnoremap <silent> <space>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
-" Reveal current current class (trait or object) in Tree View 'metalsBuild'
-" nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
-nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsPackages<CR>
+" See also: https://github.com/scalameta/coc-metals/blob/main/coc-mappings.vim
+nnoremap <leader>cl :<C-u>call CocActionAsync('codeLensAction')<CR>
+xmap <leader>al  <Plug>(coc-codeaction-line)
+nmap <leader>al  <Plug>(coc-codeaction-line)
+nmap <leader>ac  <Plug>(coc-codeaction-cursor)
 
 " Use K to either doHover or show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -323,42 +339,60 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Show all diagnostics
 nnoremap <silent> <space>D  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr> " Manage extensions
+nnoremap <silent> <space>cc :<C-u>CocList commands<cr> " Show commands
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr> " Find symbol of current document
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr> " Search workspace symbols
+nnoremap <silent> <space>j  :<C-u>CocNext<CR> " Do default action for next item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR> " Do default action for previous item.
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR> " Resume latest coc list
+nnoremap <silent> <space>i :<C-u>CocCommand editor.action.organizeImport<CR>
 
 xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
 nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
-" }}}
+
+" Metals
+nnoremap <silent> <space>t :<C-u>CocCommand metals.tvp<CR> " Toggle panel with Tree Views
+nnoremap <silent> <space>tb :<C-u>CocCommand metals.tvp metalsBuild<CR> " Toggle Tree View 'metalsBuild'
+nnoremap <silent> <space>tc :<C-u>CocCommand metals.tvp metalsCompile<CR> " Toggle Tree View 'metalsCompile'
+" nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR> Reveal current current class (trait or object) in Tree View 'metalsBuild'
+nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsPackages<CR>
+nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
+
+" " Vimspector
+" nmap <leader>vc <Plug>VimspectorContinue                     " When debugging, continue. Otherwise start debugging.
+" nmap <leader>vst <Plug>VimspectorStop                        " Stop debugging.
+" nmap <leader>vrt <Plug>VimspectorRestart                     " Restart debugging with the same configuration.
+" nmap <leader>vrs <Plug>VimspectorReset                       " Restart debugging with the same configuration.
+" nmap <leader>vp <Plug>VimspectorPause                        " Pause debuggee.
+" nmap <leader>vbb <Plug>VimspectorToggleBreakpoint            " Toggle line breakpoint on the current line.
+" nmap <leader>vbc <Plug>VimspectorToggleConditionalBreakpoint " Toggle conditional line breakpoint on the current line.
+" nmap <leader>vbf <Plug>VimspectorAddFunctionBreakpoint       " Add a function breakpoint for the expression under cursor
+" nmap <leader>vrc <Plug>VimspectorRunToCursor                 " Run to Cursor
+" nmap <leader>vsn <Plug>VimspectorStepOver                    " Step Over
+" nmap <leader>vsi <Plug>VimspectorStepInto                    " Step Into
+" nmap <leader>vso <Plug>VimspectorStepOut
+" " }}}
 
 " Creative maps {{{
 map <Leader>SF :s/_/-/g<CR>^gu$ " lowercase + _→-
 map <Leader>S :%s/\s\+$//<CR>
 map <Leader>x :%s/>/>\r/g<CR>gg=G " turn single line tags into multi-line
 map <Leader>y ggVG
-map <Leader>v vip!sort<CR>:w<CR>
+map <Leader>V vip!sort<CR>:w<CR>
 
-map <Leader>P :!realpath % \| tr -d '\n' \| xclip -sel clip<CR><CR>
-map <Leader>O :!realpath --relative-to=. % \| tr -d '\n' \| xclip -sel clip<CR><CR>
-map <Leader>I :!echo -n "$(basename %)" \| cut -f1 -d . \| tr -d '\n' \| xclip -sel clip<CR><CR>
+map <Leader>P :!realpath "%" \| tr -d '\n' \| xclip -sel clip<CR><CR>
+map <Leader>O :!realpath --relative-to=. "%" \| tr -d '\n' \| xclip -sel clip<CR><CR>
+map <Leader>I :!echo -n "$(basename "%")" \| cut -f1 -d . \| tr -d '\n' \| xclip -sel clip<CR><CR>
 map <Leader>R :setlocal relativenumber!<CR>
 map <Leader>X :!run tmux-term<CR><CR>
 map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR> " show commit
+" map <Leader>gs yiw:!urxvt -e sh -c \"cd $(pwd); git show --stat -p <C-r>0 \| vim '+nnoremap q :qal!<CR>' -" &<CR><CR> " show commit
 " :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
 cnoremap mk. !mkdir -p <c-r>=expand("%:h")<cr>/
 nnoremap <F9> :!./%<CR>
+nnoremap <F1> :NERDTreeToggle<CR>
 nnoremap <F10> :!make clean &<CR><CR>
 nnoremap <F11> :!make &<CR><CR>
 nnoremap <Leader>z :setlocal spell<CR>z= " Suggest word under/after the cursor.
@@ -374,17 +408,20 @@ inoremap <F6> <C-R>=strftime("%F-%T")<CR>
 " }}}
 
 " Remaps {{{
-map <Leader>gb :Gblame<CR>
+map <Leader>gb :Git blame<CR>
 map <Leader>gd :Gdiff<CR>
-map <Leader>gu :Gbrowse!<CR>
+map <Leader>gu :GBrowse!<CR>
 map <C-j> :noh<CR>:<ESC>
 imap <silent> <C-j> <ESC>:noh<CR>i
 imap <silent> <C-_> <ESC>:undo<CR>a
 map <Leader>W :setlocal nowrap!<CR>
+map <Leader>w :w<CR>
 map <Leader>T :set paste!<CR>
 "map <Leader>N :set relativenumber!<CR>
 map <silent> <M-m> :tabm +1<CR>
 map <silent> <M-n> :tabm -1<CR>
+map <M-z> :q<CR>
+map â :q<CR>
 
 " map <Leader>q :wq<CR>
 " map <Leader>w :w<CR>
@@ -392,6 +429,8 @@ map <silent> <M-n> :tabm -1<CR>
 " Indent visually selected text.
 vnoremap < <gv
 vnoremap > >gv
+" ^R in visual does :%s/SELECTED/
+vnoremap <C-r> "hy:%s/<C-r>h/
 
 " Visually select word under the cursor without moving.
 nmap * g*N
@@ -414,6 +453,7 @@ map <Leader><C-t> :-tabnew %<CR><C-o>zz
 nnoremap <Leader>N :-tabnew<CR>
 nnoremap <Leader>M :tabnew<CR>
 map â :q<CR>
+nnoremap y_ ^yg_
 " }}}
 
 " Maps with functions {{{
@@ -453,6 +493,7 @@ function! s:ScalaSpecOpen()
 
   execute 'edit '. l:spec
 endf
+autocmd vimrc FileType scala nnoremap <buffer> <C-w><C-e> :call <SID>ScalaSpecOpen()<CR>
 autocmd vimrc FileType scala nnoremap <buffer> <Leader>E :call <SID>ScalaSpecOpen()<CR>
 " }}}
 
@@ -468,4 +509,29 @@ function! SaveTrash(...)
 endf
 
 command! -nargs=? Trash :call SaveTrash(<f-args>)
+
+" https://github.com/daGrevis/Dotfiles/blob/c4f32aed80d7742e436c1de11188a3ce44e93fdd/neovim/.config/nvim/init.vim#L234
+function! g:Copy(text)
+  let @* = a:text
+  let @+ = a:text
+endfunction
 " }}}
+
+" Markdown {{{
+let g:mkdp_open_to_the_world = 1 " normally firewalled anyway
+let g:mkdp_port = '7777'
+let g:mkdp_page_title = 'Md: ${name}'
+let g:mkdp_browserfunc = 'g:Mkdp_browserfunc'
+
+function! g:Mkdp_browserfunc(url)
+  echom a:url
+  call Copy(a:url)
+endfunction
+
+function! Md()
+    exe ':MarkdownPreview'
+endfunction
+command! Md call Md()
+" }}}
+
+lua require 'pipe'

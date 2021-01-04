@@ -1,15 +1,14 @@
 { pkgs, lib, config, ... }:
 {
   networking = {
-    firewall.allowedTCPPorts = [
-      # 3000  # grafana
-      # 9090  # prometheus
+    firewall.interfaces.tun0.allowedTCPPorts = [
+      9100 # node_exporter
     ];
   };
 
   services = {
     prometheus = {
-      enable = true;
+      enable = false;
       scrapeConfigs = [
         {
           job_name = "node";
@@ -27,7 +26,7 @@
         }
       ];
       exporters.node = {
-        enable = true;
+        enable = false;
         enabledCollectors = [
           # "conntrack"
           # "diskstats"
@@ -49,8 +48,9 @@
         ];
       };
     };
+
     grafana = {
-      enable = true;
+      enable = false;
       addr = "0.0.0.0";
       domain = "grafana.example.com";
       rootUrl = "https://grafana.example.com/";

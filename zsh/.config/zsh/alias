@@ -42,12 +42,15 @@ p() { f="$1"; shift 2> /dev/null; ping -c1 "${f:-google.lv}" "$@"; } # tired of 
 pp() { p "$@" || (sleep 0.66; pp "$@"); }
 ppo() { pp; ok internet\ on\!; }
 
+cdf() { cd "$(dirname "$1")"; }
+
 alias l='ls'
 alias mv='mv -i'
 alias du='du -h'
 alias mkd=mkdir
 alias th=touch
 
+alias ok.='ok $?'
 alias vim=v
 [ -z "$ZSH_DARWIN" ] && alias cal='cal -m'
 alias grep='grep --colour'
@@ -56,6 +59,7 @@ alias watch='watch -n.5'
 alias hexdump='hexdump -C'
 alias jqu='jq --unbuffered 2>/dev/null'
 alias scsus='systemctl suspend'
+alias ydl='youtube-dl'
 
 alias tmux-alt-shell='tmux bind-key v new-window'
 
@@ -68,11 +72,14 @@ alias gwd='git diff --word-diff'
 alias gk='git checkout'
 alias gr='git reset'
 alias grhu='git reset --hard @{u}'
+alias grsu='git reset @{u}'
 alias grm='git remote'
 alias grb='git rebase'
 alias grbc='git rebase --continue'
 alias gbs='git bisect'
 alias gls='git ls-files'
+alias glt='git ls-tree -r --name-only'
+alias glst='git ls-tree'
 alias gf='git fetch'
 alias gcl='git clone'
 
@@ -100,5 +107,6 @@ alias rn='react-native'
 
 alias dc='docker-compose'
 alias kctl='kubectl'
-alias kctl_='kubectl --context="$KUBECTL_CONTEXT" --namespace="$KUBECTL_NAMESPACE"'
+alias kctl_='kubectl --context="$kctx" --namespace="$kns"'
 alias tf='terraform'
+alias dex-login='dex-login -k pass'

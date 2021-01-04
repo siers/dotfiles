@@ -1,80 +1,105 @@
 [ -e "$HOME/.config/zsh/temporary" ] && source ~/.config/zsh/temporary || :
 
-forever() { while sleep 0.5; do "$@"; done }
+## File path and directory operations
 
-f() {
-    if [ -z "$1" ]; then p="$(pwd)"; else p="$1"; fi
-    echo -n "file://$(realpath $p)" | tee >(xclip) | tee >(xclip -selection clip)
-}
+# get a local URL
+f() { if [ -z "$1" ]; then p="$(pwd)"; else p="$1"; fi; echo -n "file://$(realpath $p)" | tee >(xclip) | tee >(xclip -selection clip); }
 
-fp() {
-    echo -n "$(realpath "$(if [ -z "$1" ]; then echo "$(pwd)"; else echo "$1"; fi)")" | tee >(xclip) | tee >(xclip -selection clip)
-}
+# copy resolved absolute file path to clipboard
+fp() { echo -n "$(realpath "$(if [ -z "$1" ]; then echo "$(pwd)"; else echo "$1"; fi)")" | tee >(xclip) | tee >(xclip -selection clip); }
 
-tmpcd() { cd "$(mktemp -d /tmp/sand-XXX)"; }
-tmppd() { cd "$(mktemp -d $HOME/tmp/sand-XXX)"; } # persistent
-cdl() { cd $(dirlast "$1") }
-cb() { cd "$(dirname "$1")"; } # cd to filename's location
+tmpcd() { cd "$(mktemp -d /tmp/sand-XXX)"; } # cd /tmp temp dir
+tmppd() { cd "$(mktemp -d $HOME/tmp/sand-XXX)"; } # cd ~ temp dir
+cb() { cd "$(dirname "$1")"; } # cd to filename's location (technically also zsh's (:h) could work, but it's longer)
 
 pk9f() { pkill -9 -f "$@"; }
+
+c_() { cd ~/code/cache; }
+
+## Utilities
+
+forever() { while sleep 0.5; do "$@"; done }
+
+tmpchrome() { dir="$(mktemp -d /tmp/chrome-XXX)"; google-chrome-stable --user-data-dir="$dir" "$@"; }
+
 which-cat () { less "$(which "$1")" }
+vimw() { vim "$(which "$1")"; }
+
+space() { yes '' | head "-n$(tput lines)"; }
+
+## Wrappers
+
+## String operations
+# https://stackoverflow.com/a/51141872/1687259
+rmescapes() { sed 's/\x1B[@A-Z\\\]^_]\|\x1B\[[0-9:;<=>?]*[-!"#$%&'"'"'()*+,.\/]*[][\\@A-Z^_`a-z{|}~]//g'; }
+url-decode() { ruby -ne 'require "cgi"; puts(CGI.unescape($_))' }
+sample() { shuf | head "-n${1:-1}"; }
+
+## Nix / Nixops / Direnv
 
 nix-revsha() { nix-prefetch-git "$@" | jq -r '"  rev = \"\(.rev)\";\n  sha256 = \"\(.sha256)\";"' | tee >(c); }
 no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
-
-tmx-sel() { tmx $(tmux ls -F '#{session_name}' | fzf); }
-tda() { tmux detach -a; }
-# tmux-term() {  run urxvt -e term specific "$(tmux display-message -p '#S')" }
 
 zns() { nix-shell "$@" --run zsh }
 direnv-unload() { pushd /; _direnv_hook; popd; }
 dau() { direnv-unload; }
 
-url-decode() { ruby -ne 'require "cgi"; puts(CGI.unescape($_))' }
+## Tmux
 
-c_() { cd ~/code/cache; }
+tmx-sel() { tmx $(tmux ls -F '#{session_name}' | fzf); }
+tda() { tmux detach -a; }
+# tmux-term() { run urxvt -e term specific "$(tmux display-message -p '#S')" }
 
-sample() { shuf | head "-n${1:-1}"; }
-
-tmpchrome() { dir="$(mktemp -d /tmp/chrome-XXX)"; google-chrome-stable --user-data-dir="$dir" "$@"; }
-
-## GIT
+## Git
 
 alias cgr='cd "$(git rev-parse --show-toplevel)"'
+
+gmsg() { g show $'--format=%s\n\n%b' -s "$@" | tac | sed -e '/./,$!d' | tac; }
+gwhat() { g rev-parse --abbrev-ref "${1:-HEAD}"; }
+gsha() { g rev-parse --short HEAD; }
+gp() { g rev-parse --short "$@"; }
+gwhatc() { gwhat | xclip -sel clipboard; }
+gbu() { git branch -u "${1:-origin}/$(gwhat)"; }
 
 local previewer="git diff {} | tee >(grep -q . || cat {})"
 gsel() { git ls-files -mo --exclude-standard | sort -u | fzf -m --preview="$previewer" | tee >(c); }
 gma() { git ls-files -mo --exclude-standard | fzf -m --preview="$previewer" | xargs -r git add; }
-gbrsel() { git for-each-ref --format='%(refname:short)' refs/heads | fzf; }
-gksel() { git checkout "$(git for-each-ref --format='%(refname:short)' | fzf)"; }
+gbsel() { git for-each-ref --format='%(refname:short)' | sed 's:^origin/::' | sort -u | fzf; }
+gksel() { git checkout "$(gbsel)"; }
 gstsel() { gst --porcelain | sed 's/^...//' | fzf; }
 gkc() { git checkout "$(c -o)"; }
 
-git-parent() { git rev-list --ancestry-path HEAD.."$1" | tail -n1; }
+gpmr() { g pf -o merge_request.create 2> >(tee >(rg -o 'http\S*' | c)); }
+gmb() { git merge-base HEAD "${1:-origin/master}"; };
+gdmb() { git diff **/src/main; }
+gdmb() { git diff "$(gmb)" "$@"; }
+gds() { gdmb --stat; }
+glmb() { git l HEAD..."$(gmb)" "$@"; }
+git-feat-edit() { feat="${1:-HEAD}"; git diff -z --name-only "$feat" "$(git merge-base "$feat" origin/master)" | xargs -r0 vim -np; }
+git-feat-diff() { feat="${1:-break}" && git checkout "$feat" && base="$(git merge-base "$feat" origin/master)" && git reset "$base" && git diff -z --name-only "$feat" "$base" | xargs -r0 vim -np; }
+
+grba() { git rebase --abort; }
+grbc() { git rebase --continue; }
+grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
+grbib() { git rebase -i "$(git merge-base HEAD "${base:-origin/master}")" "$@"; }
 
 gbrd() { git branch -d "$2" && git push --delete "$1" "$2" }
 gbrdf() { git branch -D "$2" && git push --delete "$1" "$2" }
 
-gahead() { ! gst --porcelain=2 -b | grep -q 'branch.ab +0'; }
-
-gwhat() { g rev-parse --abbrev-ref HEAD; }
-gwhatc() { gwhat | xclip -sel clipboard; }
-gbu() { git branch -u "${1:-origin}/$(gwhat)"; }
-
-grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
-
-gmb() { git merge-base HEAD "${branch:-master}"; };
-gdmb() { git diff "$(gmb)" "$@"; }
-glmb() { git l HEAD..."$(gmb)" "$@"; }
-grbib() { git rebase -i "$(git merge-base HEAD "${base:-master}")" "$@"; }
-git-feat-edit() { feat="${1:-HEAD}"; git diff -z --name-only "$feat" "$(git merge-base "$feat" master)" | xargs -r0 vim -np; }
-
-gtmp() { name="tmp-$(date "+%Y%m%d-%H%M")-${1:-draft}" && git checkout -b "$name" && g-ac && gk -; }
 grr() { git reset HEAD~; }
 
 gprev() { file=$1; out="trash/prev/$(basename "$file")"; mkdir trash/prev -p; git show "${branch:-master}:$file" > $out; vim $out; }
 
-gpmr() { g pf -o merge_request.create 2> >(tee >(rg -o 'http\S*' | c)); }
+git-parent() { git rev-list --ancestry-path HEAD.."$1" | tail -n1; }
+
+gtmp() { name="tmp-$(date "+%Y%m%d-%H%M")-${1:-draft}" && git checkout -b "$name" && g-ac && gk -; }
+
+glinecounts() { git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr; }
+gblameg() { git grep -n "$@" | perl -F':' -anpe '$_=`git blame -L$F[1],+1 $F[0]`'; } # this is absolutely bad-ass
+
+git-random-sha() { ruby -e 'puts 7.times.map { |_| rand(16).to_s(16) }.join'; }
+
+gahead() { ! gst --porcelain=2 -b | grep -q 'branch.ab +0'; }
 
 clone() {
     cldir="${dir:-$HOME/code/cache}"
@@ -92,25 +117,43 @@ ccc() {
     clone "$(xclip -o clipboard)"
 }
 
-wclone() {
-    1="$(sed 's!https!ssh!; s!gitlab!git@gitlab!' <<< "$1")"
-    dir=$HOME/work clone "$@"
-}
+## Ripgrep + Vim
 
+# sample () { shuf | head "-n${1:-1}" } # defined elsewhere
 rgsample() { rg -l "$@" | sample; }
 rgsample-v() { vim $(rg -l "$@" | sample); }
-rgedit() { vim -n $(rg -l "$@"); }
-rgsel() { rg -l "$@" | fzf -m --preview="$previewer" | c; }
-
+frg() { find . | rg "$@"; }
+grg() { g ls | rg "$@"; }
+grgm() { g ls | rg -v /src/test/ | rg "$@"; }
+grgmedit() { vim $(g ls | rg -v /src/test/ | rg "$@"); }
 rgm() { rg "$@" **/src/main; }
 
-frg() { find . | rg "$@"; }
-frgedit() { find . | rg "$@" | xargs -r vim -p; }
-grg() { g ls | rg "$@"; }
+rgsel() { rg -l "$@" | fzf -m --preview="$previewer" | c; }
+
+rgedit() { SEARCH="$1" vim -c 'call setreg("/", getenv("SEARCH"))' -n $(rg -l "$@"); }
+rgmedit() { SEARCH="$1" vim -c 'call setreg("/", getenv("SEARCH"))' -n $(rg -l "$@" **/src/main); }
+frgedit() { find . | rg "$@" | xargs -r vim -pn; }
+grgedit() { vim -n $(g ls | rg "$@"); }
+
+## SCALA
+
+bloopgrep() { jq -r < .bloop/*.json '(.project.resolution.modules // []) | map(.artifacts | map(select(.classifier == "sources") | .path)[])[]' | sort -u | pattern="$1" parallel -P8 -N1 'sh -c "zipgrep \"\$pattern\" \"\$1\" && echo -e \"from: \$1\n\"" sh' 2&>1 | grep -v zip.bomb }
+# bloopgrep() { jq -r < .bloop/*.json '(.project.resolution.modules // []) | map(.artifacts | map(select(.classifier == "sources") | .path)[])[]' | sort -u | pattern="$1" parallel -P8 -N1 'sh -c '\''zipgrep DUMPED.MESSAGES "\$1" && echo -e "from: $1\\n" sh'\' }
+# bloopgrep() { jq -r < .bloop/*.json '(.project.resolution.modules // []) | map(.artifacts | map(select(.classifier == "sources") | .path)[])[]' | sort -u | pattern="$1" parallel -P8 -N1 'sh -c "zipgrep DUMPED.MESSAGES \"\$1\" && echo \"from: \$1\"" sh'\' }
+# bloopgrep() { jq -r < .bloop/*.json '(.project.resolution.modules // []) | map(.artifacts | map(select(.classifier == "sources") | .path)[])[]' | sort -u | pattern="$1" xargs -rL1 sh -c 'zipgrep -i "$pattern" "$1" && echo -e from: "$1\n"' sh
+# jq -r < .bloop/*.json '(.project.resolution.modules // []) | map(.artifacts | map(select(.classifier == "sources") | .path)[])[]' | sort -u | parallel -P4 -N1 'sh -c "zipgrep DUMPED.MESSAGES \$1 && echo from: \$1" sh'
+
+## KUBECTL
+
+kctl_ns() { kubectl --context="$kctx" get namespaces | awk '{print $1}' | fzf; }
+# namespace assumed:
+kpods() { kctl_ get pods -o jsonpath='{.items..metadata.name}' | tr ' ' \\n; }
+kpod() { kpods | sample; }
+kdeploys() { kctl_ get deployments -o jsonpath='{.items..metadata.name}'; }
 
 ## MISC
 
-wait() { interval=0.1 wait-diff > /dev/null 2>&1 sh -c 'ls /tmp/flag'; }
+waitf() { interval=0.1 wait-diff > /dev/null 2>&1 sh -c 'ls /tmp/flag'; }
 slq() { clip-pipe sh "echo -n \"\\\`\\\`\\\`\$(cat)\\\`\\\`\\\`\""; } # slack quotes
 ft() { date "+%F:%T" }
 

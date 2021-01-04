@@ -1,14 +1,19 @@
 { config, pkgs, ... }:
 
 let
+  trace = a: builtins.trace a a;
   # also update NUR in lib/package-sets.nix
   nixpkgs = fetchTarball {
-    url = "https://channels.nixos.org/nixos-20.09/nixexprs.tar.xz?2020-12-10";
-    sha256 = "0rrcysadwrlw2iqrqr9lpbraqrqsdbgp9yccn8b0vyfn4fxpf8ki";
+    url = "https://channels.nixos.org/nixos-21.05/nixexprs.tar.xz?2021-11-13";
+    sha256 = "0ds8z44cdkbcx3k50hb02l0zn0a88nqxkf7f1q1v8s0918p94hk7";
   };
   nixos-hardware = fetchTarball {
-    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2020-12-10";
-    sha256 = "1zdky8vv7aznvmkkf53f5bm73n19a7728m33hhs8dg1psrb9lkx1";
+    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2021-11-13";
+    sha256 = "0x5bk4l52r3jfa8kih7vhbh29sysn2x2m2273agrj7s6zfz1cmxv";
+  };
+  home-manager = fetchTarball {
+    url = "https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz?2021-11-13";
+    sha256 = "122azyrkbp508a1yrhnq2ja2kj9whdmpb1qwgnmdaz87l02m0m26";
   };
 in
 
@@ -16,7 +21,11 @@ in
 #assert builtins.readFile <nixpkgs/.version> == builtins.readFile (nixpkgs + "/.version");
 
 {
-  system.stateVersion = "20.09";
+  imports = [
+    ./home-manager.nix
+  ];
+
+  system.stateVersion = "21.05";
   system.autoUpgrade.enable = true;
 
   # grouped by singlelinedness
@@ -26,7 +35,13 @@ in
   time.timeZone = "Europe/Riga";
 
   nix = {
-    nixPath = ["nixpkgs=${nixpkgs}:nixos-hardware=${nixos-hardware}:nixos-config=/etc/nixos/configuration.nix"];
+    # package = pkgs.nixUnstable;
+
+    # extraOptions = ''
+    #   experimental-features = nix-command flakes
+    # '';
+
+    nixPath = ["nixpkgs=${nixpkgs}:nixos-hardware=${nixos-hardware}:nixos-config=/etc/nixos/configuration.nix:home-manager=${home-manager}"];
     daemonNiceLevel = 19;
     daemonIONiceLevel = 19;
     # gc = { automatic = true; dates = "00:00"; }; # interesting, but no
@@ -35,9 +50,11 @@ in
       "https://cache.nixos.org/"
       "https://all-hies.cachix.org"
     ];
+
     binaryCachePublicKeys = [
       "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
     ];
+
     trustedUsers = [ "root" "s" ];
   };
 
@@ -46,8 +63,8 @@ in
   };
 
   networking = {
-    firewall.enable = false;
-    firewall.allowedTCPPorts = [ 22 80 8080 65353 ];
+    firewall.enable = true;
+    firewall.allowedTCPPorts = [ 22 8080 65353 ];
     networkmanager.enable = true;
     extraHosts = ''
       127.0.0.1 self

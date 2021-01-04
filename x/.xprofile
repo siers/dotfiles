@@ -15,11 +15,10 @@ if [ "$(hostname)" == 'spiral' ]; then
     xrandr -s 3840x2160 || exit
 fi
 
-autocutsel -fork                      &
-autocutsel -selection PRIMARY -fork   &
+autocutsel -fork &
+autocutsel -selection PRIMARY -fork &
 # unclutter -jitter 2 -noevents -idle 2 -grab &
-xsetroot -cursor_name left_prt        &
-
+xsetroot -cursor_name left_prt -bg '#000000' &
 xss-lock lock &
 
 #udiskie        &

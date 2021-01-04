@@ -1,8 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports =
-  [
+  imports = [
     ./work-p53-hardware.nix
     <nixos-hardware/lenovo/thinkpad/p53>
 
@@ -10,8 +9,7 @@
     ../lib/openvpn.nix
     ../lib/printing.nix
     ../lib/backlight.nix
-    ../lib/prometheus.nix
-    ../lib/evolution.nix
+    /home/s/work/conf/evolution.nix
   ];
 
   networking.hostName = "rv-p53";
@@ -19,12 +17,12 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  hardware.logitech.enable = true;
+  hardware.logitech.enableGraphical = true;
+
   #
 
-  services = lib.attrsets.recursiveUpdate
-    (import ../lib/xserver.nix).xfce-i3
-    {
-    };
+  services = (import ../lib/xserver.nix).xfce-i3;
 
   # xserver.videoDrivers = [ "modesetting" "nvidia" ];
   # xserver.config = ''
@@ -52,8 +50,9 @@
     headless = true;
   };
 
-  environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything ++ [
-  ];
+  environment.systemPackages =
+    (import ../lib/package-sets.nix { inherit pkgs; }).everything
+    ++ (with pkgs; [ zoom-us ] );
 
   fonts = {
     # fonts = [ pkgs.google-fonts ];

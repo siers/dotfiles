@@ -81,6 +81,7 @@ let
       bc
       bind # for dig
       coreutils
+      dtrx
       file
       gitAndTools.gitFull
       gnumake
@@ -90,7 +91,6 @@ let
       p7zip
       pass
       pv
-      python
       pwgen
       ruby
       socat
@@ -114,7 +114,7 @@ let
       jq
       libnotify
       massren
-      (neovim.override { vimAlias = true; withPython = true; })
+      (neovim.override { vimAlias = true; })
       nmap
       ranger
       ripgrep
