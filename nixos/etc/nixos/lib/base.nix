@@ -3,12 +3,13 @@
 let
   # also update NUR in lib/package-sets.nix
   nixpkgs = fetchTarball {
-    url = "https://channels.nixos.org/nixos-20.09/nixexprs.tar.xz?2020-12-10";
-    sha256 = "0rrcysadwrlw2iqrqr9lpbraqrqsdbgp9yccn8b0vyfn4fxpf8ki";
+    url = "https://channels.nixos.org/nixos-20.09/nixexprs.tar.xz?2020-12-11";
+    sha256 = "1p873x4ys9v1zblhvz15vachq5ny50kdlq1c74z2c4driwip8k97";
+
   };
   nixos-hardware = fetchTarball {
     url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2020-12-10";
-    sha256 = "1zdky8vv7aznvmkkf53f5bm73n19a7728m33hhs8dg1psrb9lkx1";
+    sha256 = "1z4cr5gsyfdpcy31vqg4ikalbxmnnac6jjk1nl8mxj0h0ix7pp36";
   };
 in
 
@@ -46,8 +47,8 @@ in
   };
 
   networking = {
-    firewall.enable = false;
-    firewall.allowedTCPPorts = [ 22 80 8080 65353 ];
+    firewall.enable = true;
+    firewall.allowedTCPPorts = [ 22 8080 65353 ];
     networkmanager.enable = true;
     extraHosts = ''
       127.0.0.1 self

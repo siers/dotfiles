@@ -10,7 +10,6 @@
     ../lib/openvpn.nix
     ../lib/printing.nix
     ../lib/backlight.nix
-    ../lib/prometheus.nix
     ../lib/evolution.nix
   ];
 

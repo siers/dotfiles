@@ -10,5 +10,6 @@
       ./lib/dev.nix
       ./lib/gnome-support.nix
       ./lib/fonts.nix
+      ./lib/prometheus.nix
     ];
 }
