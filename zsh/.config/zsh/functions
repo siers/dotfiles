@@ -38,6 +38,9 @@ sample() { shuf | head "-n${1:-1}"; }
 
 tmpchrome() { dir="$(mktemp -d /tmp/chrome-XXX)"; google-chrome-stable --user-data-dir="$dir" "$@"; }
 
+# https://stackoverflow.com/a/51141872/1687259
+rmescapes() { sed 's/\x1B[@A-Z\\\]^_]\|\x1B\[[0-9:;<=>?]*[-!"#$%&'"'"'()*+,.\/]*[][\\@A-Z^_`a-z{|}~]//g'; }
+
 ## GIT
 
 alias cgr='cd "$(git rev-parse --show-toplevel)"'
@@ -57,7 +60,7 @@ gbrdf() { git branch -D "$2" && git push --delete "$1" "$2" }
 
 gahead() { ! gst --porcelain=2 -b | grep -q 'branch.ab +0'; }
 
-gwhat() { g rev-parse --abbrev-ref HEAD; }
+gwhat() { g rev-parse --abbrev-ref "${1:-HEAD}"; }
 gsha() { g rev-parse --short HEAD; }
 gwhatc() { gwhat | xclip -sel clipboard; }
 gbu() { git branch -u "${1:-origin}/$(gwhat)"; }
@@ -76,6 +79,8 @@ grr() { git reset HEAD~; }
 gprev() { file=$1; out="trash/prev/$(basename "$file")"; mkdir trash/prev -p; git show "${branch:-master}:$file" > $out; vim $out; }
 
 gpmr() { g pf -o merge_request.create 2> >(tee >(rg -o 'http\S*' | c)); }
+
+glinecounts() { git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr; }
 
 clone() {
     cldir="${dir:-$HOME/code/cache}"
@@ -108,10 +113,11 @@ rgm() { rg "$@" **/src/main; }
 frg() { find . | rg "$@"; }
 frgedit() { find . | rg "$@" | xargs -r vim -p; }
 grg() { g ls | rg "$@"; }
+grgedit() { vim -n $(g ls | rg "$@"); }
 
 ## MISC
 
-wait() { interval=0.1 wait-diff > /dev/null 2>&1 sh -c 'ls /tmp/flag'; }
+waitf() { interval=0.1 wait-diff > /dev/null 2>&1 sh -c 'ls /tmp/flag'; }
 slq() { clip-pipe sh "echo -n \"\\\`\\\`\\\`\$(cat)\\\`\\\`\\\`\""; } # slack quotes
 ft() { date "+%F:%T" }
 

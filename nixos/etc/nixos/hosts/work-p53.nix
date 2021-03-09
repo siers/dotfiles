@@ -1,5 +1,9 @@
 { config, pkgs, lib, ... }:
 
+let
+  evolution = import /home/s/work/nix-conf/packages.nix { inherit pkgs; };
+in
+
 {
   imports =
   [
@@ -23,6 +27,12 @@
   services = lib.attrsets.recursiveUpdate
     (import ../lib/xserver.nix).xfce-i3
     {
+      apache-kafka = {
+        enable = true;
+      };
+
+
+      zookeeper.enable = true;
     };
 
   # xserver.videoDrivers = [ "modesetting" "nvidia" ];
@@ -51,8 +61,9 @@
     headless = true;
   };
 
-  environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything ++ [
-  ];
+  environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything ++ (with evolution; [
+    pan-globalprotect-okta
+  ]);
 
   fonts = {
     # fonts = [ pkgs.google-fonts ];

@@ -48,7 +48,7 @@
 (xbindkey '(XF86AudioLowerVolume)   "amixer set Master 3%-; click")
 (xbindkey '(XF86AudioRaiseVolume)   "amixer set Master 3%+; click")
 (xbindkey '(XF86AudioMute)          "amixer set Master toggle")
-(xbindkey '(XF86AudioPause)         "xdotool key control+shift+9")
+; (xbindkey '(XF86AudioPause)         "xdotool key control+shift+9")
 (xbindkey '(XF86AudioPlay)          "xdotool key control+shift+9")
 
 ; /sound

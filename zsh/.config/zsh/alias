@@ -56,6 +56,7 @@ alias watch='watch -n.5'
 alias hexdump='hexdump -C'
 alias jqu='jq --unbuffered 2>/dev/null'
 alias scsus='systemctl suspend'
+alias ydl='youtube-dl'
 
 alias tmux-alt-shell='tmux bind-key v new-window'
 

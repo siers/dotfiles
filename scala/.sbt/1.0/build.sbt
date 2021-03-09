@@ -21,7 +21,7 @@ def runCommandAndRemaining(command: String): State => State = { st: State =>
 }
 
 commands += Command.command("clear") { state => print("\033c"); state }
-commands += Command.args("testO", "<file>") { (state, args) => runCommandAndRemaining(s"~clear; test:testOnly *${args(0)}")(state) }
+commands += Command.args("t", "<file>") { (state, args) => runCommandAndRemaining(s"~clear; test:testOnly *${args(0)}")(state) }
 
 // def flaky = Command("flaky")(parser) {(state,args) =>
 //  val taskKey = Keys.test in Test

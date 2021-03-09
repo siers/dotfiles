@@ -89,9 +89,11 @@ Plug 'https://github.com/cakebaker/scss-syntax.vim'
 Plug 'https://github.com/ekalinin/Dockerfile.vim'
 
 " The Plugs below don't mean much to me.
+Plug 'https://github.com/preservim/nerdtree'
 Plug 'https://github.com/wsdjeg/vim-fetch'
 Plug 'https://github.com/HerringtonDarkholme/yats.vim', {'for': ['typescript', 'typescript.jsx']}
 Plug 'https://github.com/nixprime/cpsm'
+Plug 'https://github.com/junegunn/fzf'
 Plug 'https://github.com/junegunn/fzf.vim'
 " Plug 'https://github.com/mattn/emmet-vim' " div#foo<C-y>, => <div id=foo>
 " Plug 'https://github.com/ervandew/supertab'
@@ -99,6 +101,7 @@ Plug 'https://github.com/junegunn/fzf.vim'
 " Plug 'https://github.com/AndrewRadev/sideways.vim' " argument swapping
 " Plug 'https://github.com/junegunn/vim-easy-align'
 " Plug 'https://github.com/severin-lemaignan/vim-minimap'
+Plug 'https://github.com/eugen0329/vim-esearch'
 
 call plug#end()
 "}}}
@@ -236,8 +239,8 @@ autocmd vimrc FocusLost * call AuFocusLost()
 
 " Commands {{{
 command! Config :tabedit ~/.config/nvim/init.vim
-command! NF :tabedit notes
-command! NN :tabedit notes/notes
+command! NF :-tabedit notes
+command! NN :-tabedit notes/notes
 command! -range=% Sum :<line1>,<line2>!paste -sd+ | bc
 command! CL :tabedit %
 command! RMNL :%g/^$/d
@@ -366,6 +369,7 @@ map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim 
 
 cnoremap mk. !mkdir -p <c-r>=expand("%:h")<cr>/
 nnoremap <F9> :!./%<CR>
+nnoremap <F1> :NERDTreeToggle<CR>
 nnoremap <F10> :!make clean &<CR><CR>
 nnoremap <F11> :!make &<CR><CR>
 nnoremap <Leader>z :setlocal spell<CR>z= " Suggest word under/after the cursor.
@@ -388,10 +392,13 @@ map <C-j> :noh<CR>:<ESC>
 imap <silent> <C-j> <ESC>:noh<CR>i
 imap <silent> <C-_> <ESC>:undo<CR>a
 map <Leader>W :setlocal nowrap!<CR>
+map <Leader>w :w<CR>
 map <Leader>T :set paste!<CR>
 "map <Leader>N :set relativenumber!<CR>
 map <silent> <M-m> :tabm +1<CR>
 map <silent> <M-n> :tabm -1<CR>
+map <M-z> :q<CR>
+map â :q<CR>
 
 " map <Leader>q :wq<CR>
 " map <Leader>w :w<CR>
@@ -423,6 +430,7 @@ map <Leader><C-t> :-tabnew %<CR><C-o>zz
 nnoremap <Leader>N :-tabnew<CR>
 nnoremap <Leader>M :tabnew<CR>
 map â :q<CR>
+nnoremap y_ ^yg_
 " }}}
 
 " Maps with functions {{{

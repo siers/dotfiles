@@ -17,6 +17,7 @@ if [ -z "$ZSH_NESTED" ]; then
 fi
 
 __PS1_HOSTNAME="$(hostname | cut -b-6)"
+__PS1_NEWLINE="${__PS1_NEWLINE:-}"
 
 # PS1
 precmd() {
@@ -56,6 +57,6 @@ precmd() {
         succ="red"
     fi
 
-    PS1="$PS1%F{$succ}%#%F{default} "
+    PS1="$PS1$__PS1_NEWLINE%F{$succ}%#%F{default} "
     RPS1=""
 }
