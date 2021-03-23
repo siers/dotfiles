@@ -101,5 +101,5 @@ alias rn='react-native'
 
 alias dc='docker-compose'
 alias kctl='kubectl'
-alias kctl_='kubectl --context="$KUBECTL_CONTEXT" --namespace="$KUBECTL_NAMESPACE"'
+alias kctl_='kubectl --context="$kctx" --namespace="$kns"'
 alias tf='terraform'

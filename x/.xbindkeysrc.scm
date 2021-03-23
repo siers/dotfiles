@@ -63,7 +63,7 @@
 
 ; all the keypad binds
 
-(xbindkey '(Mod4 shift f)           "google-chrome-stable")
+(xbindkey '(Mod4 shift f)           "chrome-session")
 (xbindkey '(Shift KP_Home)          "chromium --incognito")
 (xbindkey '(Control KP_Home)        "chromium hide random")
 (xbindkey '(Shift Control KP_Home)  "chromium hide random proxy")

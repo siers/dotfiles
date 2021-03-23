@@ -470,6 +470,7 @@ function! s:ScalaSpecOpen()
 
   execute 'edit '. l:spec
 endf
+autocmd vimrc FileType scala nnoremap <buffer> <C-w><C-e> :call <SID>ScalaSpecOpen()<CR>
 autocmd vimrc FileType scala nnoremap <buffer> <Leader>E :call <SID>ScalaSpecOpen()<CR>
 " }}}
 

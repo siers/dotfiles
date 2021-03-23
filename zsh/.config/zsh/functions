@@ -81,6 +81,7 @@ gprev() { file=$1; out="trash/prev/$(basename "$file")"; mkdir trash/prev -p; gi
 gpmr() { g pf -o merge_request.create 2> >(tee >(rg -o 'http\S*' | c)); }
 
 glinecounts() { git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr; }
+gblameg() { git grep -n "$@" | perl -F':' -anpe '$_=`git blame -L$F[1],+1 $F[0]`'; } # this is absolutely bad-ass
 
 clone() {
     cldir="${dir:-$HOME/code/cache}"
@@ -114,6 +115,14 @@ frg() { find . | rg "$@"; }
 frgedit() { find . | rg "$@" | xargs -r vim -p; }
 grg() { g ls | rg "$@"; }
 grgedit() { vim -n $(g ls | rg "$@"); }
+
+## KUBECTL
+
+kctl_ns() { kubectl --context="$kctx" get namespaces | awk '{print $1}' | fzf; }
+# namespace assumed:
+kpods() { kctl_ get pods -o jsonpath='{.items..metadata.name}' | tr ' ' \\n; }
+kpod() { pods | sample; }
+kdeploys() { kctl_ get deployments -o jsonpath='{.items..metadata.name}'; }
 
 ## MISC
 
