@@ -1,3 +1,5 @@
+import scala.sys.process._
+
 // https://stackoverflow.com/questions/40741244/how-to-execute-a-command-in-task
 
 /**
@@ -21,6 +23,7 @@ def runCommandAndRemaining(command: String): State => State = { st: State =>
 }
 
 commands += Command.command("clear") { state => print("\033c"); state }
+commands += Command.command("ok") { state => "ok sbt".!; state }
 commands += Command.args("t", "<file>") { (state, args) => runCommandAndRemaining(s"~clear; test:testOnly *${args(0)}")(state) }
 
 // def flaky = Command("flaky")(parser) {(state,args) =>

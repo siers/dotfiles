@@ -102,6 +102,8 @@ Plug 'https://github.com/junegunn/fzf.vim'
 " Plug 'https://github.com/junegunn/vim-easy-align'
 " Plug 'https://github.com/severin-lemaignan/vim-minimap'
 Plug 'https://github.com/eugen0329/vim-esearch'
+Plug 'https://github.com/weirongxu/coc-calc'
+Plug 'https://github.com/derekelkins/agda-vim'
 
 call plug#end()
 "}}}
@@ -365,6 +367,7 @@ map <Leader>I :!echo -n "$(basename %)" \| cut -f1 -d . \| tr -d '\n' \| xclip -
 map <Leader>R :setlocal relativenumber!<CR>
 map <Leader>X :!run tmux-term<CR><CR>
 map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR> " show commit
+" map <Leader>gs yiw:!urxvt -e sh -c \"cd $(pwd); git show --stat -p <C-r>0 \| vim '+nnoremap q :qal!<CR>' -" &<CR><CR> " show commit
 " :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
 cnoremap mk. !mkdir -p <c-r>=expand("%:h")<cr>/
@@ -385,7 +388,7 @@ inoremap <F6> <C-R>=strftime("%F-%T")<CR>
 " }}}
 
 " Remaps {{{
-map <Leader>gb :Gblame<CR>
+map <Leader>gb :Git blame<CR>
 map <Leader>gd :Gdiff<CR>
 map <Leader>gu :Gbrowse!<CR>
 map <C-j> :noh<CR>:<ESC>

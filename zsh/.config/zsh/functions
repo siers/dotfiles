@@ -67,7 +67,7 @@ gbu() { git branch -u "${1:-origin}/$(gwhat)"; }
 
 grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
 
-gmb() { git merge-base HEAD "${branch:-master}"; };
+gmb() { git merge-base HEAD "${1:-origin/master}"; };
 gdmb() { git diff "$(gmb)" "$@"; }
 glmb() { git l HEAD..."$(gmb)" "$@"; }
 grbib() { git rebase -i "$(git merge-base HEAD "${base:-master}")" "$@"; }
@@ -82,6 +82,8 @@ gpmr() { g pf -o merge_request.create 2> >(tee >(rg -o 'http\S*' | c)); }
 
 glinecounts() { git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr; }
 gblameg() { git grep -n "$@" | perl -F':' -anpe '$_=`git blame -L$F[1],+1 $F[0]`'; } # this is absolutely bad-ass
+
+gmsg() { g show $'--format=%s\n\n%b' -s "$@" | tac | sed -e '/./,$!d' | tac; }
 
 clone() {
     cldir="${dir:-$HOME/code/cache}"
@@ -99,29 +101,36 @@ ccc() {
     clone "$(xclip -o clipboard)"
 }
 
-wclone() {
-    1="$(sed 's!https!ssh!; s!gitlab!git@gitlab!' <<< "$1")"
-    dir=$HOME/work clone "$@"
-}
+## RIPGREP + VIM
 
+# sample () { shuf | head "-n${1:-1}" } # defined elsewhere
 rgsample() { rg -l "$@" | sample; }
 rgsample-v() { vim $(rg -l "$@" | sample); }
-rgedit() { vim -n $(rg -l "$@"); }
-rgsel() { rg -l "$@" | fzf -m --preview="$previewer" | c; }
-
+frg() { find . | rg "$@"; }
+grg() { g ls | rg "$@"; }
 rgm() { rg "$@" **/src/main; }
 
-frg() { find . | rg "$@"; }
-frgedit() { find . | rg "$@" | xargs -r vim -p; }
-grg() { g ls | rg "$@"; }
+rgsel() { rg -l "$@" | fzf -m --preview="$previewer" | c; }
+
+rgedit() { SEARCH="$1" vim -c 'call setreg("/", getenv("SEARCH"))' -n $(rg -l "$@"); }
+rgmedit() { SEARCH="$1" vim -c 'call setreg("/", getenv("SEARCH"))' -n $(rg -l "$@" **/src/main); }
+frgedit() { find . | rg "$@" | xargs -r vim -pn; }
 grgedit() { vim -n $(g ls | rg "$@"); }
+
+## SCALA
+
+bloopgrep() { jq -r < .bloop/*.json '(.project.resolution.modules // []) | map(.artifacts | map(select(.classifier == "sources") | .path)[])[]' | sort -u | pattern="$1" parallel -P8 -N1 'sh -c "zipgrep \"\$pattern\" \"\$1\" && echo -e \"from: \$1\n\"" sh' 2&>1 | grep -v zip.bomb }
+# bloopgrep() { jq -r < .bloop/*.json '(.project.resolution.modules // []) | map(.artifacts | map(select(.classifier == "sources") | .path)[])[]' | sort -u | pattern="$1" parallel -P8 -N1 'sh -c '\''zipgrep DUMPED.MESSAGES "\$1" && echo -e "from: $1\\n" sh'\' }
+# bloopgrep() { jq -r < .bloop/*.json '(.project.resolution.modules // []) | map(.artifacts | map(select(.classifier == "sources") | .path)[])[]' | sort -u | pattern="$1" parallel -P8 -N1 'sh -c "zipgrep DUMPED.MESSAGES \"\$1\" && echo \"from: \$1\"" sh'\' }
+# bloopgrep() { jq -r < .bloop/*.json '(.project.resolution.modules // []) | map(.artifacts | map(select(.classifier == "sources") | .path)[])[]' | sort -u | pattern="$1" xargs -rL1 sh -c 'zipgrep -i "$pattern" "$1" && echo -e from: "$1\n"' sh
+# jq -r < .bloop/*.json '(.project.resolution.modules // []) | map(.artifacts | map(select(.classifier == "sources") | .path)[])[]' | sort -u | parallel -P4 -N1 'sh -c "zipgrep DUMPED.MESSAGES \$1 && echo from: \$1" sh'
 
 ## KUBECTL
 
 kctl_ns() { kubectl --context="$kctx" get namespaces | awk '{print $1}' | fzf; }
 # namespace assumed:
 kpods() { kctl_ get pods -o jsonpath='{.items..metadata.name}' | tr ' ' \\n; }
-kpod() { pods | sample; }
+kpod() { kpods | sample; }
 kdeploys() { kctl_ get deployments -o jsonpath='{.items..metadata.name}'; }
 
 ## MISC

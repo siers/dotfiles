@@ -5,10 +5,10 @@
     <property name="workspace_names" type="array">
       <value type="string" value="2"/>
       <value type="string" value="3"/>
+      <value type="string" value="4"/>
       <value type="string" value="9"/>
       <value type="string" value="1"/>
-      <value type="string" value="4"/>
-      <value type="string" value="5"/>
+      <value type="string" value="1"/>
       <value type="string" value="9"/>
       <value type="string" value="9"/>
       <value type="string" value="2"/>

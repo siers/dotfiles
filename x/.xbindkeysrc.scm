@@ -39,6 +39,7 @@
 (xbindkey '(Print)                  "prtscr")
 (xbindkey '(Control Print)          "sleep 1; prtscr -s")
 (xbindkey '(Shift Print)            "sleep 1; prtscr -sb 0")
+(xbindkey '(Control Shift Print)    "prtscr -i $(xdotool getactivewindow)")
 
 ; (xbindkey '(Shift Print)            "cloud-prtscr")
 ; (xbindkey '(Shift Control Print)    "sleep 1; cloud-prtscr -s")

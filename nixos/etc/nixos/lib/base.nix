@@ -5,7 +5,6 @@ let
   nixpkgs = fetchTarball {
     url = "https://channels.nixos.org/nixos-20.09/nixexprs.tar.xz?2020-12-11";
     sha256 = "1p873x4ys9v1zblhvz15vachq5ny50kdlq1c74z2c4driwip8k97";
-
   };
   nixos-hardware = fetchTarball {
     url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2020-12-10";

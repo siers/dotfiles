@@ -2,6 +2,15 @@
 
 let
   evolution = import /home/s/work/nix-conf/packages.nix { inherit pkgs; };
+
+  kafka = {
+    apache-kafka = {
+      enable = true;
+    };
+
+
+    zookeeper.enable = true;
+  };
 in
 
 {
@@ -26,14 +35,7 @@ in
 
   services = lib.attrsets.recursiveUpdate
     (import ../lib/xserver.nix).xfce-i3
-    {
-      apache-kafka = {
-        enable = true;
-      };
-
-
-      zookeeper.enable = true;
-    };
+    {}; # kafka
 
   # xserver.videoDrivers = [ "modesetting" "nvidia" ];
   # xserver.config = ''
