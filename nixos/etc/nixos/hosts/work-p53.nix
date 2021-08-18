@@ -3,19 +3,24 @@
 let
   evolution = import /home/s/work/nix-conf/packages.nix { inherit pkgs; };
 
-  kafka = {
+  services = {
     apache-kafka = {
       enable = true;
+      extraProperties = ''
+        offsets.topic.replication.factor = 1
+      '';
     };
 
-
     zookeeper.enable = true;
+
+    cassandra = {
+      enable = true;
+    };
   };
 in
 
 {
-  imports =
-  [
+  imports = [
     ./work-p53-hardware.nix
     <nixos-hardware/lenovo/thinkpad/p53>
 
@@ -23,7 +28,7 @@ in
     ../lib/openvpn.nix
     ../lib/printing.nix
     ../lib/backlight.nix
-    ../lib/evolution.nix
+    /home/s/work/nix-conf/evolution.nix
   ];
 
   networking.hostName = "rv-p53";
@@ -35,7 +40,7 @@ in
 
   services = lib.attrsets.recursiveUpdate
     (import ../lib/xserver.nix).xfce-i3
-    {}; # kafka
+    services;
 
   # xserver.videoDrivers = [ "modesetting" "nvidia" ];
   # xserver.config = ''
@@ -63,9 +68,10 @@ in
     headless = true;
   };
 
-  environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything ++ (with evolution; [
-    pan-globalprotect-okta
-  ]);
+  environment.systemPackages =
+    (import ../lib/package-sets.nix { inherit pkgs; }).everything
+    ++ (with evolution; [ pan-globalprotect-okta ] )
+    ++ (with pkgs; [ zoom-us ] );
 
   fonts = {
     # fonts = [ pkgs.google-fonts ];

@@ -201,7 +201,10 @@ call coc#config('languageserver.haskell', {
 
 call coc#config("coc.preferences.formatOnSaveFiletypes", ["scala"])
 
-" call coc#config("metals.serverVersion", "0.9.0") " downgrade
+call coc#config("metals", {
+  \ "metals.showImplicitArguments": "true",
+  \ "metals.showImplicitConversionsAndClasses": "true",
+  \ })
 
 " nnoremap <Tab> :CocCommand explorer<CR>
 let g:vimspector_enable_mappings = 'HUMAN'
@@ -361,9 +364,9 @@ map <Leader>x :%s/>/>\r/g<CR>gg=G " turn single line tags into multi-line
 map <Leader>y ggVG
 map <Leader>v vip!sort<CR>:w<CR>
 
-map <Leader>P :!realpath % \| tr -d '\n' \| xclip -sel clip<CR><CR>
-map <Leader>O :!realpath --relative-to=. % \| tr -d '\n' \| xclip -sel clip<CR><CR>
-map <Leader>I :!echo -n "$(basename %)" \| cut -f1 -d . \| tr -d '\n' \| xclip -sel clip<CR><CR>
+map <Leader>P :!realpath "%" \| tr -d '\n' \| xclip -sel clip<CR><CR>
+map <Leader>O :!realpath --relative-to=. "%" \| tr -d '\n' \| xclip -sel clip<CR><CR>
+map <Leader>I :!echo -n "$(basename "%")" \| cut -f1 -d . \| tr -d '\n' \| xclip -sel clip<CR><CR>
 map <Leader>R :setlocal relativenumber!<CR>
 map <Leader>X :!run tmux-term<CR><CR>
 map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR> " show commit
@@ -390,7 +393,7 @@ inoremap <F6> <C-R>=strftime("%F-%T")<CR>
 " Remaps {{{
 map <Leader>gb :Git blame<CR>
 map <Leader>gd :Gdiff<CR>
-map <Leader>gu :Gbrowse!<CR>
+map <Leader>gu :GBrowse!<CR>
 map <C-j> :noh<CR>:<ESC>
 imap <silent> <C-j> <ESC>:noh<CR>i
 imap <silent> <C-_> <ESC>:undo<CR>a

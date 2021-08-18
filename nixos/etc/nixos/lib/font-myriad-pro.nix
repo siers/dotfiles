@@ -1,6 +1,6 @@
 # https://gist.github.com/emmanuelrosa/a6f0e2f3bc80de2ffb51e6e9b73ebfcd
 
-{ stdenv, fetchurl }:
+{ lib, stdenv, fetchurl }:
 
 let
   fetchfont = name: num: sha:
@@ -35,7 +35,7 @@ in stdenv.mkDerivation rec {
     done
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = https://fontsup.com/font/myriad-pro.html;
     description = "Myriad Pro Adobe font";
     license = with licenses; [ unfree ];

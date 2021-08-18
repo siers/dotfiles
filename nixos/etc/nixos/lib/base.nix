@@ -3,12 +3,16 @@
 let
   # also update NUR in lib/package-sets.nix
   nixpkgs = fetchTarball {
-    url = "https://channels.nixos.org/nixos-20.09/nixexprs.tar.xz?2020-12-11";
-    sha256 = "1p873x4ys9v1zblhvz15vachq5ny50kdlq1c74z2c4driwip8k97";
+    url = "https://channels.nixos.org/nixos-21.05/nixexprs.tar.xz?2021-08-16";
+    sha256 = "1chfsnzb30y0sxgvxn8ycv60jvwmnr4wny46xqxddwzj51xqsm3x";
   };
   nixos-hardware = fetchTarball {
-    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2020-12-10";
-    sha256 = "1z4cr5gsyfdpcy31vqg4ikalbxmnnac6jjk1nl8mxj0h0ix7pp36";
+    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2021-08-16";
+    sha256 = "1rsigxljk9cmxnscwq8hcybkh7rs8a0gyf8zk3hjn0683rwclqjf";
+  };
+  home-manager = fetchTarball {
+    url = "https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz?2021-08-16";
+    sha256 = "0xw1vgwfdn75rgamcsi5j1iqfl0j06x8xp92k24wr9hayfr5m400";
   };
 in
 
@@ -16,7 +20,11 @@ in
 #assert builtins.readFile <nixpkgs/.version> == builtins.readFile (nixpkgs + "/.version");
 
 {
-  system.stateVersion = "20.09";
+  imports = [
+    ./home-manager.nix
+  ];
+
+  system.stateVersion = "21.05";
   system.autoUpgrade.enable = true;
 
   # grouped by singlelinedness
@@ -26,7 +34,13 @@ in
   time.timeZone = "Europe/Riga";
 
   nix = {
-    nixPath = ["nixpkgs=${nixpkgs}:nixos-hardware=${nixos-hardware}:nixos-config=/etc/nixos/configuration.nix"];
+    # package = pkgs.nixUnstable;
+
+    # extraOptions = ''
+    #   experimental-features = nix-command flakes
+    # '';
+
+    nixPath = ["nixpkgs=${nixpkgs}:nixos-hardware=${nixos-hardware}:nixos-config=/etc/nixos/configuration.nix:home-manager=${home-manager}"];
     daemonNiceLevel = 19;
     daemonIONiceLevel = 19;
     # gc = { automatic = true; dates = "00:00"; }; # interesting, but no
@@ -35,9 +49,11 @@ in
       "https://cache.nixos.org/"
       "https://all-hies.cachix.org"
     ];
+
     binaryCachePublicKeys = [
       "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
     ];
+
     trustedUsers = [ "root" "s" ];
   };
 

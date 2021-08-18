@@ -24,6 +24,8 @@ def runCommandAndRemaining(command: String): State => State = { st: State =>
 
 commands += Command.command("clear") { state => print("\033c"); state }
 commands += Command.command("ok") { state => "ok sbt".!; state }
+commands += Command.command("tc") { state => runCommandAndRemaining("~clear; test:compile")(state) }
+commands += Command.command("zr") { state => "reload".!; state }
 commands += Command.args("t", "<file>") { (state, args) => runCommandAndRemaining(s"~clear; test:testOnly *${args(0)}")(state) }
 
 // def flaky = Command("flaky")(parser) {(state,args) =>

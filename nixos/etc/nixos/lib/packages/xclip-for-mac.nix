@@ -12,5 +12,5 @@ mkDerivation {
   executableHaskellDepends = [ base bytestring process ];
   description = "xclip for mac";
   license = "unlicense";
-  platforms = stdenv.lib.platforms.darwin;
+  platforms = lib.platforms.darwin;
 }

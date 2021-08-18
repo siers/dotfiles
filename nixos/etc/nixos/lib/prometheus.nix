@@ -26,7 +26,7 @@
         }
       ];
       exporters.node = {
-        enable = true;
+        enable = false;
         enabledCollectors = [
           # "conntrack"
           # "diskstats"

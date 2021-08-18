@@ -48,6 +48,7 @@ alias du='du -h'
 alias mkd=mkdir
 alias th=touch
 
+alias ok.='ok $?'
 alias vim=v
 [ -z "$ZSH_DARWIN" ] && alias cal='cal -m'
 alias grep='grep --colour'

@@ -15,6 +15,7 @@ gnore-*
 .vim
 /.*.swp
 .session*.vim
+.*session*.vim
 .*envrc*
 
 # nix

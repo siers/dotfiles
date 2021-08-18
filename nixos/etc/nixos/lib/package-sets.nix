@@ -90,7 +90,6 @@ let
       p7zip
       pass
       pv
-      python
       pwgen
       ruby
       socat
@@ -114,7 +113,7 @@ let
       jq
       libnotify
       massren
-      (neovim.override { vimAlias = true; withPython = true; })
+      (neovim.override { vimAlias = true; })
       nmap
       ranger
       ripgrep
