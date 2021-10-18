@@ -13,6 +13,6 @@ alias zr='exec zsh'
 . ~/.config/zsh/sessions
 . ~/.config/zsh/functions
 
-[ -e ~/work/scripts/profile ] && . ~/work/scripts/profile
+[ -e ~/work/conf/scripts/profile ] && . ~/work/conf/scripts/profile
 
 # http://unix.stackexchange.com/questions/71253/what-should-shouldnt-go-in-zshenv-zshrc-zlogin-zprofile-zlogout

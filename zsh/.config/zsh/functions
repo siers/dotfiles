@@ -41,6 +41,8 @@ tmpchrome() { dir="$(mktemp -d /tmp/chrome-XXX)"; google-chrome-stable --user-da
 # https://stackoverflow.com/a/51141872/1687259
 rmescapes() { sed 's/\x1B[@A-Z\\\]^_]\|\x1B\[[0-9:;<=>?]*[-!"#$%&'"'"'()*+,.\/]*[][\\@A-Z^_`a-z{|}~]//g'; }
 
+vimw() { vim "$(which "$1")"; }
+
 ## GIT
 
 alias cgr='cd "$(git rev-parse --show-toplevel)"'
@@ -86,6 +88,8 @@ glinecounts() { git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/
 gblameg() { git grep -n "$@" | perl -F':' -anpe '$_=`git blame -L$F[1],+1 $F[0]`'; } # this is absolutely bad-ass
 
 gmsg() { g show $'--format=%s\n\n%b' -s "$@" | tac | sed -e '/./,$!d' | tac; }
+
+git-random-sha() { ruby -e 'puts 7.times.map { |_| rand(16).to_s(16) }.join'; }
 
 clone() {
     cldir="${dir:-$HOME/code/cache}"

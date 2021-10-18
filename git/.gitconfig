@@ -14,6 +14,8 @@
 	lod = log --format='%h %aD %s' --abbrev-commit
 	lo = log --format=oneline --abbrev-commit
 	ls = ls-files
+	sl = shortlog
+	sn = shortlog -sn
 	m = merge
 	o = show
 	p = cherry-pick

@@ -42,6 +42,8 @@ p() { f="$1"; shift 2> /dev/null; ping -c1 "${f:-google.lv}" "$@"; } # tired of 
 pp() { p "$@" || (sleep 0.66; pp "$@"); }
 ppo() { pp; ok internet\ on\!; }
 
+cdf() { cd "$(dirname "$1")"; }
+
 alias l='ls'
 alias mv='mv -i'
 alias du='du -h'

@@ -17,6 +17,7 @@ gnore-*
 .session*.vim
 .*session*.vim
 .*envrc*
+.vimspector.json
 
 # nix
 /gemset.nix

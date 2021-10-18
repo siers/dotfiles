@@ -1,24 +1,5 @@
 { config, pkgs, lib, ... }:
 
-let
-  evolution = import /home/s/work/nix-conf/packages.nix { inherit pkgs; };
-
-  services = {
-    apache-kafka = {
-      enable = true;
-      extraProperties = ''
-        offsets.topic.replication.factor = 1
-      '';
-    };
-
-    zookeeper.enable = true;
-
-    cassandra = {
-      enable = true;
-    };
-  };
-in
-
 {
   imports = [
     ./work-p53-hardware.nix
@@ -28,7 +9,7 @@ in
     ../lib/openvpn.nix
     ../lib/printing.nix
     ../lib/backlight.nix
-    /home/s/work/nix-conf/evolution.nix
+    /home/s/work/conf/evolution.nix
   ];
 
   networking.hostName = "rv-p53";
@@ -36,11 +17,12 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  hardware.logitech.enable = true;
+  hardware.logitech.enableGraphical = true;
+
   #
 
-  services = lib.attrsets.recursiveUpdate
-    (import ../lib/xserver.nix).xfce-i3
-    services;
+  services = (import ../lib/xserver.nix).xfce-i3;
 
   # xserver.videoDrivers = [ "modesetting" "nvidia" ];
   # xserver.config = ''
@@ -70,7 +52,6 @@ in
 
   environment.systemPackages =
     (import ../lib/package-sets.nix { inherit pkgs; }).everything
-    ++ (with evolution; [ pan-globalprotect-okta ] )
     ++ (with pkgs; [ zoom-us ] );
 
   fonts = {
