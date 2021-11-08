@@ -13,6 +13,7 @@
 ; locking
 (xbindkey '(Mod4 F12)               "lock; xset dpms force off")
 (xbindkey '(Mod4 Shift F12)         "lock")
+(xbindkey '(Mod4 Alt F12)           "lock --stealth")
 
 ; prtscr magic
 (xbindkey '(Print)                  "prtscr")

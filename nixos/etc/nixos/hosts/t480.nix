@@ -27,5 +27,5 @@
   };
   users.extraGroups.vboxusers.members = [ "s" ];
 
-  environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything ++ [ pkgs.transmission-gtk ];
+  environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything ++ [ pkgs.transmission-gtk pan-globalprotect-okta ];
 }

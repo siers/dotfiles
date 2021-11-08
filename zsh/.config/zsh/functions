@@ -47,29 +47,23 @@ vimw() { vim "$(which "$1")"; }
 
 alias cgr='cd "$(git rev-parse --show-toplevel)"'
 
-local previewer="git diff {} | tee >(grep -q . || cat {})"
-gsel() { git ls-files -mo --exclude-standard | sort -u | fzf -m --preview="$previewer" | tee >(c); }
-gma() { git ls-files -mo --exclude-standard | fzf -m --preview="$previewer" | xargs -r git add; }
-gbrsel() { git for-each-ref --format='%(refname:short)' refs/heads | fzf; }
-gksel() { git checkout "$(git for-each-ref --format='%(refname:short)' | fzf)"; }
-gstsel() { gst --porcelain | sed 's/^...//' | fzf; }
-gkc() { git checkout "$(c -o)"; }
-
-git-parent() { git rev-list --ancestry-path HEAD.."$1" | tail -n1; }
-
-gbrd() { git branch -d "$2" && git push --delete "$1" "$2" }
-gbrdf() { git branch -D "$2" && git push --delete "$1" "$2" }
-
-gahead() { ! gst --porcelain=2 -b | grep -q 'branch.ab +0'; }
-
+gmsg() { g show $'--format=%s\n\n%b' -s "$@" | tac | sed -e '/./,$!d' | tac; }
 gwhat() { g rev-parse --abbrev-ref "${1:-HEAD}"; }
 gsha() { g rev-parse --short HEAD; }
 gp() { g rev-parse --short "$@"; }
 gwhatc() { gwhat | xclip -sel clipboard; }
 gbu() { git branch -u "${1:-origin}/$(gwhat)"; }
 
-grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
+local previewer="git diff {} | tee >(grep -q . || cat {})"
+gsel() { git ls-files -mo --exclude-standard | sort -u | fzf -m --preview="$previewer" | tee >(c); }
+gma() { git ls-files -mo --exclude-standard | fzf -m --preview="$previewer" | xargs -r git add; }
+gbsel() { git for-each-ref --format='%(refname:short)' | sed 's:^origin/::' | sort -u | fzf; }
+gksel() { git checkout "$(gbsel)"; }
+gstsel() { gst --porcelain | sed 's/^...//' | fzf; }
+gkc() { git checkout "$(c -o)"; }
 
+gpmr() { g pf -o merge_request.create 2> >(tee >(rg -o 'http\S*' | c)); }
+grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
 gmb() { git merge-base HEAD "${1:-origin/master}"; };
 gdmb() { git diff "$(gmb)" "$@"; }
 glmb() { git l HEAD..."$(gmb)" "$@"; }
@@ -77,19 +71,23 @@ grbib() { git rebase -i "$(git merge-base HEAD "${base:-origin/master}")" "$@"; 
 git-feat-edit() { feat="${1:-HEAD}"; git diff -z --name-only "$feat" "$(git merge-base "$feat" origin/master)" | xargs -r0 vim -np; }
 git-feat-diff() { feat="${1:-break}" && git checkout "$feat" && base="$(git merge-base "$feat" origin/master)" && git reset "$base" && git diff -z --name-only "$feat" "$base" | xargs -r0 vim -np; }
 
-gtmp() { name="tmp-$(date "+%Y%m%d-%H%M")-${1:-draft}" && git checkout -b "$name" && g-ac && gk -; }
+gbrd() { git branch -d "$2" && git push --delete "$1" "$2" }
+gbrdf() { git branch -D "$2" && git push --delete "$1" "$2" }
+
 grr() { git reset HEAD~; }
 
 gprev() { file=$1; out="trash/prev/$(basename "$file")"; mkdir trash/prev -p; git show "${branch:-master}:$file" > $out; vim $out; }
 
-gpmr() { g pf -o merge_request.create 2> >(tee >(rg -o 'http\S*' | c)); }
+git-parent() { git rev-list --ancestry-path HEAD.."$1" | tail -n1; }
+
+gtmp() { name="tmp-$(date "+%Y%m%d-%H%M")-${1:-draft}" && git checkout -b "$name" && g-ac && gk -; }
 
 glinecounts() { git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr; }
 gblameg() { git grep -n "$@" | perl -F':' -anpe '$_=`git blame -L$F[1],+1 $F[0]`'; } # this is absolutely bad-ass
 
-gmsg() { g show $'--format=%s\n\n%b' -s "$@" | tac | sed -e '/./,$!d' | tac; }
-
 git-random-sha() { ruby -e 'puts 7.times.map { |_| rand(16).to_s(16) }.join'; }
+
+gahead() { ! gst --porcelain=2 -b | grep -q 'branch.ab +0'; }
 
 clone() {
     cldir="${dir:-$HOME/code/cache}"

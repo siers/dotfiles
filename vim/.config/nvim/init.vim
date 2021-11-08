@@ -356,6 +356,7 @@ nnoremap <silent> <space>tb :<C-u>CocCommand metals.tvp metalsBuild<CR> " Toggle
 nnoremap <silent> <space>tc :<C-u>CocCommand metals.tvp metalsCompile<CR> " Toggle Tree View 'metalsCompile'
 " nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR> Reveal current current class (trait or object) in Tree View 'metalsBuild'
 nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsPackages<CR>
+nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
 
 " " Vimspector
 " nmap <leader>vc <Plug>VimspectorContinue                     " When debugging, continue. Otherwise start debugging.

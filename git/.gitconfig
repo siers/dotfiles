@@ -4,18 +4,17 @@
 	ch = cherry-pick
 	cl = clone
 	commit = commit -v
+	f = fetch
 	fo = show --format=fuller
 	h = show --format=oneline
 	k = checkout
 	kp = checkout -
-	l = log --decorate --graph
 	lf = log --format=fuller
+	l = log --decorate --graph
 	loc = log --format='%h' --abbrev-commit
 	lod = log --format='%h %aD %s' --abbrev-commit
 	lo = log --format=oneline --abbrev-commit
 	ls = ls-files
-	sl = shortlog
-	sn = shortlog -sn
 	m = merge
 	o = show
 	p = cherry-pick
@@ -27,6 +26,8 @@
 	rh = reset --hard
 	rhu = reset --hard @{u}
 	r = reset
+	sl = shortlog
+	sn = shortlog -sn
 	s = stash
 	vc = verify-commit
 [push]
