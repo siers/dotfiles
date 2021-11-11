@@ -17,6 +17,13 @@
     home.file.".gitignore".source = /home/s/code/df/git/.gitignore;
     home.file.".gitignorex".source = /home/s/code/df/git/.gitignore;
   };
+
+  home-manager.users.ld = { pkgs, ... }: {
+    home.packages = with pkgs; [
+      scala
+      sbt
+    ];
+  }
 }
 
 # agdaWithPackages-2.6.1

@@ -338,14 +338,15 @@ command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Show all diagnostics
-nnoremap <silent> <space>D  :<C-u>CocList diagnostics<cr> " Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr> " Show commands
-nnoremap <silent> <space>cc :<C-u>CocList commands<cr> " Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr> " Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr> " Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR> " Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR> " Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent> <space>D  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr> " Manage extensions
+nnoremap <silent> <space>cc :<C-u>CocList commands<cr> " Show commands
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr> " Find symbol of current document
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr> " Search workspace symbols
+nnoremap <silent> <space>j  :<C-u>CocNext<CR> " Do default action for next item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR> " Do default action for previous item.
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR> " Resume latest coc list
+nnoremap <silent> <space>i :<C-u>CocCommand editor.action.organizeImport<CR>
 
 xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
 nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@

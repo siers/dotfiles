@@ -1,49 +1,54 @@
 [ -e "$HOME/.config/zsh/temporary" ] && source ~/.config/zsh/temporary || :
 
-forever() { while sleep 0.5; do "$@"; done }
+## File path and directory operations
 
-f() {
-    if [ -z "$1" ]; then p="$(pwd)"; else p="$1"; fi
-    echo -n "file://$(realpath $p)" | tee >(xclip) | tee >(xclip -selection clip)
-}
+# get a local URL
+f() { if [ -z "$1" ]; then p="$(pwd)"; else p="$1"; fi; echo -n "file://$(realpath $p)" | tee >(xclip) | tee >(xclip -selection clip); }
 
-fp() {
-    echo -n "$(realpath "$(if [ -z "$1" ]; then echo "$(pwd)"; else echo "$1"; fi)")" | tee >(xclip) | tee >(xclip -selection clip)
-}
+# copy resolved absolute file path to clipboard
+fp() { echo -n "$(realpath "$(if [ -z "$1" ]; then echo "$(pwd)"; else echo "$1"; fi)")" | tee >(xclip) | tee >(xclip -selection clip); }
 
-tmpcd() { cd "$(mktemp -d /tmp/sand-XXX)"; }
-tmppd() { cd "$(mktemp -d $HOME/tmp/sand-XXX)"; } # persistent
-cdl() { cd $(dirlast "$1") }
-cb() { cd "$(dirname "$1")"; } # cd to filename's location
+tmpcd() { cd "$(mktemp -d /tmp/sand-XXX)"; } # cd /tmp temp dir
+tmppd() { cd "$(mktemp -d $HOME/tmp/sand-XXX)"; } # cd ~ temp dir
+cb() { cd "$(dirname "$1")"; } # cd to filename's location (technically also zsh's (:h) could work, but it's longer)
 
 pk9f() { pkill -9 -f "$@"; }
+
+c_() { cd ~/code/cache; }
+
+## Utilities
+
+forever() { while sleep 0.5; do "$@"; done }
+
+tmpchrome() { dir="$(mktemp -d /tmp/chrome-XXX)"; google-chrome-stable --user-data-dir="$dir" "$@"; }
+
 which-cat () { less "$(which "$1")" }
+vimw() { vim "$(which "$1")"; }
+
+## Wrappers
+
+## String operations
+# https://stackoverflow.com/a/51141872/1687259
+rmescapes() { sed 's/\x1B[@A-Z\\\]^_]\|\x1B\[[0-9:;<=>?]*[-!"#$%&'"'"'()*+,.\/]*[][\\@A-Z^_`a-z{|}~]//g'; }
+url-decode() { ruby -ne 'require "cgi"; puts(CGI.unescape($_))' }
+sample() { shuf | head "-n${1:-1}"; }
+
+## Nix / Nixops / Direnv
 
 nix-revsha() { nix-prefetch-git "$@" | jq -r '"  rev = \"\(.rev)\";\n  sha256 = \"\(.sha256)\";"' | tee >(c); }
 no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
-
-tmx-sel() { tmx $(tmux ls -F '#{session_name}' | fzf); }
-tda() { tmux detach -a; }
-# tmux-term() {  run urxvt -e term specific "$(tmux display-message -p '#S')" }
 
 zns() { nix-shell "$@" --run zsh }
 direnv-unload() { pushd /; _direnv_hook; popd; }
 dau() { direnv-unload; }
 
-url-decode() { ruby -ne 'require "cgi"; puts(CGI.unescape($_))' }
+## Tmux
 
-c_() { cd ~/code/cache; }
+tmx-sel() { tmx $(tmux ls -F '#{session_name}' | fzf); }
+tda() { tmux detach -a; }
+# tmux-term() { run urxvt -e term specific "$(tmux display-message -p '#S')" }
 
-sample() { shuf | head "-n${1:-1}"; }
-
-tmpchrome() { dir="$(mktemp -d /tmp/chrome-XXX)"; google-chrome-stable --user-data-dir="$dir" "$@"; }
-
-# https://stackoverflow.com/a/51141872/1687259
-rmescapes() { sed 's/\x1B[@A-Z\\\]^_]\|\x1B\[[0-9:;<=>?]*[-!"#$%&'"'"'()*+,.\/]*[][\\@A-Z^_`a-z{|}~]//g'; }
-
-vimw() { vim "$(which "$1")"; }
-
-## GIT
+## Git
 
 alias cgr='cd "$(git rev-parse --show-toplevel)"'
 
@@ -105,7 +110,7 @@ ccc() {
     clone "$(xclip -o clipboard)"
 }
 
-## RIPGREP + VIM
+## Ripgrep + Vim
 
 # sample () { shuf | head "-n${1:-1}" } # defined elsewhere
 rgsample() { rg -l "$@" | sample; }
