@@ -3,6 +3,7 @@
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, ... }:
 
+with (import (../lib/private.nix) {});
 {
   imports =
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
@@ -13,8 +14,14 @@
   boot.extraModulePackages = [ ];
 
   boot.initrd.luks.devices = {
-    enc-vg = { device = "/dev/disk/by-uuid/a4ee2444-0bc4-4d6c-9754-c7f2353cca35"; preLVM = true; allowDiscards = true; }; # /dev/sda3
-    enc-home = { device = "/dev/disk/by-uuid/79e9c6d6-6c41-4951-95c2-a98dafe11507"; preLVM = true; allowDiscards = true; }; # /dev/sda4
+    enc-vg = {
+      device = "/dev/disk/by-uuid/a4ee2444-0bc4-4d6c-9754-c7f2353cca35"; preLVM = true; allowDiscards = true;
+      inherit keyFile keyFileOffset keyFileSize; fallbackToPassword = true;
+    }; # /dev/sda3
+    enc-home = {
+      device = "/dev/disk/by-uuid/79e9c6d6-6c41-4951-95c2-a98dafe11507"; preLVM = true; allowDiscards = true;
+      inherit keyFile keyFileOffset keyFileSize; fallbackToPassword = true;
+    }; # /dev/sda4
   };
 
   fileSystems = pkgs.lib.recursiveUpdate {

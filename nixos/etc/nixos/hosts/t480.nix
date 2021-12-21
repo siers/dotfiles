@@ -10,6 +10,7 @@
     ../lib/openvpn.nix
     ../lib/printing.nix
     ../lib/backlight.nix
+    ../lib/user/ld.nix
   ];
 
   networking.hostName = "t480";
@@ -19,7 +20,8 @@
 
   #
 
-  services = (import ../lib/xserver.nix).xfce-i3-backlight; # .gnome-backlight;
+  # services = (import ../lib/xserver.nix).xfce-i3-backlight;
+  services = (import ../lib/xserver.nix).gnome-backlight;
 
   virtualisation.virtualbox.host = {
     enable = true;
@@ -27,5 +29,10 @@
   };
   users.extraGroups.vboxusers.members = [ "s" ];
 
-  environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything ++ [ pkgs.transmission-gtk pan-globalprotect-okta ];
+  environment.systemPackages = (import ../lib/package-sets.nix { inherit pkgs; }).everything ++ [ pkgs.transmission-gtk ];
+
+  programs.java = {
+    enable = true;
+    package = pkgs.jdk8;
+  };
 }

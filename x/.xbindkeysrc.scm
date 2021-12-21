@@ -68,3 +68,8 @@
 
 ; ancient
 (xbindkey '(Mod4 Shift t)           "synclient TouchpadOff=$(synclient | ruby -ne 'puts ($_.match(/\\d+/)[0].to_i ^ 1) if /TouchpadOff/ =~ $_'); alert 80")
+
+; idasen table
+(xbindkey '(Mod4 Alt "8") "pkill idasen && sleep 0.8; idasen sit")
+(xbindkey '(Mod4 Alt "9") "pkill idasen && sleep 0.8; idasen standl")
+(xbindkey '(Mod4 Alt "0") "pkill idasen && sleep 0.8; idasen standh")

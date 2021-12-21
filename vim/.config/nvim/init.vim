@@ -96,7 +96,7 @@ Plug 'https://github.com/preservim/nerdtree'
 Plug 'https://github.com/wsdjeg/vim-fetch'
 Plug 'https://github.com/HerringtonDarkholme/yats.vim', {'for': ['typescript', 'typescript.jsx']}
 Plug 'https://github.com/nixprime/cpsm'
-Plug 'https://github.com/junegunn/fzf'
+Plug 'https://github.com/junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'https://github.com/junegunn/fzf.vim'
 " Plug 'https://github.com/mattn/emmet-vim' " div#foo<C-y>, => <div id=foo>
 " Plug 'https://github.com/ervandew/supertab'
@@ -533,3 +533,5 @@ function! Md()
 endfunction
 command! Md call Md()
 " }}}
+
+lua require 'pipe'

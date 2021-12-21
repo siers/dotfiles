@@ -25,6 +25,8 @@ tmpchrome() { dir="$(mktemp -d /tmp/chrome-XXX)"; google-chrome-stable --user-da
 which-cat () { less "$(which "$1")" }
 vimw() { vim "$(which "$1")"; }
 
+space() { yes '' | head "-n$(tput lines)"; }
+
 ## Wrappers
 
 ## String operations
@@ -68,13 +70,18 @@ gstsel() { gst --porcelain | sed 's/^...//' | fzf; }
 gkc() { git checkout "$(c -o)"; }
 
 gpmr() { g pf -o merge_request.create 2> >(tee >(rg -o 'http\S*' | c)); }
-grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
 gmb() { git merge-base HEAD "${1:-origin/master}"; };
+gdmb() { git diff **/src/main; }
 gdmb() { git diff "$(gmb)" "$@"; }
+gds() { gdmb --stat; }
 glmb() { git l HEAD..."$(gmb)" "$@"; }
-grbib() { git rebase -i "$(git merge-base HEAD "${base:-origin/master}")" "$@"; }
 git-feat-edit() { feat="${1:-HEAD}"; git diff -z --name-only "$feat" "$(git merge-base "$feat" origin/master)" | xargs -r0 vim -np; }
 git-feat-diff() { feat="${1:-break}" && git checkout "$feat" && base="$(git merge-base "$feat" origin/master)" && git reset "$base" && git diff -z --name-only "$feat" "$base" | xargs -r0 vim -np; }
+
+grba() { git rebase --abort; }
+grbc() { git rebase --continue; }
+grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
+grbib() { git rebase -i "$(git merge-base HEAD "${base:-origin/master}")" "$@"; }
 
 gbrd() { git branch -d "$2" && git push --delete "$1" "$2" }
 gbrdf() { git branch -D "$2" && git push --delete "$1" "$2" }

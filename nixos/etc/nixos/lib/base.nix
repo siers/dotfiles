@@ -3,17 +3,17 @@
 let
   trace = a: builtins.trace a a;
   # also update NUR in lib/package-sets.nix
-  nixpkgs = trace (fetchTarball {
-    url = "https://channels.nixos.org/nixos-21.05/nixexprs.tar.xz?2021-09-09";
-    sha256 = "189j2n7gz0xsvpxlw690rky5bwmzp89j450230v4csyxx2favs8s";
-  });
+  nixpkgs = fetchTarball {
+    url = "https://channels.nixos.org/nixos-21.05/nixexprs.tar.xz?2021-11-13";
+    sha256 = "0ds8z44cdkbcx3k50hb02l0zn0a88nqxkf7f1q1v8s0918p94hk7";
+  };
   nixos-hardware = fetchTarball {
-    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2021-09-09";
-    sha256 = "18lzd51ihsdsjbv5677ngv4kvdi3gcdwp9zi4208585gkhmjjgpv";
+    url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2021-11-13";
+    sha256 = "0x5bk4l52r3jfa8kih7vhbh29sysn2x2m2273agrj7s6zfz1cmxv";
   };
   home-manager = fetchTarball {
-    url = "https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz?2021-09-09";
-    sha256 = "1x77fglv81rrpihkv8vnl1023hawg83k42vbflp76blgljv1sxm7";
+    url = "https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz?2021-11-13";
+    sha256 = "122azyrkbp508a1yrhnq2ja2kj9whdmpb1qwgnmdaz87l02m0m26";
   };
 in
 

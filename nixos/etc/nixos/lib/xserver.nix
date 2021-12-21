@@ -2,8 +2,8 @@ rec {
   autoLogin = {
     lightdm = {
       enable = true;
-      autoLogin.enable = true;
-      autoLogin.user = "s";
+      # autoLogin.enable = true;
+      # autoLogin.user = "s";
     };
   };
 
@@ -60,7 +60,7 @@ rec {
   gnome-backlight = {
     xserver.enable = true;
     xserver.displayManager.gdm.enable = true;
-    xserver.desktopManager.gnome3.enable = true;
+    xserver.desktopManager.gnome.enable = true;
 
     xserver.extraConfig = ''
         Section "Device"

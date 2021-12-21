@@ -81,6 +81,7 @@ let
       bc
       bind # for dig
       coreutils
+      dtrx
       file
       gitAndTools.gitFull
       gnumake

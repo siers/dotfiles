@@ -6,24 +6,87 @@
   ];
 
   home-manager.users.s = { pkgs, ... }: {
-    home.packages = with pkgs; [
-      asciinema
-    ];
+    # home.packages = with pkgs; [
+    #   asciinema
+    # ];
 
     home.file.".zshrc".source = /home/s/code/df/zsh/.zshrc;
     home.file.".config/zsh".source = /home/s/code/df/zsh/.config/zsh;
 
     home.file.".gitconfig".source = /home/s/code/df/git/.gitconfig;
     home.file.".gitignore".source = /home/s/code/df/git/.gitignore;
-    home.file.".gitignorex".source = /home/s/code/df/git/.gitignore;
-  };
 
-  home-manager.users.ld = { pkgs, ... }: {
-    home.packages = with pkgs; [
-      scala
-      sbt
-    ];
-  }
+    # programs.neovim = {
+    #   enable = true;
+    #   vimAlias = true;
+    #   vimdiffAlias = true;
+    #   withNodeJs = true;
+
+    #   packages = with pkgs.vimP lugins; [
+    #     yankring
+    #     vim-nix
+    #     { plugin = vim-startify; config = "let g:startify_change_to_vcs_root = 0"; }
+
+    #     # palenight.vim
+    #     jellyx.vim
+    #     ctrlp.vim
+    #     vim-airline
+    #     indentLine
+    #     gundo.vim # Gi
+    #     vim-obsession # Session files
+    #     vim-signify # Git diff signs.
+    #     neomake
+    #     vim-commentary
+    #     vim-repeat
+    #     vim-abolish # Subvert, crs.
+    #     vim-sneak # f/t for double chars
+    #     syntastic
+    #     vim-snippets
+    #     vim-surround
+    #     vim-signature # Marks of all kind.
+    #     vim-esearch
+    #     markdown-preview.nvim, {'do': 'cd app && yarn install --frozen-lockfile --force'}
+    #     fzf, { 'do': { -> fzf#install() } }
+    #     fzf.vim
+
+    #     vim-fugitive # Git.
+    #     fugitive-gitlab.vim
+    #     vim-rhubarb
+    #     vim-fubitive
+
+    #     coc.nvim, {'branch': 'release'}
+    #     coc-json {'do': 'yarn install --frozen-lockfile --force'}
+    #     coc-tsserver {'do': 'yarn install --frozen-lockfile --force'}
+    #     coc-metals {'do': 'yarn install --frozen-lockfile --force'}
+    #     vimspector
+    #     coc-snippets {'do': 'yarn install --frozen-lockfile --force'}
+    #     # coc-actions {'do': 'yarn install --frozen-lockfile --force'}
+
+    #     vim-nix
+    #     vim-es6
+    #     vim-scala
+    #     vim-gnupg
+    #     vim-terraform
+    #     vim-lilypond-integrator
+    #     vim-vue
+    #     scss-syntax.vim
+    #     Dockerfile.vim
+    #     agda-vim
+
+    #     # The nerdtree
+    #     # vim-fetch
+    #     # yats.vim', {'for': ['typescript', 'typescript.jsx']}
+    #     # cpsm
+    #     # emmet-vim' " div#foo<C-y>, => <div id=foo>
+    #     # supertab
+    #     # splitjoin.vim
+    #     # sideways.vim' " argument swapping
+    #     # vim-easy-align
+    #     # vim-minimap
+    #     # coc-calc' " doesn't seem to work
+    # ]
+    # };
+  };
 }
 
 # agdaWithPackages-2.6.1
