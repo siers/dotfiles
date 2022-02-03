@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <channel name="displays" version="1.0">
-  <property name="ActiveProfile" type="string" value="Default"/>
+  <property name="ActiveProfile" type="string" value="e83249bd3ba79932e16fb1fb5100dafade9954c2"/>
   <property name="Default" type="empty">
     <property name="eDP-1" type="string" value="Laptop">
       <property name="Active" type="bool" value="true"/>
@@ -50,9 +50,9 @@
         <property name="Y" type="int" value="0"/>
       </property>
     </property>
-    <property name="DP-1" type="string" value="Dell 24&quot;">
-      <property name="Active" type="bool" value="false"/>
-      <property name="EDID" type="string" value="338f45691cda1c00590967caee420f6207993b8a"/>
+    <property name="DP-1" type="string" value="Dell 23&quot;">
+      <property name="Active" type="bool" value="true"/>
+      <property name="EDID" type="string" value="b668fae4619051c4a6ba279ed0d2a9f3d336b0dd"/>
       <property name="Resolution" type="string" value="1920x1080"/>
       <property name="RefreshRate" type="double" value="60.000000"/>
       <property name="Rotation" type="int" value="0"/>
@@ -61,6 +61,10 @@
       <property name="Position" type="empty">
         <property name="X" type="int" value="1920"/>
         <property name="Y" type="int" value="0"/>
+      </property>
+      <property name="Scale" type="empty">
+        <property name="X" type="double" value="1.000000"/>
+        <property name="Y" type="double" value="1.000000"/>
       </property>
     </property>
   </property>
@@ -148,9 +152,9 @@
         <property name="Y" type="double" value="1.000000"/>
       </property>
     </property>
-    <property name="DP-1" type="string" value="Dell 24&quot;">
-      <property name="Active" type="bool" value="false"/>
-      <property name="EDID" type="string" value="338f45691cda1c00590967caee420f6207993b8a"/>
+    <property name="DP-1" type="string" value="Dell 23&quot;">
+      <property name="Active" type="bool" value="true"/>
+      <property name="EDID" type="string" value="b668fae4619051c4a6ba279ed0d2a9f3d336b0dd"/>
       <property name="Resolution" type="string" value="1920x1080"/>
       <property name="RefreshRate" type="double" value="60.000000"/>
       <property name="Rotation" type="int" value="0"/>
@@ -159,6 +163,10 @@
       <property name="Position" type="empty">
         <property name="X" type="int" value="1920"/>
         <property name="Y" type="int" value="0"/>
+      </property>
+      <property name="Scale" type="empty">
+        <property name="X" type="double" value="1.000000"/>
+        <property name="Y" type="double" value="1.000000"/>
       </property>
     </property>
     <property name="HDMI-2" type="string" value="Dell 27&quot;">

@@ -60,6 +60,7 @@ gsha() { g rev-parse --short HEAD; }
 gp() { g rev-parse --short "$@"; }
 gwhatc() { gwhat | xclip -sel clipboard; }
 gbu() { git branch -u "${1:-origin}/$(gwhat)"; }
+gmain() { git rev-parse --abbrev-ref origin/HEAD; }
 
 local previewer="git diff {} | tee >(grep -q . || cat {})"
 gsel() { git ls-files -mo --exclude-standard | sort -u | fzf -m --preview="$previewer" | tee >(c); }
@@ -78,8 +79,6 @@ glmb() { git l HEAD..."$(gmb)" "$@"; }
 git-feat-edit() { feat="${1:-HEAD}"; git diff -z --name-only "$feat" "$(git merge-base "$feat" origin/master)" | xargs -r0 vim -np; }
 git-feat-diff() { feat="${1:-break}" && git checkout "$feat" && base="$(git merge-base "$feat" origin/master)" && git reset "$base" && git diff -z --name-only "$feat" "$base" | xargs -r0 vim -np; }
 
-grba() { git rebase --abort; }
-grbc() { git rebase --continue; }
 grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
 grbib() { git rebase -i "$(git merge-base HEAD "${base:-origin/master}")" "$@"; }
 

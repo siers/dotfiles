@@ -5,15 +5,15 @@ let
   # also update NUR in lib/package-sets.nix
   nixpkgs = fetchTarball {
     url = "https://channels.nixos.org/nixos-21.05/nixexprs.tar.xz?2021-11-13";
-    sha256 = "0ds8z44cdkbcx3k50hb02l0zn0a88nqxkf7f1q1v8s0918p94hk7";
+    sha256 = "02ywlm1spg76l83zv07r0k1n4shgmmycmddcmbfv1bxiv3328r60";
   };
   nixos-hardware = fetchTarball {
     url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2021-11-13";
-    sha256 = "0x5bk4l52r3jfa8kih7vhbh29sysn2x2m2273agrj7s6zfz1cmxv";
+    sha256 = "1cbzf7srhhr9dr0c7fq74mqvqg2kxzi21l68bhb4zqw3d6vlgma5";
   };
   home-manager = fetchTarball {
     url = "https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz?2021-11-13";
-    sha256 = "122azyrkbp508a1yrhnq2ja2kj9whdmpb1qwgnmdaz87l02m0m26";
+    sha256 = "1liqvc6bhfypscbvq953j8izw806xn4vklh86zyqpkmsa5ac0yvp";
   };
 in
 
@@ -35,11 +35,11 @@ in
   time.timeZone = "Europe/Riga";
 
   nix = {
-    # package = pkgs.nixUnstable;
+    package = pkgs.nixUnstable;
 
-    # extraOptions = ''
-    #   experimental-features = nix-command flakes
-    # '';
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
 
     nixPath = ["nixpkgs=${nixpkgs}:nixos-hardware=${nixos-hardware}:nixos-config=/etc/nixos/configuration.nix:home-manager=${home-manager}"];
     daemonNiceLevel = 19;
