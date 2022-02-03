@@ -26,9 +26,12 @@
 (xbindkey '(Mod4 z)                 "xcalib -a -i")
 (xbindkey '(Mod4 Shift e)           "rofimoji -s medium-light")
 (xbindkey '(Mod4 Shift z)           "sleep 0.1; xset dpms force off")
-(xbindkey '(XF86MonBrightnessUp)    "~/.nix-profile/bin/xbacklight -inc 7")
-(xbindkey '(XF86MonBrightnessDown)  "~/.nix-profile/bin/xbacklight -dec 7")
 (xbindkey '(Mod4 Shift c)           "xdotool windowkill $(xdotool getactivewindow)")
+
+(xbindkey '(XF86MonBrightnessUp)    "light -T 2")
+(xbindkey '(XF86MonBrightnessDown)  "light -T 0.5")
+(xbindkey '(Shift XF86MonBrightnessUp)    "light -S 100")
+(xbindkey '(Shift XF86MonBrightnessDown)  "light -S 0.05")
 
 (xbindkey '(Mod4 alt grave)         "oneliners")
 (xbindkey '(Mod4 space)             "runner")

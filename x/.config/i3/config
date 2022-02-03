@@ -152,6 +152,7 @@ bindsym $mod+r mode "resize"
 bar {
     status_command i3status
     tray_output primary
+    bindsym button2 exec --no-startup-id "sleep 0.1; xset dpms force off"
     bindsym button3 exec --no-startup-id urxvt
 }
 
