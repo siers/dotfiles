@@ -9,7 +9,7 @@ let
   };
   nixos-hardware = fetchTarball {
     url = "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz?2021-11-13";
-    sha256 = "1yhlzb8rn8s1ssyv3ix2hlrpy5y205yhcm9s0dddyvhr60imzz01";
+    sha256 = "1cbzf7srhhr9dr0c7fq74mqvqg2kxzi21l68bhb4zqw3d6vlgma5";
   };
   home-manager = fetchTarball {
     url = "https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz?2021-11-13";
@@ -35,11 +35,11 @@ in
   time.timeZone = "Europe/Riga";
 
   nix = {
-    # package = pkgs.nixUnstable;
+    package = pkgs.nixUnstable;
 
-    # extraOptions = ''
-    #   experimental-features = nix-command flakes
-    # '';
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
 
     nixPath = ["nixpkgs=${nixpkgs}:nixos-hardware=${nixos-hardware}:nixos-config=/etc/nixos/configuration.nix:home-manager=${home-manager}"];
     daemonNiceLevel = 19;
