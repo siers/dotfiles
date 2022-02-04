@@ -60,6 +60,7 @@ gsha() { g rev-parse --short HEAD; }
 gp() { g rev-parse --short "$@"; }
 gwhatc() { gwhat | xclip -sel clipboard; }
 gbu() { git branch -u "${1:-origin}/$(gwhat)"; }
+gmain() { git rev-parse --abbrev-ref origin/HEAD; }
 
 local previewer="git diff {} | tee >(grep -q . || cat {})"
 gsel() { git ls-files -mo --exclude-standard | sort -u | fzf -m --preview="$previewer" | tee >(c); }
