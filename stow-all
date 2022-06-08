@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-set -eu
-
-touch ~/.stow-global-ignore
-stow -t ~ ack git nix scala shells ssh tmux vim zsh x
-#sudo stow -t / nixos

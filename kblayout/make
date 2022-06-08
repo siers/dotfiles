@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+# these don't seem to be change anything :(
+# defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
+# defaults write -g KeyRepeat        -int 1 # normal minimum is 2 (30 ms)
+
+xset r rate 175 25
+
+cd "$(dirname "$0")"
+
+setxkbmap "xkbmap-custom,ru" -print -option grp:rctrl_rshift_toggle,caps:super > xkbmap.out
+xkbcomp -I"$(dirname "$(pwd)")" xkbmap.out $DISPLAY &> /dev/null || :
