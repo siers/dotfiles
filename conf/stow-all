@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -eu
+
+touch ~/.stow-global-ignore
+stow -t ~ scala shells ssh tmux vim x
+#sudo stow -t / nixos

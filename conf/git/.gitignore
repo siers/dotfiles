@@ -1,0 +1,43 @@
+/tags
+# /core*
+/result
+
+notes
+scrap
+trash
+tmp
+venv
+
+gnore-*
+*-gign
+
+# vim
+.vim
+/.*.swp
+.session*.vim
+.*session*.vim
+.*envrc*
+.vimspector.json
+
+# nix
+/gemset.nix
+/shell-*.nix
+/shell*.nix
+/flake.nix
+/flake.lock
+/.direnv
+
+# development
+/.tf-version
+/.ruby-version
+/node_modules
+*.dot
+.ghc.environment.*
+.bloop
+.metals
+.bsp
+project/metals.sbt
+
+# temporary
+/project/project
+.scalafmt.conf

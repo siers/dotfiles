@@ -1,0 +1,62 @@
+#!/usr/bin/env zsh
+
+precmd-color() {
+    local -a colors
+    (cat ~/.config/zsh/colors 2> /dev/null; echo '0 white white white' ) |
+        grep -Em1 "^($(id -u)|$USER|$(hostname)|fallback) " | sed 's/^[^ ]* //'
+}
+precmdcolorcache="$(precmd-color)"
+precmd-color() { echo "${precmdcolorcache}" }
+
+precmd-realm() {
+    ruby -e "a, b, *r, l = ENV['PWD'].sub(ENV['HOME'], '').sub(%r{^/}, '').split(?/); puts([a || '%.', b, l].compact.zip(['/', r.any? ? ' ' : '/', '.']).flatten.join[0..-2])"
+}
+
+if [ -z "$ZSH_NESTED" ]; then
+    export ZSH_NESTED=$$
+fi
+
+__PS1_HOSTNAME="$(hostname | cut -b-6)"
+__PS1_NEWLINE="${__PS1_NEWLINE:-}"
+
+# PS1
+precmd() {
+    __ps1_succ="$?"
+
+    local fst snd thd ruby succ
+
+    gb="$(git rev-parse --abbrev-ref "${1:-HEAD}" 2> /dev/null)"
+    # git="$(git symbolic-ref -q --short HEAD | tr -cd "a-zA-Z0-9\\-/.")"
+    ruby="$(rbenv version 2> /dev/null | grep -Eo '^[0-9]\S+')"
+
+    [ "$(id -u)" = "0" ] && sep=')' || sep='|'
+    read fst snd thd <<< "$(precmd-color)"
+    fst="${fst:-105}"; snd="${snd:-105}"; thd="${thd:-105}"
+    # PS1="%F{$thd}%n$sep${__PS1_HOSTNAME}$sep%F{$fst}%B$(precmd-realm)%b%F{default} "
+    PS1="%F{$thd}${__PS1_HOSTNAME}$sep%F{$fst}%B$(precmd-realm)%b%F{default} "
+
+    if [ -n "$gb" ] && [ -z "$PS1_OMMIT_BRANCH" ]; then
+        PS1="$PS1%F{$snd}$gb "
+    fi
+
+    if [ -n "$ruby" ] && false; then
+        PS1="$PS1$ruby "
+    fi
+
+    # if git show HEAD:"config/application.rb" &> /dev/null && ! cat notes/db-path 2> /dev/null | xargs -r rails-is-migrated 2> /dev/null; then
+    #     PS1="$PS1%F{red}UNMIGRATED "
+    # fi
+
+    if [ "$__ps1_succ" = "0" ]; then
+        if [ "$ZSH_NESTED" = "$(ps -p $$ -o ppid=)" ]; then
+            succ="green"
+        else
+            succ="default"
+        fi
+    else
+        succ="red"
+    fi
+
+    PS1="$PS1$__PS1_NEWLINE%F{$succ}%#%F{default} "
+    RPS1=""
+}

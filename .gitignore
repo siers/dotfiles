@@ -1,16 +1,15 @@
-#*
+# *
 
-/vim/.config/nvim/*
-/vim/.config/nvim/plugin/fugitive.vim
-!/vim/.config/nvim/plugin
-!/vim/.config/nvim/UltiSnips
+/conf/vim/.config/nvim/*
+/conf/vim/.config/nvim/plugin/fugitive.vim
+!/conf/vim/.config/nvim/plugin
+!/conf/vim/.config/nvim/UltiSnips
 
-/zsh/.config/zsh/temporary
+temporary
 
-/nixos/**/result
-/nixos/**/image
-/nixos/**/stick
-/nixos/**/configuration.nix
-/**/private.nix
+result
+image
+stick
+private.nix
 
 /ssh
