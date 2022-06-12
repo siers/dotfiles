@@ -2,8 +2,7 @@
 
 let
   conf = ../../conf;
-in
-{
+in {
   home-manager.users.s = { pkgs, ... }: {
     home.stateVersion = "22.05";
 

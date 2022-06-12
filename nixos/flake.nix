@@ -10,19 +10,19 @@
       ref = "nixos-22.05";
     };
 
-    nixpkgs-unstable = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "nixos-unstable";
-    };
+    # nixpkgs-unstable = {
+    #   type = "github";
+    #   owner = "NixOS";
+    #   repo = "nixpkgs";
+    #   ref = "nixos-unstable";
+    # };
 
-    nixpkgs-master = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "master";
-    };
+    # nixpkgs-master = {
+    #   type = "github";
+    #   owner = "NixOS";
+    #   repo = "nixpkgs";
+    #   ref = "master";
+    # };
 
     home-manager = {
       type = "github";
@@ -41,12 +41,11 @@
         ./modules/literals.nix
         ./modules/base.nix
         ./modules/home-manager.nix
-        ./modules/audio.nix
         ./modules/services.nix
         ./modules/dev.nix
         ./modules/gnome-support.nix
         ./modules/fonts.nix
-        ./modules/prometheus.nix
+        #./modules/prometheus.nix
         inputs.secrets.nixosModules.default
       ];
     in {
@@ -58,7 +57,7 @@
             ./hosts/t480-hardware.nix
             ./modules/user/ld.nix
             ./modules/openvpn.nix
-            # nixos-hardware.nixosModules.lenovo-thinkpad-t480
+            nixos-hardware.nixosModules.lenovo-thinkpad-t480
           ];
         };
         rv-p53 = inputs.nixpkgs.lib.nixosSystem {

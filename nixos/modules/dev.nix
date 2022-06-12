@@ -3,7 +3,7 @@
 {
   imports =
     [
-      ./misc/podman.nix
+      #./misc/podman.nix
     ];
 
   virtualisation = {

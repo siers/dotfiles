@@ -3,7 +3,7 @@
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
 
-with config.literals;
+with config.secrets;
 {
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")

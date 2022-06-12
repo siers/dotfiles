@@ -39,7 +39,7 @@ let
       #virtmanager
       vlc
       pinentry_gnome
-      # spotify
+      spotify
     ];
 
     # an uncategory for all things large

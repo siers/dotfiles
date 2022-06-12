@@ -4,7 +4,7 @@ export MANPAGER='nvim -R "+setf man" -'
 # export PAGER='nvim -R -'
 export EDITOR=vim
 # export TERM=alacritty
-export TERM=rxvt-unicode-256color
+# export TERM=rxvt-unicode-256color # wtf? :D
 
 if tty | grep -qE '^/dev/tty[0-9]+$'; then
     TMOUT=$(( 60 * 20 ))

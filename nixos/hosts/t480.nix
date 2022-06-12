@@ -13,7 +13,7 @@
 
   environment.systemPackages = (import ../modules/package-sets.nix { inherit pkgs; }).everything ++ [
     pkgs.transmission-gtk
-    pkgs.kdenlive
+    # pkgs.kdenlive
   ];
 
   programs.java = {
