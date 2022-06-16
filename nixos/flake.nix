@@ -10,19 +10,12 @@
       ref = "nixos-22.05";
     };
 
-    # nixpkgs-unstable = {
-    #   type = "github";
-    #   owner = "NixOS";
-    #   repo = "nixpkgs";
-    #   ref = "nixos-unstable";
-    # };
-
-    # nixpkgs-master = {
-    #   type = "github";
-    #   owner = "NixOS";
-    #   repo = "nixpkgs";
-    #   ref = "master";
-    # };
+    nixpkgs-unstable = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "nixos-unstable";
+    };
 
     home-manager = {
       type = "github";
@@ -62,6 +55,7 @@
         };
         rv-p53 = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = commonModules ++ [
             ./hosts/work-p53.nix
             ./hosts/work-p53-hardware.nix

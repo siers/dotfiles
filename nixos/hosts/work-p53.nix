@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   networking.hostName = "rv-p53";
@@ -12,8 +12,13 @@
   services = (import ../modules/xserver.nix).xfce-i3;
   # services = (import ../modules/xserver.nix).gnome-backlight;
 
-  environment.systemPackages = (import ../modules/package-sets.nix { inherit pkgs; }).everything ++ [
+  environment.systemPackages = (
+    import ../packages/package-sets.nix {
+      inherit pkgs;
+    }
+  ).everything ++ [
     (pkgs.sbt.override { jre = pkgs.jdk17; })
+    # inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.;
   ];
 
   programs.java.enable = true;

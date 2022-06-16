@@ -8,5 +8,5 @@ xset r rate 175 25
 
 cd "$(dirname "$0")"
 
-setxkbmap "xkbmap-custom,ru" -print -option grp:rctrl_rshift_toggle,caps:super > xkbmap.out
+setxkbmap -layout "xkbmap-custom,lv,ru" -option grp:rctrl_rshift_toggle,caps:super #> xkbmap.out
 xkbcomp -I"$(dirname "$(pwd)")" xkbmap.out $DISPLAY &> /dev/null || :

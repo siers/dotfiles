@@ -3,13 +3,8 @@
 with pkgs;
 
 let
-  nur = fetchTarball {
-    # see revisions: https://github.com/nix-community/NUR/commits/master
-    url = "https://github.com/nix-community/NUR/archive/9f4866850306098224356342ec0a798518aa9461.tar.gz";
-    sha256 = "04387gzgl8y555b3lkz9aiw9xsldfg4zmzp930m62qw8zbrvrshd";
-  };
-
   siers = import ./packages.nix pkgs;
+  neovim = pkgs.callPackage ./neovim/default.nix {};
 
   sets = {
     aliases = [
@@ -114,7 +109,6 @@ let
       jq
       libnotify
       massren
-      (neovim.override { vimAlias = true; })
       nmap
       ranger
       ripgrep
@@ -123,6 +117,10 @@ let
       units
       weechat
       youtube-dl
+
+      neovim
+      # (neovim.override { vimAlias = true; })
+      # luaPackages.luautf8
     ];
 
     termtoolsOptional = [
@@ -147,7 +145,7 @@ let
 
     dev = [ # also work
       slack
-      #tdesktop
+      tdesktop
 
       cachix
       gitAndTools.diff-so-fancy

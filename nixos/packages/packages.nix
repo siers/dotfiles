@@ -15,8 +15,8 @@ in {
     ln -s "$where" "$out/bin/${alias}"
   '';
 
-  xclip-for-mac = haskellPackages.callPackage ./packages/xclip-for-mac.nix {};
+  xclip-for-mac = haskellPackages.callPackage ./xclip-for-mac.nix {};
 
-  footswitch = callPackage ./packages/footswitch.nix {};
-  rofimoji = callPackage ./packages/rofimoji.nix {};
+  footswitch = callPackage ./footswitch.nix {};
+  rofimoji = callPackage ./rofimoji.nix {};
 }

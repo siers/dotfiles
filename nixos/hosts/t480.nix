@@ -11,7 +11,7 @@
 
   users.extraGroups.vboxusers.members = [ "s" ];
 
-  environment.systemPackages = (import ../modules/package-sets.nix { inherit pkgs; }).everything ++ [
+  environment.systemPackages = (import ../packages/package-sets.nix { inherit pkgs; }).everything ++ [
     pkgs.transmission-gtk
     # pkgs.kdenlive
   ];
