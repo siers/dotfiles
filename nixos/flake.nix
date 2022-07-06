@@ -64,6 +64,7 @@
             ./modules/backlight.nix
             #./modules/printing.nix
             # /home/s/work/conf/evolution.nix
+            ./modules/openconnect.nix
             nixos-hardware.nixosModules.lenovo-thinkpad-p53
           ];
         };
