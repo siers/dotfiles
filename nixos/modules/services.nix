@@ -36,7 +36,7 @@
       enable = true;
       layout = "lv";
 
-      autoRepeatDelay = 175;
+      autoRepeatDelay = 150;
       autoRepeatInterval = 25;
 
       displayManager.sessionCommands = ''
