@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-export MANPAGER='nvim -R "+setf man" -'
+export MANPAGER='nvim +Man!'
 # export PAGER='nvim -R -'
 export EDITOR=vim
 # export TERM=alacritty

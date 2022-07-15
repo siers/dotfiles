@@ -25,6 +25,7 @@ in {
     # home.file.".config/xfce4".source = "${conf}/x/.config/mpv";
     home.file.".Xresources".source = "${conf}/x/.Xresources";
     home.file.".xprofile".source = "${conf}/x/.xprofile";
+    home.file.".config/alacritty.yml".source = "${conf}/x/.config/alacritty.yml";
     home.file.".xbindkeysrc.scm".source = "${conf}/x/.xbindkeysrc.scm";
     home.file.".sbt/1.0/build.sbt".source = "${conf}/scala/.sbt/1.0/build.sbt";
     home.file.".sbt/1.0/plugins/plugins.sbt".source = "${conf}/scala/.sbt/1.0/plugins/plugins.sbt";

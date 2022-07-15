@@ -46,6 +46,8 @@ autocmd vimrc FileType erb setlocal sw=2 ts=2
 autocmd vimrc BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 autocmd vimrc BufWritePre * %s/\s\+$//e
 
+autocmd vimrc FileType agda setlocal commentstring=--\ \%s
+
 function! AuFocusLost()
     " Save when losing focus.
     exe ':silent! update'
