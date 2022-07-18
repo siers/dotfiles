@@ -42,6 +42,7 @@ wrapNeovimUnstable neovim-unwrapped (neovimUtils.makeNeovimConfig {
     vim-esearch = vimUtils.buildVimPlugin {
       pname = "vim-esearch";
       version = "2022-06-16";
+      configurePhase = "rm Makefile";
       src = fetchFromGitHub {
         owner = "eugen0329";
         repo = "vim-esearch";
@@ -96,7 +97,7 @@ wrapNeovimUnstable neovim-unwrapped (neovimUtils.makeNeovimConfig {
     # vim-syntastic/syntastic
     vim-surround
     vim-signature
-    # vim-esearch
+    vim-esearch
     markdown-preview-nvim
     vim-fugitive
     fugitive-gitlab-vim
