@@ -41,6 +41,7 @@ fi
 p() { f="$1"; shift 2> /dev/null; ping -c1 "${f:-google.lv}" "$@"; } # tired of writing this over and over again.
 pp() { p "$@" || (sleep 0.66; pp "$@"); }
 ppo() { pp; ok internet\ on\!; }
+pg() { ping google.com; }
 
 cdf() { cd "$(dirname "$1")"; }
 

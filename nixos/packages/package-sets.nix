@@ -4,7 +4,7 @@ with pkgs;
 
 let
   siers = import ./packages.nix pkgs;
-  neovimConfigured = siers.alias [(pkgs.callPackage ./neovim/default.nix {})] "nvim" "nvim-nix";
+  neovimConfigured = siers.alias [(pkgs.callPackage ./neovim/default.nix {})] "nvim" "nv";
 
   sets = {
     aliases = [

@@ -61,8 +61,8 @@ gwhatc() { gwhat | xclip -sel clipboard; }
 gbu() { git branch -u "${1:-origin}/$(gwhat)"; }
 # gmain() { git rev-parse --abbrev-ref origin/HEAD; }
 # gmainl() { git rev-parse --abbrev-ref origin/HEAD | sed 's:^.*/::'; }
-gmain() { echo "origin/$(git remote show origin | awk '/HEAD branch/ {print $NF}')"; }
-gmainl() { git remote show origin | awk '/HEAD branch/ {print $NF}'; }
+gmain() { echo "origin/$(gmainl)"; }
+gmainl() { if [ -e .git/main ]; then cat .git/main; else git remote show origin | awk '/HEAD branch/ {print $NF}' | tee .git/main; fi; }
 gp() { git pull "$@"; }
 gmp() { gkm && git pull "$@"; }
 gkm() { git checkout "$(gmainl)"; }

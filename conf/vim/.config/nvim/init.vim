@@ -276,7 +276,7 @@ map <M-l> <C-w>l
 map <M-q> <C-w>s
 map <M-w> <C-w>v
 map <C-n> gT
-map <C-m> gt
+map <CR> gt " this used to be <c-m>
 map <C-t> :tabnew %<CR><C-o>zz
 map <Leader><C-t> :-tabnew %<CR><C-o>zz
 nnoremap <Leader>N :-tabnew<CR>
@@ -338,6 +338,12 @@ function! SaveTrash(...)
 endf
 
 command! -nargs=? Trash :call SaveTrash(<f-args>)
+
+function! FnReminder(fn)
+  call writefile([strftime("%F-%T") . ' ' . a:fn], "notes/filenames", "a")
+endf
+command! FnReminder :call FnReminder(@%)
+nmap <leader>fr :FnReminder<CR>
 
 " https://github.com/daGrevis/Dotfiles/blob/c4f32aed80d7742e436c1de11188a3ce44e93fdd/neovim/.config/nvim/init.vim#L234
 function! g:Copy(text)
@@ -404,7 +410,7 @@ call coc#config('languageserver.haskell', {
       \ "filetypes": ["haskell", "lhaskell"]
       \ })
 
-call coc#config("coc.preferences.formatOnSaveFiletypes", ["scala"])
+call coc#config("coc.preferences.formatOnSaveFiletypes", ["scala", "typescriptreact", "typescript"])
 
 call coc#config("metals", {
   \ "metals.showImplicitArguments": "true",
@@ -412,7 +418,7 @@ call coc#config("metals", {
   \ })
 " \ "metals.serverVersion": "0.10.7",
 
-call coc#config("codeLens.enable", "true")
+call coc#config("codeLens.enable", "false")
 
 " nnoremap <Tab> :CocCommand explorer<CR>
 " packadd! vimspector

@@ -18,7 +18,7 @@
     }
   ).everything ++ [
     (pkgs.sbt.override { jre = pkgs.jdk17; })
-    # inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.;
+    # inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.youtube-dl
   ];
 
   programs.java.enable = true;
