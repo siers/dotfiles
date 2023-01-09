@@ -35,6 +35,7 @@ bindsym $mod+Return exec urxvt
 # kill focused window
 bindsym $mod+c kill
 bindsym --release button2 kill
+bindsym --release button3 fullscreen toggle
 
 # start dmenu (a program launcher)
 #bindsym $mod+space exec dmenu_run

@@ -15,6 +15,12 @@ in {
     ln -s "$where" "$out/bin/${alias}"
   '';
 
+  sym-alias = command: alias: runCommand "command-aliases" {} ''
+    set -e
+    mkdir -p $out/bin
+    echo -e '#! /usr/bin/env sh\n"${command}" "$@"' > "$out/bin/${alias}"
+  '';
+
   xclip-for-mac = haskellPackages.callPackage ./xclip-for-mac.nix {};
 
   footswitch = callPackage ./footswitch.nix {};

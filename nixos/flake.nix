@@ -7,7 +7,7 @@
       type = "github";
       owner = "NixOS";
       repo = "nixpkgs";
-      ref = "nixos-22.05";
+      ref = "nixos-22.11";
     };
 
     nixpkgs-unstable = {
@@ -21,7 +21,15 @@
       type = "github";
       owner = "nix-community";
       repo = "home-manager";
-      ref = "release-22.05";
+      ref = "release-22.11";
+    };
+
+    neovim = {
+      type = "github";
+      owner = "neovim";
+      repo = "neovim";
+      ref = "nightly";
+      dir = "contrib";
     };
 
     secrets.url = "path:/home/s/code/nix/secrets";

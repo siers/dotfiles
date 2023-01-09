@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, neovim-flake, ... }:
 
 with pkgs;
 
@@ -9,6 +9,7 @@ let
   sets = {
     aliases = [
       (siers.alias [systemd] "systemctl" "sc")
+      (siers.sym-alias "nvim" "vim")
     ];
 
     services = [
@@ -119,7 +120,7 @@ let
       youtube-dl
 
       neovimConfigured
-      (neovim.override { vimAlias = true; })
+      # (neovim-flake.outputs.neovim)
     ];
 
     termtoolsOptional = [

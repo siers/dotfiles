@@ -15,6 +15,7 @@
   environment.systemPackages = (
     import ../packages/package-sets.nix {
       inherit pkgs;
+      neovim-flake = inputs.neovim;
     }
   ).everything ++ [
     (pkgs.sbt.override { jre = pkgs.jdk17; })
