@@ -67,13 +67,14 @@
           modules = commonModules ++ [
             ./hosts/work-p53.nix
             ./hosts/work-p53-hardware.nix
-            ./modules/libinput.nix
+            # ./modules/libinput.nix
             ./modules/openvpn.nix
             ./modules/backlight.nix
             #./modules/printing.nix
             # /home/s/work/conf/evolution.nix
             ./modules/openconnect.nix
-            nixos-hardware.nixosModules.lenovo-thinkpad-p53
+            # nixos-hardware.nixosModules.lenovo-thinkpad-p53
+            nixos-hardware.nixosModules.lenovo-thinkpad-t14s
           ];
         };
       };

@@ -78,9 +78,10 @@ gkc() { git checkout "$(c -o)"; }
 
 gpmr() { git pf -o merge_request.create 2> >(tee >(rg -o 'http\S*' | c)); }
 gmb() { git merge-base HEAD "${1:-$(gmain)}"; };
+gdm() { gd **/src/main; }
 gdmb() { git diff "$(gmb)" "$@"; }
 grmb() { git reset "$(gmb)" "$@"; }
-gdmbm() { git diff **/src/main; }
+gdmbm() { gdmb "$@" **/src/main; }
 gds() { gdmb --stat; }
 glmb() { git log HEAD..."$(gmb)" "$@"; }
 git-feat-edit() { feat="${1:-HEAD}"; git diff -z --name-only "$feat" "$(git merge-base "$feat" origin/master)" | xargs -r0 vim -np; }

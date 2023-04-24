@@ -4,7 +4,8 @@
   networking.hostName = "rv-p53";
 
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.efi.efiInstallAsRemovable = true;
 
   hardware.logitech.wireless.enable = true;
   hardware.logitech.wireless.enableGraphical = true;
@@ -14,7 +15,7 @@
 
   environment.systemPackages = (
     import ../packages/package-sets.nix {
-      inherit pkgs;
+      inherit (pkgs.override { openjdk = inputs.nixpkgs.openjdk19; });
       neovim-flake = inputs.neovim;
     }
   ).everything ++ [

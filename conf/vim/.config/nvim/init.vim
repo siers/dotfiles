@@ -73,7 +73,6 @@ Plug 'https://github.com/tommcdo/vim-fubitive'
 
 Plug 'https://github.com/neovim/nvim-lspconfig'
 Plug 'https://github.com/hrsh7th/nvim-cmp'
-Plug 'https://github.com/neovim/nvim-lspconfig'
 Plug 'https://github.com/hrsh7th/cmp-nvim-lsp'
 Plug 'https://github.com/hrsh7th/cmp-buffer'
 Plug 'https://github.com/hrsh7th/cmp-path'
@@ -112,6 +111,8 @@ Plug 'https://github.com/junegunn/fzf.vim'
 " Plug 'https://github.com/junegunn/vim-easy-align'
 " Plug 'https://github.com/severin-lemaignan/vim-minimap'
 " Plug 'https://github.com/liuchengxu/vista.vim'
+" Plug 'https://github.com/hrsh7th/vim-vsnip'
+" Plug 'https://github.com/hrsh7th/vim-vsnip-integ'
 
 call plug#end()
 "}}}
@@ -325,6 +326,7 @@ exec 'command! -range=% Share :<line1>,<line2>write !pasty'
 " }}}
 
 " Creative maps {{{
+map E <Home>y$
 map <Leader>SF :s/_/-/g<CR>^gu$ " lowercase + _→-
 map <Leader>S :%s/\s\+$//<CR>
 map <Leader>x :%s/>/>\r/g<CR>gg=G " turn single line tags into multi-line
