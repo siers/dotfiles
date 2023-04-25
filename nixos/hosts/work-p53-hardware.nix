@@ -8,14 +8,14 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  # T14s
-
-  boot.initrd.availableKernelModules = [ "nvme" "ehci_pci" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usbhid" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # boot.initrd.kernelModules = [ ];
   # boot.kernelModules = [ "kvm-intel" ];
@@ -35,8 +35,7 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   # hardware.cpu.intel.updateMicrocode = true;
 
-  # services.xserver.videoDrivers = [ "modesetting" ];
-  # services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
+  services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
 
   # hardware.nvidia.prime.sync.enable = true;
   # hardware.nvidia.prime.nvidiaBusId = "PCI:60:0:0";

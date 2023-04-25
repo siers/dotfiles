@@ -1,7 +1,7 @@
 { config, pkgs, lib, inputs, ... }:
 
 {
-  networking.hostName = "rv-p53";
+  networking.hostName = "rv-p14s";
 
   boot.loader.systemd-boot.enable = true;
   # boot.loader.efi.canTouchEfiVariables = true;
@@ -15,12 +15,13 @@
 
   environment.systemPackages = (
     import ../packages/package-sets.nix {
-      inherit (pkgs.override { openjdk = inputs.nixpkgs.openjdk19; });
+      inherit pkgs;
+      # inherit (pkgs.override { openjdk = inputs.nixpkgs.openjdk19; });
       neovim-flake = inputs.neovim;
     }
   ).everything ++ [
-    (pkgs.sbt.override { jre = pkgs.jdk17; })
-    # inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.youtube-dl
+    (pkgs.sbt.override { jre = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.jdk19; })
+    inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.youtube-dl
   ];
 
   programs.java.enable = true;
