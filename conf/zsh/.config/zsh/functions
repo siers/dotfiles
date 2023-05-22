@@ -78,10 +78,12 @@ gkc() { git checkout "$(c -o)"; }
 
 gpmr() { git pf -o merge_request.create 2> >(tee >(rg -o 'http\S*' | c)); }
 gmb() { git merge-base HEAD "${1:-$(gmain)}"; };
+gdu() { gd @{u} "$@"; }
 gdm() { gd **/src/main; }
 gdmb() { git diff "$(gmb)" "$@"; }
-grmb() { git reset "$(gmb)" "$@"; }
+gdmbs() { git diff "$(gmb)" --stat "$@"; }
 gdmbm() { gdmb "$@" **/src/main; }
+grmb() { git reset "$(gmb)" "$@"; }
 gds() { gdmb --stat; }
 glmb() { git log HEAD..."$(gmb)" "$@"; }
 git-feat-edit() { feat="${1:-HEAD}"; git diff -z --name-only "$feat" "$(git merge-base "$feat" origin/master)" | xargs -r0 vim -np; }

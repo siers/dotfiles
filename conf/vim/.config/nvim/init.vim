@@ -80,6 +80,8 @@ Plug 'https://github.com/hrsh7th/cmp-cmdline'
 Plug 'https://github.com/scalameta/nvim-metals'
 Plug 'https://github.com/nvim-lua/plenary.nvim'
 Plug 'https://github.com/wbthomason/packer.nvim'
+Plug 'https://github.com/L3MON4D3/LuaSnip', {'tag': 'v1*', 'do': 'make install_jsregexp'} " Replace <CurrentMajor> by the latest released major (first number of latest release)
+Plug 'https://github.com/hrsh7th/vim-vsnip'
 
 " Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'https://github.com/neoclide/coc-json', {'do': 'yarn install --frozen-lockfile --force'}
@@ -111,7 +113,6 @@ Plug 'https://github.com/junegunn/fzf.vim'
 " Plug 'https://github.com/junegunn/vim-easy-align'
 " Plug 'https://github.com/severin-lemaignan/vim-minimap'
 " Plug 'https://github.com/liuchengxu/vista.vim'
-" Plug 'https://github.com/hrsh7th/vim-vsnip'
 " Plug 'https://github.com/hrsh7th/vim-vsnip-integ'
 
 call plug#end()
@@ -156,6 +157,16 @@ lua <<EOF
   map("n", "[g", "<cmd>lua vim.diagnostic.goto_prev { wrap = false }<CR>")
   map("n", "]g", "<cmd>lua vim.diagnostic.goto_next { wrap = false }<CR>")
 
+  local has_words_before = function()
+    unpack = unpack or table.unpack
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+  end
+
+  local feedkey = function(key, mode)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+  end
+
   -- completion related settings
   -- This is similiar to what I use
   local cmp = require("cmp")
@@ -166,32 +177,30 @@ lua <<EOF
     },
     snippet = {
       expand = function(args)
-        -- Comes from vsnip
         vim.fn["vsnip#anonymous"](args.body)
       end,
     },
-    mapping = cmp.mapping.preset.insert({
-      -- None of this made sense to me when first looking into this since there
-      -- is no vim docs, but you can't have select = true here _unless_ you are
-      -- also using the snippet stuff. So keep in mind that if you remove
-      -- snippets you need to remove this select
+    mapping = {
       ["<CR>"] = cmp.mapping.confirm({ select = true }),
-      -- I use tabs... some say you should stick to ins-completion but this is just here as an example
-      ["<Tab>"] = function(fallback)
+      ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
+        elseif vim.fn["vsnip#available"](1) == 1 then
+          feedkey("<Plug>(vsnip-expand-or-jump)", "")
+        elseif has_words_before() then
+          cmp.complete()
         else
-          fallback()
+          fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
         end
-      end,
-      ["<S-Tab>"] = function(fallback)
+      end, { "i", "s" }),
+      ["<S-Tab>"] = cmp.mapping(function()
         if cmp.visible() then
           cmp.select_prev_item()
-        else
-          fallback()
+        elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+          feedkey("<Plug>(vsnip-jump-prev)", "")
         end
-      end,
-    }),
+      end, { "i", "s" }),
+    }
   })
 
   ----------------------------------
@@ -210,7 +219,7 @@ lua <<EOF
   -- you *have* to have a setting to display this in your statusline or else
   -- you'll not see any messages from metals. There is more info in the help
   -- docs about this
-  -- metals_config.init_options.statusBarProvider = "on"
+  metals_config.init_options.statusBarProvider = "on"
 
   -- Example if you are using cmp how to make sure the correct capabilities for snippets are set
   metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
