@@ -157,4 +157,7 @@ bar {
     bindsym button3 exec --no-startup-id urxvt
 }
 
+for_window [class="Alacritty" instance="floating-term"] floating enable
+
 exec ~/code/bin/wrappers/term in-tag
+exec xrandr --output eDP-1 --primary

@@ -24,6 +24,8 @@ def runCommandAndRemaining(command: String): State => State = { st: State =>
 
 commands += Command.command("clear") { state => print("\033c"); state }
 commands += Command.command("ok") { state => "ok sbt".!; state }
+commands += Command.command("flag") { state => "action".!; state }
+commands += Command.command("click") { state => "click".!; state }
 commands += Command.command("tt") { state => runCommandAndRemaining("~clear; test")(state) }
 commands += Command.command("tc") { state => runCommandAndRemaining("~clear; Test/compile")(state) }
 commands += Command.command("cc") { state => runCommandAndRemaining("~clear; compile")(state) }

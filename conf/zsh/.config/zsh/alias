@@ -104,9 +104,11 @@ alias b='bundle'
 # alias rgm="$RAILS_PREFIX rails generate migration"
 
 de-nix() { > .envrc <<< "use nix" }
+de-flake() { > .envrc <<< "use flake" }
 alias dea='direnv allow'
 alias ded='direnv deny'
-alias rn='react-native'
+direnv-unload() { pushd /; _direnv_hook; popd; }
+dau() { direnv-unload; }
 
 alias dc='docker-compose'
 alias kctl='kubectl'

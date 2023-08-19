@@ -14,7 +14,6 @@
   boot.extraModulePackages = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # boot.initrd.kernelModules = [ ];
@@ -35,9 +34,33 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   # hardware.cpu.intel.updateMicrocode = true;
 
-  services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
+  # hardware.opengl.enable = true;
+  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_390;
+  # hardware.nvidia.modesetting.enable = true;
+  # services.xserver.videoDrivers = [ "nvidia" "modesetting" ];
+  # services.xserver.videoDrivers = [ "modesetting" ];
+
+  # environment.systemPackages = [ pkgs.nvidia-offload ];
 
   # hardware.nvidia.prime.sync.enable = true;
-  # hardware.nvidia.prime.nvidiaBusId = "PCI:60:0:0";
+  # hardware.nvidia.prime.nvidiaBusId = "PCI:3:0:0";
   # hardware.nvidia.prime.intelBusId = "PCI:0:2:0";
+
+  # boot.kernelParams = [ "module_blacklist=i915" ];
+
+  ### Regular
+
+  # hardware.nvidia.modesetting.enable = true;
+  # services.xserver.videoDrivers = [ "nvidia" "modesetting" ];
+  # hardware.opengl.enable = true;
+  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+  # nixpkgs.config.allowUnfree = true;
+  # services.xserver.videoDrivers = [ "nvidia" ];
+  # hardware.opengl.enable = true;
+  # # Optionally, you may need to select the appropriate driver version for your specific GPU.
+  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  # # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
+  # hardware.nvidia.modesetting.enable = true;
 }

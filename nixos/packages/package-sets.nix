@@ -80,6 +80,7 @@ let
       dtrx
       file
       gitAndTools.gitFull
+      pijul
       gnumake
       htop
       inetutils
@@ -109,7 +110,7 @@ let
       iftop
       jq
       libnotify
-      massren
+      moreutils
       nmap
       ranger
       ripgrep

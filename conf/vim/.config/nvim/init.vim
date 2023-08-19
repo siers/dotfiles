@@ -77,10 +77,10 @@ Plug 'https://github.com/hrsh7th/cmp-nvim-lsp'
 Plug 'https://github.com/hrsh7th/cmp-buffer'
 Plug 'https://github.com/hrsh7th/cmp-path'
 Plug 'https://github.com/hrsh7th/cmp-cmdline'
-Plug 'https://github.com/scalameta/nvim-metals'
+Plug 'https://github.com/scalameta/nvim-metals', {'commit': 'cc60a74b7bab2d545cf8f33980d3d84dea8a264d'}
 Plug 'https://github.com/nvim-lua/plenary.nvim'
 Plug 'https://github.com/wbthomason/packer.nvim'
-Plug 'https://github.com/L3MON4D3/LuaSnip', {'tag': 'v1*', 'do': 'make install_jsregexp'} " Replace <CurrentMajor> by the latest released major (first number of latest release)
+" Plug 'https://github.com/L3MON4D3/LuaSnip', {'tag': 'v1*', 'do': 'make install_jsregexp'} " Replace <CurrentMajor> by the latest released major (first number of latest release)
 Plug 'https://github.com/hrsh7th/vim-vsnip'
 
 " Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
@@ -114,6 +114,7 @@ Plug 'https://github.com/junegunn/fzf.vim'
 " Plug 'https://github.com/severin-lemaignan/vim-minimap'
 " Plug 'https://github.com/liuchengxu/vista.vim'
 " Plug 'https://github.com/hrsh7th/vim-vsnip-integ'
+Plug 'https://github.com/mrcjkb/haskell-tools.nvim'
 
 call plug#end()
 "}}}
@@ -211,6 +212,7 @@ lua <<EOF
   -- Example of settings
   metals_config.settings = {
     showImplicitArguments = true,
+    showImplicitConversionsAndClasses = true,
     excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
   }
 
@@ -232,6 +234,31 @@ lua <<EOF
       require("metals").initialize_or_attach(metals_config)
     end,
     group = nvim_metals_group,
+  })
+
+  local nvim_haskell_group = api.nvim_create_augroup("nvim-haskell", { clear = true })
+  api.nvim_create_autocmd("FileType", {
+    pattern = { "haskell" },
+    callback = function()
+      local ht = require('haskell-tools')
+      vim.g.haskell_tools = {
+        hls = {
+          settings = {
+            haskell = {
+              plugin = {
+                class = { -- missing class methods
+                  codeLensOn = true,
+                },
+                importLens = { -- make import lists fully explicit
+                  codeLensOn = true,
+                },
+              },
+            },
+          },
+        },
+      }
+    end,
+    group = nvim_haskell_group,
   })
 EOF
 
@@ -289,6 +316,9 @@ Plug 'https://gist.github.com/drasill/ff9b94025dc8aa7e404f',
 augroup vimrc
     autocmd!
 augroup END
+augroup format
+    autocmd!
+augroup END
 
 " When reading a file, jump to the last cursor position.
 autocmd vimrc FileType go setlocal noet
@@ -299,7 +329,7 @@ autocmd vimrc FileType erb setlocal sw=2 ts=2
 
 autocmd vimrc BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 autocmd vimrc BufWritePre * %s/\s\+$//e
-autocmd vimrc BufWritePre <buffer> lua vim.lsp.buf.format()
+autocmd format BufWritePre * lua vim.lsp.buf.format()
 
 function! AuFocusLost()
     " Save when losing focus.
@@ -321,6 +351,7 @@ autocmd vimrc FocusLost * call AuFocusLost()
 command! Config :tabedit ~/.config/nvim/init.vim
 command! NF :-tabedit notes
 command! NN :-tabedit notes/notes
+command! Wtmp :w! `mktemp`
 command! -range=% Sum :<line1>,<line2>!paste -sd+ | bc
 command! CL :tabedit %
 command! RMNL :%g/^$/d
@@ -344,6 +375,7 @@ map <Leader>V vip!sort<CR>:w<CR>
 
 map <Leader>P :!realpath "%" \| tr -d '\n' \| xclip -sel clip<CR><CR>
 map <Leader>O :!realpath --relative-to=. "%" \| tr -d '\n' \| xclip -sel clip<CR><CR>
+map <Leader>o :e `xclip -sel clip -o`<CR>
 map <Leader>I :!echo -n "$(basename "%")" \| cut -f1 -d . \| tr -d '\n' \| xclip -sel clip<CR><CR>
 map <Leader>R :setlocal relativenumber!<CR>
 map <Leader>X :!run tmux-term<CR><CR>
@@ -500,157 +532,6 @@ function! Md()
 endfunction
 command! Md call Md()
 " }}}
-
-" Language servers {{{
-" call coc#config('coc.preferences', {
-"       \ 'diagnostic.errorSign': 'E',
-"       \ 'diagnostic.warningSign': 'W',
-"       \ 'diagnostic.infoSign': 'I',
-"       \ 'diagnostic.hintSign': 'H',
-"       \ })
-
-" call coc#config('diagnostic', {
-"       \ 'refreshAfterSave': 0,
-"       \ 'maxWindowHeight': 16,
-"       \ })
-
-" call coc#config('explorer', {
-"       \ 'keyMappings.<tab>': 'quit',
-"       \ 'keyMappings.<cr>': ['expandable?', 'expandOrCollapse', 'open'],
-"       \ 'openAction.changeDirectory': 0,
-"       \ 'quitOnOpen': 1,
-"       \ 'sources': [{'name': 'file', 'expand': 1}],
-"       \ 'file.columns': ['git', 'indent', 'icon', 'filename', 'readonly', ['fullpath'], ['size'], ['created'], ['modified']],
-"       \ 'file.showHiddenFiles': 1,
-"       \ 'width': 60,
-"       \ 'icon.enableNerdfont': 1,
-"       \ 'previewAction.onHover': 0,
-"       \ })
-
-" call coc#config('languageserver.haskell', {
-"       \ 'command': 'hie-wraper',
-"       \ 'args': ['--lsp'],
-"       \ "rootPatterns": ["stack.yaml", "cabal.config", "package.yaml"],
-"       \ "filetypes": ["hs", "lhs", "haskell" ],
-"       \ "initializationOptions.languageServerHaskell": {},
-"       \ })
-
-" call coc#config('languageserver.haskell', {
-"       \ "command": "haskell-language-server-wrapper",
-"       \ "args": ["--lsp", "-l", "/tmp/hlsp.log"],
-"       \ "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
-"       \ "filetypes": ["haskell", "lhaskell"]
-"       \ })
-
-" call coc#config("coc.preferences.formatOnSaveFiletypes", ["scala", "typescriptreact", "typescript"])
-
-" call coc#config("metals", {
-"   \ "metals.showImplicitArguments": "true",
-"   \ "metals.showImplicitConversionsAndClasses": "true",
-"   \ })
-" " \ "metals.serverVersion": "0.11.2",
-
-" call coc#config("codeLens.enable", "false")
-
-" nnoremap <Tab> :CocCommand explorer<CR>
-" packadd! vimspector
-" }}}
-
-" Coc.nvim / LSP maps {{{
-" You will have a bad experience with diagnostic messages with the default of 4000.
-set updatetime=300
-
-" Use `[g` and `]g` to navigate diagnostics
-"nmap <silent> [g <Plug>(coc-diagnostic-prev)
-"nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-"" Remap keys for gotos
-"nmap <silent> gd <Plug>(coc-definition)
-"nmap <silent> gy <Plug>(coc-type-definition)
-"nmap <silent> gi <Plug>(coc-implementation)
-"nmap <silent> <leader>gr <Plug>(coc-references)
-
-"" Remap for rename current word
-"nmap <leader>rn <Plug>(coc-rename)
-
-"" Remap for format selected region
-"xmap <leader>f  <Plug>(coc-format-selected)
-"nmap <leader>f  <Plug>(coc-format-selected)
-"nmap <leader>F  <Plug>(coc-format)
-
-"" See also: https://github.com/scalameta/coc-metals/blob/main/coc-mappings.vim
-"nnoremap <leader>cl :<C-u>call CocActionAsync('codeLensAction')<CR>
-"xmap <leader>al  <Plug>(coc-codeaction-line)
-"nmap <leader>al  <Plug>(coc-codeaction-line)
-"nmap <leader>ac  <Plug>(coc-codeaction-cursor)
-
-"" Use K to either doHover or show documentation in preview window
-"nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-"function! s:show_documentation()
-"  if (index(['vim','help'], &filetype) >= 0)
-"    execute 'h '.expand('<cword>')
-"  else
-"    call CocAction('doHover')
-"  endif
-"endfunction
-
-"" My own mappings
-"nmap <space>e :CocCommand explorer<CR>
-""
-"" Use tab for trigger completion with characters ahead and navigate.
-"" Use command ':verbose imap <tab>' to make sure tab is not mapped by another plugin.
-"" inoremap <silent><expr> <TAB>
-""       \ pumvisible() ? "\<C-n>" :
-""       \ <SID>check_back_space() ? "\<TAB>" :
-""       \ coc#refresh()
-"" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-"inoremap <silent><expr> <TAB>
-"      \ pumvisible() ? "\<C-n>" :
-"      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-"      \ <SID>check_back_space() ? "\<TAB>" :
-"      \ coc#refresh()
-
-"" Used in the tab autocompletion for coc
-"function! s:check_back_space() abort
-"  let col = col('.') - 1
-"  return !col || getline('.')[col - 1]  =~# '\s'
-"endfunction
-
-"imap <C-l> <Plug>(coc-snippets-expand-jump)
-
-"" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-"" position.
-"" Coc only does snippet and additional edit on confirm.
-"inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-"" Use `:Format` to format current buffer
-"command! -nargs=0 Format :call CocAction('format')
-
-"" Use `:Fold` to fold current buffer
-"command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-"" Show all diagnostics
-"nnoremap <silent> <space>D  :<C-u>CocList diagnostics<cr>
-"nnoremap <silent> <space>e  :<C-u>CocList extensions<cr> " Manage extensions
-"nnoremap <silent> <space>cc :<C-u>CocList commands<cr> " Show commands
-"nnoremap <silent> <space>o  :<C-u>CocList outline<cr> " Find symbol of current document
-"nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr> " Search workspace symbols
-"nnoremap <silent> <space>j  :<C-u>CocNext<CR> " Do default action for next item.
-"nnoremap <silent> <space>k  :<C-u>CocPrev<CR> " Do default action for previous item.
-"nnoremap <silent> <space>p  :<C-u>CocListResume<CR> " Resume latest coc list
-"nnoremap <silent> <space>i :<C-u>CocCommand editor.action.organizeImport<CR>
-
-"xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
-"nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
-
-"" Metals
-"nnoremap <silent> <space>t :<C-u>CocCommand metals.tvp<CR> " Toggle panel with Tree Views
-"nnoremap <silent> <space>tb :<C-u>CocCommand metals.tvp metalsBuild<CR> " Toggle Tree View 'metalsBuild'
-"nnoremap <silent> <space>tc :<C-u>CocCommand metals.tvp metalsCompile<CR> " Toggle Tree View 'metalsCompile'
-"" nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR> Reveal current current class (trait or object) in Tree View 'metalsBuild'
-"nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsPackages<CR>
-"nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
 
 " " Vimspector
 " nmap <leader>vc <Plug>VimspectorContinue                     " When debugging, continue. Otherwise start debugging.

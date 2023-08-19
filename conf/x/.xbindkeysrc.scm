@@ -30,6 +30,7 @@
 (xbindkey '(Control space)          "dunstctl close")
 (xbindkey '(Control shift space)    "dunstctl close-all")
 (xbindkey '(Control grave)          "dunstctl history-pop")
+(xbindkey '(Mod4 plus)              "touch-toggle")
 
 (xbindkey '(XF86MonBrightnessUp)    "light -T 2")
 (xbindkey '(XF86MonBrightnessDown)  "light -T 0.5")
@@ -44,8 +45,8 @@
 (xbindkey '(Mod4 alt p)             "passmenu")
 
 ; sound
-(xbindkey '(XF86AudioLowerVolume)   "amixer set Master 3%-; click")
-(xbindkey '(XF86AudioRaiseVolume)   "amixer set Master 3%+; click")
+(xbindkey '(XF86AudioLowerVolume)   "amixer set Master 3%-; click gain -15 pitch -217")
+(xbindkey '(XF86AudioRaiseVolume)   "amixer set Master 3%+; click gain -15 pitch +217")
 (xbindkey '(XF86AudioMute)          "amixer set Master toggle")
 ; (xbindkey '(XF86AudioPause)         "xdotool key control+shift+9")
 (xbindkey '(XF86AudioPlay)          "xdotool key control+shift+9")

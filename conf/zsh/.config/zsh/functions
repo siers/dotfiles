@@ -27,6 +27,8 @@ vimw() { vim "$(which "$1")"; }
 
 space() { yes '' | head "-n$(tput lines)"; }
 
+sum() { paste -sd+ infile | bc }
+
 ## Wrappers
 
 ## String operations
@@ -41,8 +43,6 @@ nix-revsha() { nix-prefetch-git "$@" | jq -r '"  rev = \"\(.rev)\";\n  sha256 = 
 no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
 
 zns() { nix-shell "$@" --run zsh }
-direnv-unload() { pushd /; _direnv_hook; popd; }
-dau() { direnv-unload; }
 
 ## Tmux
 
@@ -62,7 +62,7 @@ gbu() { git branch -u "${1:-origin}/$(gwhat)"; }
 # gmain() { git rev-parse --abbrev-ref origin/HEAD; }
 # gmainl() { git rev-parse --abbrev-ref origin/HEAD | sed 's:^.*/::'; }
 gmain() { echo "origin/$(gmainl)"; }
-gmainl() { if [ -e .git/main ]; then cat .git/main; else git remote show origin | awk '/HEAD branch/ {print $NF}' | tee .git/main; fi; }
+gmainl() { gmainf="$(git rev-parse --git-dir)/main"; if [ -e "$gmainf" ]; then cat "$gmainf"; else git remote show origin | awk '/HEAD branch/ {print $NF}' | tee "$gmainf"; fi; }
 gp() { git pull "$@"; }
 gmp() { gkm && git pull "$@"; }
 gkm() { git checkout "$(gmainl)"; }

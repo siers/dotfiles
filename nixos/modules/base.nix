@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
-  system.stateVersion = "22.05";
+  system.stateVersion = "23.05";
   system.autoUpgrade.enable = true;
 
   security.sudo.extraConfig = "Defaults timestamp_timeout=30";
@@ -26,7 +26,15 @@
     ];
 
     trustedUsers = [ "root" "s" ];
+
+    nixPath = [
+      "nixpkgs=/etc/channels/nixpkgs"
+      "nixos-config=/etc/nixos/configuration.nix"
+      "/nix/var/nix/profiles/per-user/root/channels"
+    ];
   };
+
+  environment.etc."channels/nixpkgs".source = inputs.nixpkgs.outPath;
 
   nixpkgs.config.allowUnfree = true;
 

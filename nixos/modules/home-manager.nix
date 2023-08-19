@@ -4,10 +4,10 @@ let
   conf = ../../conf;
 in {
   home-manager.users.s = { pkgs, ... }: {
-    home.stateVersion = "22.05";
+    home.stateVersion = "23.05";
 
     home.packages = with pkgs; [
-      kdenlive
+      # kdenlive
     ];
 
     home.file.".zshrc".source = "${conf}/zsh/.zshrc";
@@ -19,14 +19,14 @@ in {
     home.file.".tmux.conf".source = "${conf}/tmux.conf";
     home.file.".ghci".source = "${conf}/ghci";
 
-    home.file.".config/i3".source = "${conf}/x/.config/i3";
+    home.file.".config/i3/config".source = "${conf}/x/.config/i3/config";
     home.file.".config/dunst".source = "${conf}/x/.config/dunst";
     home.file.".config/mpv".source = "${conf}/x/.config/mpv";
     # home.file.".config/xfce4".source = "${conf}/x/.config/mpv";
     home.file.".Xresources".source = "${conf}/x/.Xresources";
     home.file.".xprofile".source = "${conf}/x/.xprofile";
     home.file.".config/alacritty.yml".source = "${conf}/x/.config/alacritty.yml";
-    home.file.".xbindkeysrc.scm".source = "${conf}/x/.xbindkeysrc.scm";
+    # home.file.".xbindkeysrc.scm".source = "${conf}/x/.xbindkeysrc.scm";
     home.file.".sbt/1.0/build.sbt".source = "${conf}/scala/.sbt/1.0/build.sbt";
     home.file.".sbt/1.0/plugins/plugins.sbt".source = "${conf}/scala/.sbt/1.0/plugins/plugins.sbt";
 

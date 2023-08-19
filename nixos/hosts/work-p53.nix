@@ -10,8 +10,21 @@
   hardware.logitech.wireless.enable = true;
   hardware.logitech.wireless.enableGraphical = true;
 
-  services = (import ../modules/xserver.nix).xfce-i3;
+  services =
+    lib.attrsets.recursiveUpdate
+    (import ../modules/xserver.nix).gnome-backlight
+    # (import ../modules/xserver.nix).xfce-i3
+    {
+      apache-kafka.enable = true;
+      zookeeper.enable = true;
+      cassandra.enable = true;
+
+    };
   # services = (import ../modules/xserver.nix).gnome-backlight;
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "python-2.7.18.6"
+  ];
 
   environment.systemPackages = (
     import ../packages/package-sets.nix {
@@ -21,7 +34,10 @@
     }
   ).everything ++ [
     (pkgs.sbt.override { jre = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.jdk19; })
+    pkgs.scala
+    pkgs.glxinfo
     inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.youtube-dl
+    pkgs.teams
   ];
 
   programs.java.enable = true;

@@ -58,6 +58,7 @@
       nssmdns = true;
       reflector = true;
       allowPointToPoint = true;
+      openFirewall = true; # from https://nixos.wiki/wiki/Printing
     };
 
     keybase.enable = true;
