@@ -42,7 +42,7 @@ sample() { shuf | head "-n${1:-1}"; }
 nix-revsha() { nix-prefetch-git "$@" | jq -r '"  rev = \"\(.rev)\";\n  sha256 = \"\(.sha256)\";"' | tee >(c); }
 no() { a="$1"; shift; nixops "$a" -s localstate.nixops "$@"; }
 
-zns() { nix-shell "$@" --run zsh }
+nsz() { nix-shell "$@" --run zsh }
 
 ## Tmux
 
@@ -74,6 +74,7 @@ gma() { git ls-files -mo --exclude-standard | fzf -m --preview="$previewer" | xa
 gbsel() { git for-each-ref --format='%(refname:short)' | sed 's:^origin/::' | sort -u | fzf; }
 gksel() { git checkout "$(gbsel)"; }
 gstsel() { gst --porcelain | sed 's/^...//' | fzf; }
+gsmod() { gst --porcelain | sed 's/^...//'; }
 gkc() { git checkout "$(c -o)"; }
 
 gpmr() { git pf -o merge_request.create 2> >(tee >(rg -o 'http\S*' | c)); }
@@ -98,7 +99,7 @@ gbrdf() { git branch -D "$2" && git push --delete "$1" "$2" }
 
 grr() { git reset HEAD~; }
 
-gprev() { file=$1; out="trash/prev/$(basename "$file")"; mkdir trash/prev -p; git show "${branch:-master}:$file" > $out; vim $out; }
+gprev() { file=$1; out="trash/prev/$(basename "$file")"; mkdir trash/prev -p; git show "${branch:-${gmainl}}:$file" > $out; vim $out; }
 
 git-parent() { git rev-list --ancestry-path HEAD.."$1" | tail -n1; }
 

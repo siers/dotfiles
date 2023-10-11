@@ -1,9 +1,11 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p inotify-tools
+#! nix-shell -i bash -p inotify-tools -p easyrsa
 # vim: ft=sh
 
 set -e
 
+dir="$(dirname "$0")/../secrets"
+mkdir -p "$dir"
 cd "$(dirname "$0")/../secrets"
 
 er="$(which easyrsa)"
@@ -45,7 +47,7 @@ ifexists pki/private/ca.key     easyrsa build-ca nopass
 ifexists pki/dh.pem             easyrsa gen-dh
 ifexists pki/private/server.key easyrsa build-server-full server nopass
 
-for client in t480 rv-p53; do
+for client in t480 rv-p53 phone; do
     ifexists pki/private/"$client.key" easyrsa build-client-full "$client" nopass
 done
 

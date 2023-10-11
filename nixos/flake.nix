@@ -11,12 +11,12 @@
       # ref = "nixos-22.11";
     };
 
-    nixpkgs-unstable = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "nixos-unstable";
-    };
+    # nixpkgs-unstable = {
+    #   type = "github";
+    #   owner = "NixOS";
+    #   repo = "nixpkgs";
+    #   ref = "nixos-unstable";
+    # };
 
     nixos-hardware = {
       type = "github";
@@ -40,6 +40,11 @@
       dir = "contrib";
     };
 
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     secrets.url = "path:/home/s/code/nix/secrets";
   };
 
@@ -49,10 +54,8 @@
         inputs.home-manager.nixosModules.home-manager
         ./modules/literals.nix
         ./modules/base.nix
-        # ./modules/home-manager.nix
+        ./modules/home-manager.nix
         ./modules/services.nix
-        ./modules/dev.nix
-        ./modules/gnome-support.nix
         ./modules/fonts.nix
         #./modules/prometheus.nix
         inputs.secrets.nixosModules.default

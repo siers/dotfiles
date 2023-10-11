@@ -30,7 +30,7 @@
 
   swapDevices = [ { device = "/var/swapfile"; size = 4000; } ];
 
-  nix.maxJobs = lib.mkDefault 4;
+  nix.settings.max-jobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   # hardware.cpu.intel.updateMicrocode = true;
 

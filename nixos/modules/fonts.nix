@@ -3,7 +3,7 @@
 {
   fonts = {
     fontconfig.enable = true;
-    fonts = with pkgs; [
+    packages = with pkgs; [
       liberation_ttf
       corefonts
       ubuntu_font_family

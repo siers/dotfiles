@@ -33,6 +33,7 @@ in
         nobind
         persist-key
         persist-tun
+        # sudo cat /var/lib/openvpn-main-ip-pool-persist
 
         ca ${keys.ca}
         cert ${keys.cert}

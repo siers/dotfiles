@@ -77,7 +77,7 @@ Plug 'https://github.com/hrsh7th/cmp-nvim-lsp'
 Plug 'https://github.com/hrsh7th/cmp-buffer'
 Plug 'https://github.com/hrsh7th/cmp-path'
 Plug 'https://github.com/hrsh7th/cmp-cmdline'
-Plug 'https://github.com/scalameta/nvim-metals', {'commit': 'cc60a74b7bab2d545cf8f33980d3d84dea8a264d'}
+Plug 'https://github.com/scalameta/nvim-metals' ", {'commit': 'cc60a74b7bab2d545cf8f33980d3d84dea8a264d'}
 Plug 'https://github.com/nvim-lua/plenary.nvim'
 Plug 'https://github.com/wbthomason/packer.nvim'
 " Plug 'https://github.com/L3MON4D3/LuaSnip', {'tag': 'v1*', 'do': 'make install_jsregexp'} " Replace <CurrentMajor> by the latest released major (first number of latest release)
@@ -91,13 +91,11 @@ Plug 'https://github.com/hrsh7th/vim-vsnip'
 " Plug 'https://github.com/neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile --force'}
 " " Plug 'https://github.com/iamcco/coc-actions', {'do': 'yarn install --frozen-lockfile --force'}
 
-Plug 'https://github.com/LnL7/vim-nix'
-Plug 'https://github.com/derekwyatt/vim-scala'
 Plug 'https://github.com/jamessan/vim-gnupg'
 Plug 'https://github.com/hashivim/vim-terraform'
 Plug 'https://github.com/derekelkins/agda-vim'
 " Plug 'https://github.com/ashinkarov/nvim-agda'
-" Plug 'https://github.com/nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'https://github.com/nvim-treesitter/nvim-treesitter' " , {'do': ':TSUpdate'}
 
 " The Plugs below don't mean much to me.
 Plug 'https://github.com/preservim/nerdtree'
@@ -106,7 +104,6 @@ Plug 'https://github.com/wsdjeg/vim-fetch'
 " Plug 'https://github.com/nixprime/cpsm'
 Plug 'https://github.com/junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'https://github.com/junegunn/fzf.vim'
-" Plug 'https://github.com/mattn/emmet-vim' " div#foo<C-y>, => <div id=foo>
 " Plug 'https://github.com/ervandew/supertab'
 " Plug 'https://github.com/AndrewRadev/splitjoin.vim'
 " Plug 'https://github.com/AndrewRadev/sideways.vim' " argument swapping
@@ -115,6 +112,8 @@ Plug 'https://github.com/junegunn/fzf.vim'
 " Plug 'https://github.com/liuchengxu/vista.vim'
 " Plug 'https://github.com/hrsh7th/vim-vsnip-integ'
 Plug 'https://github.com/mrcjkb/haskell-tools.nvim'
+Plug 'https://github.com/simrat39/rust-tools.nvim'
+" Plug 'https://github.com/pmizio/typescript-tools.nvim'
 
 call plug#end()
 "}}}
@@ -245,12 +244,22 @@ lua <<EOF
         hls = {
           settings = {
             haskell = {
+              formattingProvider = "fourmolu",
               plugin = {
                 class = { -- missing class methods
                   codeLensOn = true,
                 },
                 importLens = { -- make import lists fully explicit
                   codeLensOn = true,
+                },
+                refineImports = { -- refine imports
+                  codeLensOn = true,
+                },
+                tactics = { -- wingman
+                  codeLensOn = false,
+                },
+                ['ghcide-type-lenses'] = { -- show/add missing type signatures
+                  globalOn = false,
                 },
               },
             },
@@ -260,7 +269,54 @@ lua <<EOF
     end,
     group = nvim_haskell_group,
   })
+
+  local lspconfig = require('lspconfig')
+  lspconfig.glslls.setup{}
+  lspconfig.tsserver.setup {}
+  -- lspconfig.rust_analyzer.setup {
+  --   -- Server-specific settings. See `:help lspconfig-setup`
+  --   settings = {
+  --     ['rust-analyzer'] = {},
+  --   },
+  -- }
+
+  local rt = require("rust-tools")
+
+  rt.setup({
+    server = {
+      on_attach = function(_, bufnr)
+        -- Hover actions
+        vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+        -- Code action groups
+        vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+      end,
+    },
+  })
+
+  require'nvim-treesitter.configs'.setup {
+    -- A list of parser names, or "all" (the five listed parsers should always be installed)
+    ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "scala", "glsl" },
+
+    -- Install parsers synchronously (only applied to `ensure_installed`)
+    sync_install = false,
+
+    -- Automatically install missing parsers when entering buffer
+    -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+    auto_install = true,
+
+    -- List of parsers to ignore installing (or "all")
+    ignore_install = { "javascript" },
+
+    ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+    -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+    highlight = {
+      enable = true,
+    },
+  }
 EOF
+
+" require("typescript-tools").setup{}
 
 " Plugin settings {{{
 silent! colorscheme jellyx
@@ -268,10 +324,10 @@ silent! colorscheme jellyx
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_mode_map = { "mode": "active",
-                           \ "active_filetypes": [],
-                           \ "passive_filetypes": ["scala"] }
+                          \ "active_filetypes": [],
+                          \ "passive_filetypes": ["scala"] }
 
-let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null']
+let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || (git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null | uniq)']
 let g:ctrlp_map = ''
 
 "xmap ga <Plug>(EasyAlign) | nmap ga <Plug>(EasyAlign)
@@ -379,7 +435,7 @@ map <Leader>o :e `xclip -sel clip -o`<CR>
 map <Leader>I :!echo -n "$(basename "%")" \| cut -f1 -d . \| tr -d '\n' \| xclip -sel clip<CR><CR>
 map <Leader>R :setlocal relativenumber!<CR>
 map <Leader>X :!run tmux-term<CR><CR>
-map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat -p <C-r>0 \| vim -" &<CR><CR> " show commit
+map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat=1000 -p <C-r>0 \| vim -c 'set buftype=nofile' -" &<CR><CR> " show commit
 " map <Leader>gs yiw:!urxvt -e sh -c \"cd $(pwd); git show --stat -p <C-r>0 \| vim '+nnoremap q :qal!<CR>' -" &<CR><CR> " show commit
 " :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
@@ -408,7 +464,7 @@ map <C-j> :noh<CR>:<ESC>
 imap <silent> <C-j> <ESC>:noh<CR>i
 imap <silent> <C-_> <ESC>:undo<CR>a
 map <Leader>W :setlocal nowrap!<CR>
-map <Leader>w :w<CR>
+map <Leader>w :noautocmd w<CR>
 map <Leader>T :set paste!<CR>
 "map <Leader>N :set relativenumber!<CR>
 map <silent> <M-m> :tabm +1<CR>

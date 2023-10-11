@@ -1,4 +1,4 @@
-{ pkgs, neovim-flake, ... }:
+{ pkgs, ... }:
 
 with pkgs;
 
@@ -34,8 +34,9 @@ let
       rxvt_unicode
       #virtmanager
       vlc
-      pinentry_gnome
       spotify
+      element-desktop
+      python3Packages.idasen # -controller
     ];
 
     # an uncategory for all things large
@@ -57,7 +58,7 @@ let
       go-upower-notify
       rofi
       siers.footswitch
-      siers.rofimoji
+      rofimoji
       unclutter
       xbindkeys
       xcalib
@@ -121,7 +122,6 @@ let
       youtube-dl
 
       neovimConfigured
-      # (neovim-flake.outputs.neovim)
     ];
 
     termtoolsOptional = [
@@ -162,6 +162,8 @@ let
 
       docker-compose
       kubectl
+
+      kcat
     ];
 
     audio = [

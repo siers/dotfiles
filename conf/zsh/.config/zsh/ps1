@@ -57,6 +57,8 @@ precmd() {
         succ="red"
     fi
 
+    pwd >> ~/log/comp/shell-dirs
+
     PS1="$PS1$__PS1_NEWLINE%F{$succ}%#%F{default} "
     RPS1=""
 }

@@ -12,12 +12,6 @@
     ssh.startAgent = true;
     ssh.knownHosts = config.literals.knownHosts;
 
-    gnupg.agent = {
-      enable = true;
-      enableBrowserSocket = true;
-      pinentryFlavor = "gtk2";
-    };
-
     gphoto2.enable = true;
   };
 

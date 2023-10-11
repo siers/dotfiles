@@ -1,4 +1,4 @@
-{ stdenv, pkgconfig, hidapi , fetchFromGitHub }:
+{ stdenv, pkg-config, hidapi , fetchFromGitHub }:
 
 stdenv.mkDerivation {
   name = "footswitch";
@@ -8,7 +8,7 @@ stdenv.mkDerivation {
     rev = "7b89a3b";
     sha256 = "07kalv16m1zwzzvdz4rdk96bbsqdgdlmlb08jxaph89p7m7r04xq";
   };
-  nativeBuildInputs = [ pkgconfig ];
+  nativeBuildInputs = [ pkg-config ];
   buildInputs = [ hidapi ];
   PREFIX = "$out";
 

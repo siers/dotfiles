@@ -27,6 +27,9 @@ then
     [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ] &&
         . "$HOME/.nix-profile/etc/profile.d/nix.sh"
 
+    [ -e "$HOME/.nix-profile/etc/profile.d/command-not-found.sh" ] &&
+      source "$HOME/.nix-profile/etc/profile.d/command-not-found.sh"
+
     [ -n "$ZSH_VERSION" ] && # sourced in the bash-run ~/.xprofile
         command -v direnv &> /dev/null && eval "$(direnv hook zsh)"
 

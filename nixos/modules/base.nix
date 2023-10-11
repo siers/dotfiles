@@ -1,7 +1,7 @@
 { config, pkgs, inputs, ... }:
 
 {
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
   system.autoUpgrade.enable = true;
 
   security.sudo.extraConfig = "Defaults timestamp_timeout=30";
@@ -16,16 +16,18 @@
       experimental-features = nix-command flakes
     '';
 
-    binaryCaches = [
-      "https://cache.nixos.org/"
-      "https://all-hies.cachix.org"
-    ];
+    settings = {
+      trusted-users = [ "root" "s" ];
 
-    binaryCachePublicKeys = [
-      "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
-    ];
+      substituters = [
+        "https://cache.nixos.org/"
+        "https://all-hies.cachix.org"
+      ];
 
-    trustedUsers = [ "root" "s" ];
+      trusted-public-keys = [
+        "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
+      ];
+    };
 
     nixPath = [
       "nixpkgs=/etc/channels/nixpkgs"
@@ -33,6 +35,8 @@
       "/nix/var/nix/profiles/per-user/root/channels"
     ];
   };
+
+  systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp";
 
   environment.etc."channels/nixpkgs".source = inputs.nixpkgs.outPath;
 

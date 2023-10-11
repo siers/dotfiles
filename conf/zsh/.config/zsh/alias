@@ -103,6 +103,7 @@ alias b='bundle'
 # alias rdm="$RAILS_PREFIX rake db:migrate"
 # alias rgm="$RAILS_PREFIX rails generate migration"
 
+alias ns='nix-shell'
 de-nix() { > .envrc <<< "use nix" }
 de-flake() { > .envrc <<< "use flake" }
 alias dea='direnv allow'
