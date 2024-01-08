@@ -57,7 +57,7 @@ precmd() {
         succ="red"
     fi
 
-    pwd >> ~/log/comp/shell-dirs
+    (pwd >> ~/log/comp/shell-dirs-$HOST) 2> /dev/null
 
     PS1="$PS1$__PS1_NEWLINE%F{$succ}%#%F{default} "
     RPS1=""

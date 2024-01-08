@@ -31,6 +31,7 @@
 (xbindkey '(Control shift space)    "dunstctl close-all")
 (xbindkey '(Control grave)          "dunstctl history-pop")
 (xbindkey '(Mod4 plus)              "touch-toggle")
+(xbindkey '(Mod4 shift g)           "dmenu < /dev/null -p 'wiktionary> ' | xargs -rL1 sh -c 'google-chrome-stable https://\"wiktionary.org/wiki/$1#German\"' ''")
 
 (xbindkey '(XF86MonBrightnessUp)    "light -T 2")
 (xbindkey '(XF86MonBrightnessDown)  "light -T 0.5")

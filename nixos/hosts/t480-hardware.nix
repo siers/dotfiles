@@ -11,6 +11,7 @@ with config.secrets;
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
   boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelParams = [ "acpi_backlight=video" ];
   boot.extraModulePackages = [ ];
 
   boot.initrd.luks.devices = {

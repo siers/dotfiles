@@ -17,9 +17,6 @@ with lib;
           "dbepggeogbaibhgnhhndojpepiihcmeb" # vimium
           "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
           "mjidkpedjlfnanainpdfnedkdlacidla" # CLEAN crxMouse Gestures
-          "lgaiigbekmcejmhenhhleeaicbcjjddi" # zero-width-chrome-extension
-          "hgimnogjllphhhkhlmebbmlgjoejdpjl" # xpath-helper
-          "pfippblampohahkkdoomekekmfbjkimg" # duplicate tab shortcut key
         ];
       };
     };

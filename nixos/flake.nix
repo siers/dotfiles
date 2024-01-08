@@ -64,11 +64,12 @@
       nixosConfigurations = {
         t480 = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = commonModules ++ [
             ./hosts/t480.nix
             ./hosts/t480-hardware.nix
-            ./modules/user/ld.nix
             ./modules/openvpn.nix
+            ./modules/backlight.nix
             nixos-hardware.nixosModules.lenovo-thinkpad-t480
           ];
         };
@@ -78,14 +79,10 @@
           modules = commonModules ++ [
             ./hosts/work-p53.nix
             ./hosts/work-p53-hardware.nix
-            # ./modules/libinput.nix
             ./modules/openvpn.nix
             ./modules/backlight.nix
-            ./modules/printing.nix
-            # /home/s/work/conf/evolution.nix
             ./modules/openconnect.nix
             nixos-hardware.nixosModules.lenovo-thinkpad-p52
-            # nixos-hardware.nixosModules.lenovo-thinkpad-p53
           ];
         };
       };

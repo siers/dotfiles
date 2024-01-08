@@ -9,7 +9,7 @@ let
   sets = {
     aliases = [
       (siers.alias [systemd] "systemctl" "sc")
-      (siers.sym-alias "nvim" "vim")
+      (siers.alias [neovim] "nvim" "vim")
     ];
 
     services = [
@@ -37,6 +37,8 @@ let
       spotify
       element-desktop
       python3Packages.idasen # -controller
+      anki-bin
+      # gsettings-desktop-schemas
     ];
 
     # an uncategory for all things large
@@ -82,10 +84,13 @@ let
       file
       gitAndTools.gitFull
       pijul
+      gcc
+      lua
       gnumake
       htop
       inetutils
       ncdu
+      neovim
       p7zip
       pass
       pv

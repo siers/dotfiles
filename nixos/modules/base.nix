@@ -7,7 +7,7 @@
   security.sudo.extraConfig = "Defaults timestamp_timeout=30";
 
   boot.blacklistedKernelModules = [ "pcspkr" ];
-  time.timeZone = "Europe/Riga";
+  time.timeZone = "Europe/Berlin";
 
   nix = {
     package = pkgs.nixUnstable;
@@ -51,7 +51,7 @@
     '';
   };
 
-  environment.etc."resolv.conf.head".text = ''nameserver 1.1.1.1'';
+  environment.etc."resolv.conf.head".text = ''nameserver 8.8.8.8'';
 
   users.extraUsers.s = {
     isNormalUser = true;
@@ -62,5 +62,16 @@
     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "cdrom" "audio" "camera" "video" "input" ];
     subUidRanges = [{ startUid = 100000; count = 65536; }];
     subGidRanges = [{ startGid = 100000; count = 65536; }];
+  };
+
+  users.extraUsers.d = {
+    isNormalUser = true;
+    uid = 1001;
+    shell = pkgs.zsh;
+    hashedPassword = config.secrets.password;
+    openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGHwoKCn9k47dD+AiLD757nRkHtjoZV0FZ6vQtujdc5J"];
+    extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "cdrom" "audio" "camera" "video" "input" ];
+    subUidRanges = [{ startUid = 200000; count = 65536; }];
+    subGidRanges = [{ startGid = 200000; count = 65536; }];
   };
 }

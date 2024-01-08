@@ -95,7 +95,7 @@ Plug 'https://github.com/jamessan/vim-gnupg'
 Plug 'https://github.com/hashivim/vim-terraform'
 Plug 'https://github.com/derekelkins/agda-vim'
 " Plug 'https://github.com/ashinkarov/nvim-agda'
-Plug 'https://github.com/nvim-treesitter/nvim-treesitter' " , {'do': ':TSUpdate'}
+Plug 'https://github.com/nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " The Plugs below don't mean much to me.
 Plug 'https://github.com/preservim/nerdtree'

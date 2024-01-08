@@ -19,10 +19,10 @@ xkb_symbols "basic" {
 
 	key <TLDE> {[ asciitilde,	grave,		0x1002022,		0x10025cf		]};
 	key <AE01> {[ 1,		exclam,		0x1002714,		0x1002717		]};
-	key <AE02> {[ 2,		at,		notsign,		0x101f525		]};
-	key <AE03> {[ 3,		numbersign,	0x100266d,		0x101f4a9		]};
-	key <AE04> {[ 4,		dollar,		0x10000e6,		0x10000c6		]};
-	key <AE05> {[ 5,		percent,	EuroSign,		degree			]};
+	key <AE02> {[ 2,		at,		adiaeresis,		Adiaeresis		]};
+	key <AE03> {[ 3,		numbersign,	odiaeresis,		Odiaeresis		]};
+	key <AE04> {[ 4,		dollar,		udiaeresis,		Udiaeresis		]};
+	key <AE05> {[ 5,		percent,	0x10000df,		degree			]};
 	key <AE06> {[ 6,		asciicircum,	0x1002261,		0x1002262		]};
 	key <AE07> {[ 7,		ampersand,	onesuperior,		0x1002190		]};
 	key <AE08> {[ 8,		asterisk,	twosuperior,		0x1002193		]};

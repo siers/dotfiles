@@ -102,11 +102,6 @@ in
   programs.java.enable = true;
   programs.java.package = pkgs.jdk17;
 
-  programs.chromium = {
-    enable = true;
-    extensions = config.literals.chromiumExtensions;
-  };
-
   systemd.services.nginx.serviceConfig.ProtectHome = "read-only";
   systemd.services.nginx.serviceConfig.ReadWritePaths = [
     "/home/s/code/desktop"
