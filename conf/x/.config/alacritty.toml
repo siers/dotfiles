@@ -1,0 +1,10 @@
+live_config_reload = true
+
+[window]
+option_as_alt = "OnlyLeft"
+
+[font]
+size = 11.0
+
+[font.normal]
+family = "Menlo"

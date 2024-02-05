@@ -90,4 +90,4 @@ if [ "$1" = "--" ]; then
   exec vt "$@"
 fi
 
-exec vt -e ~/code/bin/wrappers/tmx single "$@"
+exec vt -e tmx single "$@"

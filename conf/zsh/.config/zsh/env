@@ -2,7 +2,7 @@
 
 export MANPAGER='nvim +Man!'
 # export PAGER='nvim -R -'
-export EDITOR=vim
+export EDITOR=nvim
 # export TERM=alacritty
 # export TERM=rxvt-unicode-256color # wtf? :D
 
@@ -15,8 +15,11 @@ if [ -z "$ZSH_PATH_INIT" ] || command -v ruby &> /dev/null
 then
     export ZSH_PATH_INIT=1
 
-    [ -e ~/code/bin ] &&
+    [ -e ~/code/df/bin ] &&
         export PATH="$(find -L ~/code/bin -type d -not -path '*/\.*' | tr '\n' :)$PATH"
+
+    [ -e ~/dotfiles/bin ] &&
+        export PATH="$(find -L ~/dotfiles/bin -type d -not -path '*/\.*' | tr '\n' :)$PATH"
 
     [ -e ~/.local/bin ] &&
         export PATH="$HOME/.local/bin:$PATH"

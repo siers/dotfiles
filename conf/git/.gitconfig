@@ -42,6 +42,7 @@
 	verbose = true
 [user]
 	signingkey = D58EB6183E211B335B23ED5A5C1B1DF079F39C4B
+	email = raitis.veinbahs@dasch.swiss
 [safe]
 	directory = /home/s/.syncthing/shares/home/code/df
 	directory = /home/s/code/df

@@ -45,7 +45,7 @@ let g:vimspector_enable_mappings = 'HUMAN'
 " }}}
 
 " Plugins {{{
-call plug#begin('~/cache/vim-plug')
+call plug#begin('~/.cache/vim-plug')
 
 " Plug 'https://github.com/drewtempelmeyer/palenight.vim'
 Plug 'https://github.com/guns/jellyx.vim'
@@ -80,6 +80,7 @@ Plug 'https://github.com/hrsh7th/cmp-cmdline'
 Plug 'https://github.com/scalameta/nvim-metals' ", {'commit': 'cc60a74b7bab2d545cf8f33980d3d84dea8a264d'}
 Plug 'https://github.com/nvim-lua/plenary.nvim'
 Plug 'https://github.com/wbthomason/packer.nvim'
+Plug 'https://github.com/b0o/schemastore.nvim'
 " Plug 'https://github.com/L3MON4D3/LuaSnip', {'tag': 'v1*', 'do': 'make install_jsregexp'} " Replace <CurrentMajor> by the latest released major (first number of latest release)
 Plug 'https://github.com/hrsh7th/vim-vsnip'
 
@@ -273,6 +274,7 @@ lua <<EOF
   local lspconfig = require('lspconfig')
   lspconfig.glslls.setup{}
   lspconfig.tsserver.setup {}
+
   -- lspconfig.rust_analyzer.setup {
   --   -- Server-specific settings. See `:help lspconfig-setup`
   --   settings = {
@@ -280,18 +282,26 @@ lua <<EOF
   --   },
   -- }
 
-  local rt = require("rust-tools")
+  -- local rt = require("rust-tools")
+  -- rt.setup({
+  --   server = {
+  --     on_attach = function(_, bufnr)
+  --       -- Hover actions
+  --       vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+  --       -- Code action groups
+  --       vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+  --     end,
+  --   },
+  -- })
 
-  rt.setup({
-    server = {
-      on_attach = function(_, bufnr)
-        -- Hover actions
-        vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-        -- Code action groups
-        vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-      end,
+  lspconfig.jsonls.setup {
+    settings = {
+      json = {
+        schemas = require('schemastore').json.schemas(),
+        validate = { enable = true },
+      },
     },
-  })
+  }
 
   require'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
@@ -435,7 +445,7 @@ map <Leader>o :e `xclip -sel clip -o`<CR>
 map <Leader>I :!echo -n "$(basename "%")" \| cut -f1 -d . \| tr -d '\n' \| xclip -sel clip<CR><CR>
 map <Leader>R :setlocal relativenumber!<CR>
 map <Leader>X :!run tmux-term<CR><CR>
-map <Leader>gs yiw:!urxvt -e sh -c "cd $(pwd); git show --stat=1000 -p <C-r>0 \| vim -c 'set buftype=nofile' -" &<CR><CR> " show commit
+map <Leader>gs yiw:!alacritty -e sh -c "cd $(pwd); git show --stat=1000 -p <C-r>0 \| nvim -c 'set buftype=nofile' -" &<CR><CR> " show commit
 " map <Leader>gs yiw:!urxvt -e sh -c \"cd $(pwd); git show --stat -p <C-r>0 \| vim '+nnoremap q :qal!<CR>' -" &<CR><CR> " show commit
 " :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 

@@ -45,7 +45,7 @@ pg() { ping google.com; }
 
 cdf() { cd "$(dirname "$1")"; }
 
-alias l='ls'
+alias l='ls --color'
 alias mv='mv -i'
 alias du='du -h'
 alias mkd=mkdir
@@ -111,6 +111,7 @@ alias ded='direnv deny'
 direnv-unload() { pushd /; _direnv_hook; popd; }
 dau() { direnv-unload; }
 
+alias d=docker
 alias dc='docker-compose'
 alias kctl='kubectl'
 alias kctl_='kubectl --context="$kctx" --namespace="$kns"'

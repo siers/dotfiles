@@ -80,9 +80,8 @@ let
       bc
       bind # for dig
       coreutils
-      dtrx
+      # dtrx
       file
-      gitAndTools.gitFull
       pijul
       gcc
       lua
@@ -100,7 +99,7 @@ let
       tmux
       unzip
       utillinux
-      vitetris # essential — ha!
+      # vitetris # essential — ha!
       watch
       wget
       which
@@ -147,6 +146,7 @@ let
       pdftk
       sysstat # pidstat
       unrar
+      gitAndTools.gitFull
     ];
 
     dev = [ # also work
@@ -154,7 +154,7 @@ let
       tdesktop
 
       cachix
-      gitAndTools.diff-so-fancy
+      # gitAndTools.diff-so-fancy
       #man-pages
       nix-prefetch-git
       xxd
@@ -182,18 +182,29 @@ let
 
     darwin = [
       coreutils
-      docker_compose
       findutils
-      musescore
+      # musescore
       syncthing
       siers.xclip-for-mac
+
+      coursier
+      just
+      lua
+      neovim
+      nodejs
+      ripgrep
+      sbt
+      stow
+      temurin-bin
+      tree-sitter
+      vscode-langservers-extracted
     ];
   };
 
   derived = with sets; rec {
-    simple-cross = termtoolsEssential ++ termtoolsFancy ++ aliases;
+    simple-cross = termtoolsEssential ++ termtoolsFancy;
     simple-darwin = simple-cross ++ darwin;
-    simple = simple-cross ++ termtoolsLinux;
+    simple = simple-cross ++ termtoolsLinux ++ aliases;
 
     most = builtins.concatLists [
       audio

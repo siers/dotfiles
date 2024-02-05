@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
 f() {
-  if [[ "$(uname)" == "Darwin" ]]; then
+  if [[ "$OSTYPE" == "darwin"* ]]; then
     title="$1" body="$2" osascript -e "
         set body to system attribute \"body\"
         set title to system attribute \"title\"
         display notification body with title title
     "
   else
+    click
     if [ -n "$DISPLAY" ]; then
         notify-send "$@"
     else
@@ -23,5 +24,4 @@ else
     args=()
 fi
 
-click
 f "${args[@]}" "$(pwd|rev|cut -b-50|rev):" "${1:-done}"

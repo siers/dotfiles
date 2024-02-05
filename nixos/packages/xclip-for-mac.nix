@@ -1,4 +1,4 @@
-{ mkDerivation, base, bytestring, process, stdenv, fetchgit }:
+{ mkDerivation, base, bytestring, process, stdenv, fetchgit, lib }:
 mkDerivation {
   pname = "xclip";
   version = "0.1.0.0";

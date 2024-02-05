@@ -1,9 +1,9 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 env | grep -q '^notify=' || notify=1
 
-YELL="\e[33m"
-OFF="\e[0m"
+YELL="\033[33m"
+OFF="\033[0m"
 
 base="/tmp/wait-diffs"
 mkdir -p "$base"
@@ -16,7 +16,7 @@ cp "$f.a" "$f.b"
 [ -n "$debug$notify" ] && echo -en "${YELL}wait-diff: start $(date)"
 
 while sleep "${interval:-1}"; do
-    [ -n "$debug$notify" ] && echo -en "\rwait-diff: cycle $(date)"
+    [ -n "$debug$notify" ] && echo -en "\015wait-diff: cycle $(date)"
     "$@" > "$f.b"
 
     # if ! out="$(diff --color="always" "$f."{a,b})"; then

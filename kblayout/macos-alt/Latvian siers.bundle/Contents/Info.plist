@@ -10,6 +10,10 @@
 	<string>1.0</string>
 	<key>KLInfo_Latvian siers</key>
 	<dict>
+		<key>TICapsLockLanguageSwitchCapable</key>
+		<false/>
+		<key>TISIconIsTemplate</key>
+		<false/>
 		<key>TISInputSourceID</key>
 		<string>org.sil.ukelele.keyboardlayout.latvianalt.latviansiers</string>
 		<key>TISIntendedLanguage</key>
