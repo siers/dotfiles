@@ -1,0 +1,4 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -p slop -p recordmydesktop -i bash
+
+echo recordmydesktop `printf -- "--width %s --height %s -x %s -y %s" $(slop | tr -c '0-9' ' ')` $* | tee /dev/tty | sh

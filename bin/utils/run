@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+log=/var/tmp/run-logs
+mkdir -p $log
+"$@" < /dev/null > $(mktemp -p $log "$(date '+%F-%R')-$(tr -cd 'a-zA-Z0-9\-' <<< "$1$2$3").XXXXXXXX") 2>&1 &
+
+echo $!
+
+disown

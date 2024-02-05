@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+if ! [ -z "$size" ]; then
+    moreargs="-fn xft:Monaco:size=$size -fb xft:Monaco:size=$size"
+fi
+
+exec `which -a urxvt | grep -Ev '/(home|Users)'` --meta8 $moreargs "$@"

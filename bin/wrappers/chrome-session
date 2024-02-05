@@ -1,0 +1,35 @@
+#! /usr/bin/env zsh
+
+# https://peter.sh/experiments/chromium-command-line-switches/
+
+mkdir -p ~/tmp/chrome
+cd ~/tmp/chrome
+
+session="${session:-$( (echo main; echo incognito; ls | grep -v trash-) | dmenu -p 'chrome')}"
+
+if [ -z "$session" ]; then
+  exit 1
+elif [ "$session" = "main" ]; then
+  args=()
+elif [ "$session" = "incognito" ]; then
+  args=(--incognito)
+else
+  args=(--user-data-dir="$session")
+fi
+
+# two $ suffix – also don't start a browser
+if grep -Eq "[$]$" <<< "$session"; then
+  die=1
+  session="${session[1,-2]}"
+fi
+
+# one $ suffix = delete
+if grep -Eq "[$]$" <<< "$session"; then
+  session="${session[1,-2]}"
+  rm -vrf "trash-$session"
+  [ -e "$session" ] && mv -v {,trash-}"$session"
+fi
+
+if [ "${die:-}" = "1" ]; then exit 0; fi
+
+run google-chrome-stable "$@" --no-first-run "${args[@]}"

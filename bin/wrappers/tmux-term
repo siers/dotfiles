@@ -1,0 +1,4 @@
+#! /usr/bin/env sh
+
+group_name="$(tmux display-message -p '#{session_group}')"
+exec term specific "$group_name"

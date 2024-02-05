@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+find 2> /dev/null $(tr : \\n <<< "$PATH") -maxdepth 1 -perm -111 -type f

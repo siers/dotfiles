@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+f() {
+  if [[ "$(uname)" == "Darwin" ]]; then
+    title="$1" body="$2" osascript -e "
+        set body to system attribute \"body\"
+        set title to system attribute \"title\"
+        display notification body with title title
+    "
+  else
+    if [ -n "$DISPLAY" ]; then
+        notify-send "$@"
+    else
+        echo "$@" >> /tmp/info
+    fi
+  fi
+}
+
+if [ "$#" != 1 ] && [[ "$1" =~ ^[0-9]+$ ]]; then
+    args=(-t "$1")
+    shift
+else
+    args=()
+fi
+
+click
+f "${args[@]}" "$(pwd|rev|cut -b-50|rev):" "${1:-done}"

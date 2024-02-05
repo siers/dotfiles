@@ -1,0 +1,121 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -p ffmpeg-full -p xprintidle-ng -i zsh
+# vim: ft=zsh
+
+# capture-face:
+#       http://sprunge.us/NGYJ
+# wait-while-idle.rb:
+#       https://gist.github.com/siers/raw/3b97d3f84347e8600985ce19bf5fb35b
+#       https://gist.githubusercontent.com/siers/3b97d3f84347e8600985ce19bf5fb35b/raw/3a228c90819f72b60e394f3becc377cc5ff1e0d0/wait-while-idle.rb
+
+# (xbindkey '(Mod4 combo)           "lock --stealth")
+# (xbindkey '(Mod4 another combo)   "touch /tmp/nolock; notify-send -t 1 ' '")
+# add this to dmenu: touch /tmp/nolock # nolck nlck
+
+output="$HOME/data/captures/$(date +'%Y-%m-%d-%H:%M:%S').mp4"
+
+set -x
+
+capture-face() {
+  # still images
+  # ffmpeg -f v4l2 -s 640x480 -i /dev/video0 -vframes 4 "$f" "$@" &> /dev/null < /dev/null
+
+  # video capture
+  t=60
+  ffmpeg < /dev/null \
+    -hide_banner -loglevel error \
+    -f v4l2 -s 640x480 -i /dev/video0 -t "$t" -async 1 \
+    -f alsa -ac 1 -i default -t "$t" -acodec libmp3lame -ab 96k \
+    "$output"
+}
+
+locker() {
+    #$HOME/code/cache/i3lock-fancy/lock -- -dI 7
+    #$HOME/code/cache/i3lock-fancy/lock -- -I 7 "$@"
+    xmodmap -e 'keycode 36=Return'
+    i3lock -c '#555555' "$@" # -i ~/log/comp/locker-dickbutt.png # image not centered
+}
+
+cancel-recording() {
+    pkill ffmpeg
+    rm "$output"
+    xmodmap -e 'keycode 36=Return'
+}
+
+check-prevented() {
+    # dmenu runner has 'nlck' alias
+    nolock="/tmp/nolock"
+    echo [ -e "$nolock" ]
+    if ! [ -e "$nolock" ]; then return; fi
+
+    rm "$nolock"
+    alert 'c octave'
+    date +'%c unlocked' > /tmp/lock-log
+    notify-send -t 1 'seasam!'
+    cancel-recording
+    exit
+}
+
+wait-while-idle() {
+  ruby -e "
+    if %x{type xprintidle-ng &> /dev/null; echo $$?}.strip == '1'
+      raise 'xprintidle not found'
+    end
+
+    def idle
+      %x{xprintidle-ng}.to_i
+    end
+
+    t = Time.now
+    i = idle - 100
+
+    wait = (ENV['IDLE_POLL'] || 100).to_i / 1000.0
+
+    loop do
+      sleep wait
+      prediction = (Time.now - t) * 1000.0 + i
+      break if prediction > idle
+    end
+  "
+}
+
+stealth-lock() {
+    sleep 0.5
+    alert g &
+    rm -f /tmp/nolock
+    wait-while-idle
+    xmodmap -e 'keycode 36='
+    capture-face &
+
+    if pgrep i3lock > /dev/null; then
+      alert f
+      notify-send -t 10 'stealth disabled'
+      cancel-recording
+    else
+      for i in {1..10}; do
+        sleep 0.5
+        check-prevented
+      done
+      locker
+    fi
+}
+
+usage() {
+    echo "usage: ./$0 [--stealth]"
+}
+
+echo "args: $@"
+
+if [ "$#" = "1" ]; then
+    notify-send -t 1000 'lock --stealth'
+    if [ "$1" = "--stealth" ]; then
+        stealth-lock
+    else
+        usage
+    fi
+elif [ "$#" = "0" ]; then
+    notify-send -t 1 'lock'
+    locker
+else
+    usage
+fi

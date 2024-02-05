@@ -1,0 +1,86 @@
+#!/usr/bin/env zsh
+
+# ; xbindkeys file
+# (xbindkey '(Mod4         quotedbl)  "action")
+# (xbindkey '(Mod4 shift   quotedbl)  "action shift")
+
+ipa() {
+    cd $HOME/data/ipa
+    ./play $(c -o)
+}
+
+restarter() {
+    pkill -9 "$@"
+    shift || exec "$@"
+}
+
+captionpause() {
+    # for captions
+    herbstclient focus right
+    sleep 0.2
+    xdotool key --clearmodifiers space
+    sleep 0.2
+    herbstclient focus left
+}
+
+flag() {
+    # if [ -e /tmp/flag ]; then
+    #     echo $(( $(cat /tmp/flag) ^ 1 ))
+    # else
+    #     echo 0
+    # fi | tee /tmp/flag_ | sed 's/^/flag: /' > /tmp/info
+    #
+    # mv /tmp/flag{_,}
+
+    if [ -e /tmp/flag ]; then
+        rm /tmp/flag
+        # alert 'fa octave'
+    else
+        touch /tmp/flag
+        # alert 'si octave'
+    fi
+}
+
+flag_() {
+     out="$(if [ -e /tmp/flag_ ]; then
+         echo $(( $(cat /tmp/flag_) ^ 1 ))
+     else
+         echo 0
+    fi)"
+    ok 1000 "flag = $out"
+    echo "$out" > /tmp/flag_
+}
+
+#(c -o | tr -d '\n'; echo) >> /tmp/clip
+
+if [ -z "$1" ]; then
+    flag
+    # echo 'cycle pause' > "$HOME/code/desktop/remote/remote"
+elif [ "$1" = 'bracketleft' ]; then
+  flag_
+    # echo 'seek -1' > "$HOME/code/desktop/remote/remote"
+elif [ "$1" = 'bracketright' ]; then
+    # echo 'seek +1' > "$HOME/code/desktop/remote/remote"
+elif [ "$1" = 'equal' ]; then
+    echo > /tmp/control
+    #rofi -dmenu < /tmp/clips | c
+    #echo 'sub-remove' > "$HOME/code/desktop/remote/remote"
+    #echo 'sub-add /tmp/srt.srt' > "$HOME/code/desktop/remote/remote"
+elif [ "$1" = 'minus' ]; then
+    out="$(awk "NR == $(c -o | grep -Eom1 '[0-9]+') { print \$0; }" < /tmp/1 | tr -d '\n')"
+    echo -n "$out" | c
+    exit
+
+    alert 'fa octave octave' 1
+    exit
+
+    xdotool mousemove_relative 0 34
+    sleep 1
+    xdotool mousedown 1\; mouseup 1
+    exit
+
+    #echo 'revert-seek mark' > "$HOME/code/desktop/remote/remote"
+elif [ "$1" = 'shift' ]; then
+    xdotool click 1
+    # ~/code/desktop/sleeper
+fi

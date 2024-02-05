@@ -1,0 +1,9 @@
+#! /usr/bin/env sh
+
+id="$(xinput list --name-only | grep -i touch)"
+
+if xinput list-props "$id" | grep -qi 'device enabled.*:.*1'; then
+  xinput disable "$id"
+else
+  xinput enable "$id"
+fi

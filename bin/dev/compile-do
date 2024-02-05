@@ -1,0 +1,17 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p inotify-tools
+
+files="$(cat)"
+
+while true; do
+    xargs inotifywait -e close_write <<< "$files";
+
+    eval $WRITE_DO_BEFORE;
+        echo -n "$(tput bold)==> $(tput sgr0)"
+
+            sleep 0.5
+            printf "%s\n" "$(("$@" && click || (alert; false)) 2>&1 || clear >&2)"
+
+        export WRITE_DO_AFTER='echo "$(tput bold)<== $(tput sgr0)";'
+    eval $WRITE_DO_AFTER;
+done

@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+p() {
+    # curl -sF 'sprunge=<-' sprunge.us "$@"
+    curl -sF 'clbin=<-' https://clbin.com "$@"
+}
+
+p "$@" | tr -d '\n' | tee >(tee >(xargs ok) | c)

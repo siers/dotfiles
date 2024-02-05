@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+providerlv()      { curl -sL http://my.ip.lv/ | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+'; }
+provideropendns() { dig +short myip.opendns.com @resolver1.opendns.com; }
+
+providerlv

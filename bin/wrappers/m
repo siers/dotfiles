@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+remote="$HOME/code/desktop/remote/remote"
+exec `which -a mpv | grep -v ~/code/bin` \
+	$([ -e "$remote" ] && echo --input-file="$remote") --volume-max 150 "$@"

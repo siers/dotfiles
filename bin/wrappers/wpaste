@@ -1,0 +1,17 @@
+#! /usr/bin/env zsh
+
+set -euo pipefail
+
+fn="${1-}"
+if [ -z "${fn-}" ]; then
+  title="$(date "+%F")-$WORK_USER"
+  file_name=/dev/stdin
+else
+  title="$(basename "$fn")"
+  file_name="$fn"
+fi
+
+token="$(pass show evo/gitlab)"
+content="$(jq <<< 1 --arg title "$(date "+%F") $(basename "$file_name")" --arg file_name "$(basename "$file_name")" --arg content "$(cat "$file_name")" '{$title, $file_name, $content}')"
+
+curl --request POST "https://$WORK_GITLAB/api/v4/snippets" -H 'Content-Type: application/json' -H "PRIVATE-TOKEN: $token" -d "$content" | jq -r .web_url | tee >(c)

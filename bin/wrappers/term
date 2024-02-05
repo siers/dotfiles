@@ -1,0 +1,93 @@
+#!/usr/bin/env zsh
+
+vt() {
+    # urxvtc "$@"
+    alacritty "$@"
+}
+
+tmux-env-dir() {
+    dir="$HOME/code/desktop/tmux-env"
+    hdir="$dir/$(hostname)"
+    [ -d "$hdir" ] && echo "$hdir" || echo "$dir"
+}
+
+tmux-session-exists() {
+    tmux ls | grep -q "^$1:"
+}
+
+possible-session-names() {
+    (
+        tmux ls -F '#{session_name} #{session_group}'
+        echo '---'
+        find "$(tmux-env-dir)" -maxdepth 1 -type f -printf '%P\n'
+    ) | ruby -e '
+        lines = $<.read.each_line.to_a.map { |l| l.split(" ")[-1] }
+        idx = lines.index("---")
+        exist = lines[0 ..idx - 1]
+        possi = lines[idx + 1..-1]
+        puts((exist + %w{---} + (possi - exist)).uniq)
+    ' | dmenu
+}
+
+tag() {
+    if pgrep herbstluftwm > /dev/null; then
+        this=$$
+        result="$(herbstclient list_rules | grep $this | grep -oE '[^=]+$')"
+        if [ -z "$result" ]; then
+            herbstclient attr tags.focus.name
+        else
+            echo $result
+        fi
+    elif pgrep i3 > /dev/null; then
+        i3-msg -t get_workspaces | jq -r '.[] | select(.focused == true).name'
+    else
+        echo 'cannot detect wm' >&2
+        return 1
+    fi
+}
+
+
+tag="${tag:-$(tag)}"
+
+unset TMUX
+
+if [ "$1" = "in-tag" ] || [ "$1" = "specific" ]; then
+    if [ "$1" = "in-tag" ]; then
+        shift
+        name="${2:-pane-$tag}"
+    elif [ -n "$2" ]; then
+        name="$2"
+    else
+        # specific
+        name="$(possible-session-names)"
+
+        if [ -z "$name" ]; then
+            ok "no session name selected"
+            exit 1
+        fi
+    fi
+
+    for env in $(find "$(tmux-env-dir)/" -maxdepth 1 \( -type f -o -type l \)); do
+        # echo "$name" "$(basename "$env")" "$([ "$name" = "$(basename "$env")" ]; echo $?)" "$(tmux-session-exists "$name"; echo $?)"
+        if [ "$name" = "$(basename "$env")" ] && ! tmux-session-exists "$name"; then
+            vt -e tmux new-session -ds "$name" bash -c "tmux source $env"
+        fi
+    done
+
+    exec vt -e ~/code/bin/wrappers/tmx "$name" "$@"
+fi
+
+if [ "$1" = "one" ]; then
+    shift
+    local alt_shell
+    alt_shell="/tmp/.workspace-shell/$tag"
+    [ -e "$alt_shell" ] && SHELL="$alt_shell"
+    exec vt "$@"
+fi
+
+if [ "$1" = "--" ]; then
+  shift
+  exec vt "$@"
+fi
+
+exec vt -e ~/code/bin/wrappers/tmx single "$@"

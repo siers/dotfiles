@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+sed 's/modified: //g' | xargs git add "$@"

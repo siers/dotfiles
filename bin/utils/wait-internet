@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ "$(uname)" = "Linux" ]; then
+    while ! ping google.com -c 1 -W 5; do sleep 1; done
+else
+    while ! curl example.com &> /dev/null; do sleep 1; done
+fi

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -eu
+
+d="${d:-1}"
+
+execute() {
+    if [ -z "${d:-}" ]; then
+        echo "$@"
+    else
+        "$@"
+    fi
+}
+
+[ "${d:-}" != "1" ] && echo "\`d=1' to disable dry run" >&2
+
+while [[ $# > 0 ]]; do
+    base="$(basename "$1")"
+    dir="$(dirname "$1")"
+    date="$(date -d "@$(stat "$1" -c %Y)" '+%F')"
+
+    execute mv "$1" "${dir}/${date}-${base}"
+    shift
+done

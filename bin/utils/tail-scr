@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+# show us one full screen of contents from stdin
+
+if [ -n "$r" ]; then
+    cmd=head
+else
+    cmd=tail
+fi
+
+$cmd -n$(( $(tput lines) - 3 + ${more:-0} )) | \
+    sed 's/	/    /g' | \
+    cut -c-$(tput cols)

@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+detect="grep -qE '(private|public) key'"
+mod='chmod -R a-rwx,u+r "$1"'
+file='file -b "$1"'
+find ~/work/keys ~/.ssh -exec sh -c "$file | $detect && $mod" '' {} \;

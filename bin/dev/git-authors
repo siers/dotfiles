@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+if [ -n "$emails" ]; then
+    format=": %an : %ae"
+else
+    format="%an"
+fi
+
+# little did I know, this is git shortlog -sn
+
+git log --format="$format" | sort | uniq -c | sort -nr

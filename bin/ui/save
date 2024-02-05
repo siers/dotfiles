@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+mkdir -p ~/data/save
+file=~/data/save/$(td)
+xclip -o sel > $file
+du -b $file
+head -n1 $file

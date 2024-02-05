@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+tetris() {
+  if [ -n "$vitetris" ]; then
+    command -v vitetris || ls /run/current-system/sw/bin/tetris
+  else
+    find ~/code/haskell/tetris -type f -name tetris -perm -+x
+    echo --preview-chars=oo
+  fi
+}
+
+term() {
+  # size=16 urxvt -e "$(tetris)" "$@"
+  alacritty -o font.size=16 -o window.startup_mode=Fullscreen "$@"
+}
+
+if uname | grep -qi darwin; then
+    exec "$(which -a tetris | grep -Ev '/(home|Users)' | head -n1)" "$@" "${args[@]}"
+else
+    term -e $(tetris)
+fi

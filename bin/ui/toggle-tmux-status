@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+touch /tmp/.status
+if grep of /tmp/.status > /dev/null; then
+    tmux set status on
+    echo on > /tmp/.status
+else
+    tmux set status off
+    echo off > /tmp/.status
+fi

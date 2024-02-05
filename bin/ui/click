@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+module MultithreadedEach
+  def multithreaded_each
+    each_with_object([]) do |item, threads|
+      threads << Thread.new { yield item }
+    end.each { |thread| thread.join }
+    self
+  end
+end
+
+# (ARGV.empty? ? [''] : ARGV).extend(MultithreadedEach).multithreaded_each do |arg|
+#   if arg.empty?
+#     args = [] # %w{gain -20}
+#   else
+#     args = ['gain', arg.to_i.to_s] # 'pitch N' also works
+#   end
+
+#   args = ['play', "#{ ENV['HOME'] }/data/sounds/click.wav"] + args
+#   IO.popen(args, {:err => [:child, :out]}) do |io| io.read end
+# end
+
+args = ['play', "#{ ENV['HOME'] }/data/sounds/click.wav"] + ARGV
+IO.popen(args, {:err => [:child, :out]}) do |io| io.read end

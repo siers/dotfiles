@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  exec `which -a open | grep -E '^/usr/'` "$@"
+else
+  for f in "$@"; do
+      run xdg-open "$f"
+  done
+fi

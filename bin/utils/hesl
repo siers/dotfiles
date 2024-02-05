@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+. ~/code/desktop/dotfiles/zsh/.config/zsh/functions
+
+heslogin

@@ -1,0 +1,18 @@
+#! /usr/bin/env bash
+
+set -x
+
+dir="$(mktemp -d /tmp/stest-diff-XXX)"
+cd "$dir"
+
+(xclip -o clipboard; pbpaste) 2>/dev/null > out
+phrase="did not contain the same elements as"
+phrase="did not equal"
+phrase="was not equal to"
+sed "s/ $phrase .*//; s/,/\\n/g" out > 1
+sed "s/.* $phrase //; s/,/\\n/g" out > 2
+diff 1 2 > diff
+# cd ..
+# rm -rf "$dir"
+
+cat diff

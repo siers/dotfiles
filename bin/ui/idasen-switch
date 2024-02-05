@@ -1,0 +1,9 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -p ruby -i ruby
+# vim: ft=ruby
+
+height = %x{idasen height}.to_f
+high = height > 0.95
+cmd = high ? "sit" : "stand"
+puts "idasen #{cmd} # was #{high ? "up" : "down"} (#{height}m)"
+system("timeout 30 idasen #{cmd}")

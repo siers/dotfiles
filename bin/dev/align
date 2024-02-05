@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+if [ -z "$1" ]; then
+    echo 'no sep given'
+    exit 1
+fi
+
+sep="$1"
+shift
+
+#column -ts "$sep" -o " $sep " "$@"
+column -ts "$sep" -o "$sep" "$@"

@@ -1,0 +1,28 @@
+#!/usr/bin/env zsh
+
+if [ -z "$1" ]; then
+    echo "usage: $0 [cmd]+"
+    exit
+fi
+
+cache=/tmp/.tuna-cache
+
+mkdir -p "$cache"
+
+hash16() {
+    md5sum <<< "$1" | dd bs=16 count=1 2> /dev/null
+}
+
+tmp-store-key() {
+    echo $cache/$(tr -cd '0-9a-z\-.' <<< "$1")$(hash16 "$1")
+}
+
+key="$(tmp-store-key "$(pwd)")"
+
+if tty -s; then
+  (find -type f | find -type l) | sort
+else
+    cat
+fi | sort > "$key"
+
+vim -S <(echo ':map <CR> !!tee >(xargs -d"\\n" '"$@"' > /dev/null)<CR>u') "$key"

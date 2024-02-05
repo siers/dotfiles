@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+r=1 exec tail-scr

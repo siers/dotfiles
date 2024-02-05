@@ -1,0 +1,86 @@
+#!/usr/bin/env ruby
+
+def whine about
+  $stderr.puts("#{ $0 }: #{ about }")
+  exit(1)
+end
+
+def note(*descriptions)
+  number = 0
+  descriptions.each do |descr|
+    descr = descr.to_i if descr == descr.scan(/\d+/).join
+    case descr
+      when String
+        descr = descr.downcase
+        begin
+          if number == 0
+            number = @notes[descr]
+          else
+            number += @notes[descr] # use only bemmole/sharp here
+          end
+        rescue TypeError
+          list = @notes.map {|note| ":#{ note[0].to_s }" }.join(', ')
+          whine "Unknown symbol(:#{descr}), choose one of these:\n\t#{ list }"
+        end
+      when Fixnum
+        number += descr
+    end
+  end
+
+  number
+end
+
+def sinize(pitch, harmonies)
+  # sp = sox pitch, 0 = 49, ps = pitches
+  sp = pitch - 49
+  ps = harmonies.map { |h| sp + h }
+  (' ' + ps.join(' ')).gsub(/ /, ' sin %').strip
+end
+
+def parse_chord(*descriptions)
+end
+
+@notes = {
+  'do'      => 40, 'c'      => 40,
+  're'      => 42, 'd'      => 42,
+  'mi'      => 44, 'e'      => 44,
+  'fa'      => 45, 'f'      => 45,
+  'sol'     => 47, 'g'      => 47,
+  'la'      => 49, 'a'      => 49,
+  'si'      => 51, 'b'      => 51,
+  'bemmole' => -1,
+  'sharp'   => 1,
+  'octave'  => 12,
+}
+
+# 01098 7654321 0
+#  o o   o o o
+# ● o ● o ● o o ●
+# fourth = 5
+
+@chords = {
+  'M' => [-12, -8, -5],
+  'm' => [-12, -9, -5],
+  '7' => [-12, -9, -5, -2],
+  'm7' => [-12, -6, -2],
+  'dis' => [-12, -11, -2],
+}
+
+if ARGV.length > 2 or ARGV[0].to_s =~ /-h|--help/
+  puts './alarm [length|0.4] [pitch|la bemmole]'
+end
+
+pitch  = note *(ARGV[0] || 'la bemmole').split
+length = ARGV[1] || '0.4'
+harmonies = sinize(pitch, @chords[ARGV[2] || 'M'])
+
+# http://forum.doom9.org/showthread.php?t=165807
+# http://forum.doom9.org/showthread.php?p=779165#post779165
+
+%x{
+play -n -c1 synth \
+    #{ harmonies } \
+    fade h 0.05 #{ length } 0.05 \
+    gain -15 \
+    2> /dev/null
+}

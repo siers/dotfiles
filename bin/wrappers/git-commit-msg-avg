@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+git log --author="$*" --pretty='%B' | grep -v '^$' | awk '{a+=length(); c+= 1} END { printf a/ c; }'

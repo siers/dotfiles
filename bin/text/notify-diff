@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+title="$1"
+shift
+
+while sleep 1; do
+    ~/code/bin/text/wait-diff "$@"
+    ok "$title"
+    [ -n "$NOTIFY_POST" ] && "$NOTIFY_POST"
+done

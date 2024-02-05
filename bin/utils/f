@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+f() {
+    if [ -z "$1" ]; then
+        p="$(pwd)"
+    else
+        p="$1"
+    fi
+
+    echo -n "file://$(realpath $p)" | tee >(xclip) | tee >(xclip -selection clip)
+}

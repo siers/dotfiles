@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+x() { xclip -selection clipboard "$@"; }
+
+x "$@"
+if [ "$1" = "-o" ]; then
+    exit
+fi
+x -o | x "$@"

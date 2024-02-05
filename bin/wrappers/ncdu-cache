@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+sanit-path() { echo "$(tr / : <<< "$1" | tr -cd '0-9a-z\-.:')"; }
+
+cache="$HOME/cache/ncdu"
+dir="$1"; shift
+key="$cache/$(sanit-path "$dir")"
+
+mkdir -p "$cache"
+(! [ -e "$key" ] || [ -n "${F:-}" ]) && ncdu -o "$key" "$dir" || :
+
+echo ncdu -f "$key" "$@"
+ncdu -f "$key" "$@"

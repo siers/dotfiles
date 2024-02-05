@@ -1,0 +1,7 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -p wdiff -i bash
+
+l1="$(head -n1)"
+l2="$(head -n1)"
+
+wdiff <(echo "$l1") <(echo "$l2")

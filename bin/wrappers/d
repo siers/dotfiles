@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+exec `which -a docker | grep -v ~/code/bin` "$@" $args
+
+exit
+
+cmd=$1
+
+if [ "$1" == 'm' ]; then cmd='migrate'; fi
+if [ "$1" == 'k' ]; then cmd='makemigrations'; fi
+if [ "$1" == 's' ]; then cmd='shell'; fi
+if [ "$1" == 'r' ]; then cmd='runserver'; fi
+
+shift
+
+if [ -e ./manage.py ]; then
+    exec ./manage.py $cmd "$@"
+fi
+
+if [ -e ../manage.py ]; then
+    exec ../manage.py $cmd "$@"
+fi
+
+echo Cannot find a manage.py.

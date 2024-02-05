@@ -1,0 +1,83 @@
+#!/usr/bin/env zsh
+
+set -eu
+[ -n "${debug:-}" ] && set -x
+
+if [ -z "${1:-}" ]; then
+    echo "usage: $0 <block> <dir> [--key-file <file>] [\$@ for cryptsetup]"
+    exit
+fi
+
+name="$1"
+to="$2"
+clearname="clear-$(tr -cd 'a-z0-9A-Z' <<< "$name")"
+loopname="/dev/loop-mount-encypted-$clearname"
+
+shift
+shift
+
+if [ -b "$name" ]; then
+    echo "$name : $clearname"
+else
+    echo "$name : $clearname : $loopname"
+fi
+
+find-biggest-minor() {
+    find /dev -type b -print0 2> /dev/null | xargs -0L1 bash -c \
+        'stat -c "%t %T" "$1" | awk "/^7 / { print(\$2); }"' '' | \
+        xargs -L1 ruby -e "puts ARGV[0].to_i(16)" | \
+            sort -nru | head -n1
+}
+
+mkloop() {
+    if ! [ -e "$1" ]; then
+        mknod -m660 "$1" b 7 "$(( $(find-biggest-minor) + 1 ))"
+        chown root:disk "$1"
+    fi
+}
+
+assert-dir() { if ! [ -d "$1" ]; then echo "'$1' should be a directory"; exit; fi }
+assert-root() { if ! ls ~root &> /dev/null; then echo must be root; exit; fi }
+
+#
+
+assert-root
+
+if [ -e /dev/mapper/"$clearname" ]; then
+    assert-dir "$to"
+
+    umount "$to" || :
+    cryptsetup --tries 3 close "$clearname" || :
+
+    # if as loopdev
+    if ! [ -b "$name" ]; then
+        losetup -d "$loopname"
+    fi
+else
+    assert-dir "$to"
+
+    # if as loopdev
+    if ! [ -b "$name" ]; then
+        mkloop "$loopname"
+        losetup -d "$loopname" &> /dev/null || :
+        losetup "$loopname" "$name"
+        name="$loopname"
+    fi
+
+    if ! file -s "$name" | grep -q 'LUKS encrypted file'; then
+        if [ -n "${format:-}" ]; then
+            cryptsetup luksFormat "$name"
+        else
+            (
+                file -s "$name"
+                echo 'This device is not formated as luks! (add format=1 to reformat it)'
+            ) 2>&1 | sed 's/^/!!! /' >&2
+        exit
+
+        fi
+    fi
+
+    cryptsetup open "$name" "$clearname" "$@"
+    if [ -n "${format:-}" ]; then mkfs.ext4 /dev/mapper/"$clearname"; fi
+    mount /dev/mapper/"$clearname" "$to"
+fi

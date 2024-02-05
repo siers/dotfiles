@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+dir="$HOME/cache/screenshots"
+mkdir -p $dir
+name="$dir/${prtscr_prefix}$(date +'%Y-%m-%d-%H:%M:%S').png"
+maim "$name" "$@" && ([ -z "$automatic_prtscr" ] && ln -sf "$name" "$HOME/prtscr.png")
+echo "$name"

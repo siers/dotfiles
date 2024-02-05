@@ -1,0 +1,11 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i zsh -p inotifyTools
+
+files="$(cat)"
+#xargs inotifywait -e close_write <<< "$files" | while read; do;
+while true; do;
+    xargs inotifywait -e close_write,delete,delete_self 2>>(grep -v '^Setting up watches.$') <<< "$files";
+    eval $WRITE_DO_BEFORE;
+    sleep 0.5; "$@";
+    eval $WRITE_DO_AFTER;
+done

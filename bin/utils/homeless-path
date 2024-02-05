@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+echo $PATH | tr : '\n' | grep -v $HOME | tr '\n' : | sed 's/.$/\n/; s/^/export PATH=/'

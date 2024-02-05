@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+paste_lines() {
+  date_formats="%Y.%m.%d.\n%F\n%T\n%F-%T"
+  date +"$(echo -e "$date_formats")"
+  cat ~/log/comp/dmenu-oneliners
+}
+
+out="$(paste_lines | rofi -dmenu)"
+
+if test -z "$paste"; then
+    echo -n "$out" | c
+else
+    xdotool type "$out"
+fi

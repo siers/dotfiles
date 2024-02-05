@@ -1,0 +1,26 @@
+#!/usr/bin/env zsh
+
+c() { xclip "$@" -selection clipboard }
+
+# usage:
+#   mapclip edit
+#       open a terminal with the contents of clipboard, load what's left
+#       in the file after editing in the clipboard
+#   mapclip sh
+#       open dmenu, map output through the sh -c "$dmenusOutput"
+
+dir="/var/tmp/mapclip-history"
+f="$dir/$(date +%F-%T)"
+
+mkdir -p "$dir"
+c -o > "$f"
+
+if [ "$1" = "edit" ]; then
+    urxvt -e vim "$f"; c < "$f"
+elif [ "$1" = "sh" ]; then
+    shift
+    < "$f" sh -c "$@" > "$f.out" && c < "$f.out"
+else
+    tee /dev/stderr <<< what
+    exit 1
+fi

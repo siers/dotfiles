@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -eu
+
+[ -e "$1" ] || [ -e "$2" ]
+
+mv_() {
+    mv "$1" "$2"
+}
+
+if [ -e "$2" ]; then
+    mv "$2" "$1"
+else
+    mv "$1" "$2"
+fi

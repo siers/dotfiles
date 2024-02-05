@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+find /sys 2> /dev/null | grep -E 'sys.*BAT.*capac' | xargs tail -n+1

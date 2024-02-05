@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+f() { 
+    [ "$#" = 0 ] && return
+
+    echo "'$1'"
+    shift
+    f "$@"
+}
+
+echo '--'
+f "$@"

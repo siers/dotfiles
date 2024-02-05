@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+cd /tmp
+
+(dmenu_path; cat ~/log/comp/dmenu-common) | exec dmenu -l 10 -p run | sh

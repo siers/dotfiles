@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+while ! ping google.com; do sleep 1; done | tee >(
+    while read line; do
+        grep -q 'bytes from' <<< "$line" && click || alert
+    done
+)

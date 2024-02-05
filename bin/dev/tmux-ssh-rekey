@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+line() {
+    tmux capture-pane -p|grep -Po "(?<=[k]nown_hosts:)\d+"|tail -n1
+}
+
+if [ -z "$(line)" ]; then
+    echo 'no key found'
+else
+    target_line="$(line)"
+    (set -x; sed -i "${target_line}d" ~/.ssh/known_hosts)
+fi

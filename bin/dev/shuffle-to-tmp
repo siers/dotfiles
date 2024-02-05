@@ -1,0 +1,29 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+if [ "${local:-}" = "1" ]; then
+  store=$(pwd)/trash/shuffle
+else
+  store=$HOME/tmp/shuffle-to-tmp
+fi
+mkdir -p "$store"
+
+hash16() {
+    md5sum <<< "$1" | dd bs=16 count=1 2> /dev/null
+}
+
+for file in "$@"; do
+    stored="$store/$(hash16 $(dirname "$file"))-$(basename "$file")"
+
+    if ! ([ -e "$file" ] || [ -e "$stored" ]); then
+        echo "$file nor $stored exist, skipping"
+        continue
+    fi
+
+    if [ -e "$file" ]; then
+        mv -vi "$file" "$stored"
+    else
+        mv -vi "$stored" "$file"
+    fi
+done

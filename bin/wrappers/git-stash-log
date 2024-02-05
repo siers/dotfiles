@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+stashes() {
+    git stash list | sed "s/:.*//" | tr '\n' ' '
+}
+
+commits() {
+    if [ $# == 0 ]; then
+        stashes
+    else
+        echo "$@"
+    fi
+}
+
+for s in $(commits "$@"); do
+    git log -1 --format=short "$s" | cat
+    echo
+    git stash show -u "$s" | cat
+    echo
+done | nvim -

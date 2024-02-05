@@ -1,0 +1,73 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -p ruby -i ruby
+# vim: ft=ruby
+
+class Env
+  PRODUCTION = :production
+  DEV = :dev
+
+  def initialize(type)
+    raise 'wrong' unless [PRODUCTION, DEV].include? type
+    @env = type
+  end
+
+  def production?; @env == PRODUCTION; end
+  def dev?; @env == DEV; end
+end
+
+@env = Env.new(1 == 1 ? :production : :dev)
+
+cycles = 0
+threshold = ENV.fetch('threshold', 20).to_i
+wait = @env.dev? ? 0.1 : 60
+
+lock_gain = 2 # you can subtract up to five minutes from cycles per each minute locked
+lock_mins = 0 # how many has been subtracted already
+
+# wait "threshold * wait seconds" and then switch
+
+def now
+  %x{date +%F-%T}.chomp
+end
+
+def check_locked
+  if @env.dev?
+    %x{pgrep rev > /dev/null; echo $?}.to_i == 0
+  else
+    %x{pgrep i3lock > /dev/null; echo $?}.to_i == 0
+  end
+end
+
+def switch
+  if @env.dev?
+    puts("(idasen-switch; echo $(date +%F-%T): done) &")
+  else
+    system("(idasen-switch; echo $(date +%F-%T): done) &")
+  end
+end
+
+loop do
+  sleep(wait)
+
+  locked = check_locked
+
+  lock_diff = locked ? 1 : -1
+  lock_mins_diff = [0, [lock_mins + lock_diff, lock_gain].min].max - lock_mins
+  lock_mins += lock_mins_diff
+
+  cycles += locked ? 0 : 1
+  cycles -= [0, lock_mins_diff].max
+  cycles = [cycles, 0].max
+
+  puts "cycle = #{cycles} | lock_mins = #{lock_mins}"
+
+  if cycles >= threshold
+    puts("cycles = #{cycles}; switching")
+    puts("#{now}: start")
+
+    cycles = 0
+    lock_mins = 0
+
+    switch
+  end
+end

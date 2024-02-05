@@ -1,0 +1,19 @@
+#! /usr/bin/env ruby
+
+sign = rand(2) == 1 ? 1 : -1
+diff = (rand(3) + 1) / 290.0 * sign
+
+debug = ENV['debug'] == '1'
+dry_run = false # ENV['d'] != '0'
+height = (dry_run ? "0.87 meters\n" : %x{idasen height}).match(/\d\.\d+/)[0].to_f
+adjustment = [height + diff, 0.62].max
+config = "  throb: #{adjustment}\n"
+debug && (puts [height, adjustment, sign, diff, config])
+puts "#{height} → #{adjustment}"
+
+f = File.read('/home/s/.config/idasen/idasen.yaml')
+new = f.each_line.to_a.reject { |f| f.match(/throb/) }.join + config
+debug && (puts new)
+File.write('/home/s/.config/idasen/idasen.yaml', new)
+
+%x{pkill idasen; sleep 0.3; idasen throb}
