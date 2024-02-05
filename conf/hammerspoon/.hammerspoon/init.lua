@@ -115,7 +115,7 @@ hs.hotkey.bind({'cmd'}, 0x32, function() -- 0x32 is grave accent
 end)
 
 -- Toggle fullscreen.
-hs.hotkey.bind({'cmd'}, 'f', function()
+hs.hotkey.bind({'cmd', 'ctrl'}, 'f', function()
   local frontmostWindow = hs.window.frontmostWindow()
   frontmostWindow:maximize()
 end)

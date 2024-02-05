@@ -571,6 +571,18 @@ endf
 
 command! -nargs=? Trash :call SaveTrash(<f-args>)
 
+function! SaveTmpTrash(...)
+  if a:0 == 0
+    let suffix = ""
+  else
+    let suffix = "." . a:1
+  end
+  echo a:
+  exe printf("write! /tmp/vim-trash-%s%s", strftime("%F.%H:%M"), suffix)
+endf
+
+command! -nargs=? Tmp :call SaveTmpTrash(<f-args>)
+
 function! FnReminder(fn)
   call writefile([strftime("%F-%T") . ' ' . a:fn], "notes/filenames", "a")
 endf

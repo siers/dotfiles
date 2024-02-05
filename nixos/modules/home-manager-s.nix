@@ -3,7 +3,11 @@
 let
   linux = pkgs.stdenv.isLinux;
   mac = !pkgs.stdenv.isLinux;
-  packageSets = import ../packages/package-sets.nix { inherit pkgs; };
+  packages =
+    if linux
+    then ../packages/package-sets.nix
+    else ~/dotfiles/nixos/packages/package-sets.nix;
+  packageSets = import packages { inherit pkgs; };
 in {
   home.stateVersion = "23.05";
 
