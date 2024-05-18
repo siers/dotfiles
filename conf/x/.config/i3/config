@@ -95,8 +95,8 @@ bindsym $mod+0 workspace 10
 bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+o workspace prev_on_output
 bindsym $mod+p workspace next_on_output
-bindsym $mod+shift+o workspace prev
-bindsym $mod+shift+p workspace next
+bindsym $mod+Control+Shift+o workspace prev
+bindsym $mod+Control+Shift+p workspace next
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1

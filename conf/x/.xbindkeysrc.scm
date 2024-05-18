@@ -40,10 +40,14 @@
 
 (xbindkey '(Mod4 alt grave)         "oneliners")
 (xbindkey '(Mod4 space)             "runner")
-(xbindkey '(Mod4 shift   grave)     "mapclip paste && alert || alert 0.4 c")
+(xbindkey '(Mod4 shift p)           "cd ~; find ~/code/pdf ~/log -name '*.pdf' | dmenu -i -l 7 -p 'pdf> ' | xargs -rL1 evince")
+(xbindkey '(Mod4 shift grave)       "mapclip paste && alert || alert 0.4 c")
 (xbindkey '(Mod4 control e)         "clip-pipe edit")
 (xbindkey '(Mod4 control shift e)   "clip-pipe sh")
 (xbindkey '(Mod4 alt p)             "passmenu")
+
+; macos compat
+(xbindkey '(Mod4 v)                 "xdotool key Shift+Insert")
 
 ; sound
 (xbindkey '(XF86AudioLowerVolume)   "amixer set Master 3%-; click gain -15 pitch -217")

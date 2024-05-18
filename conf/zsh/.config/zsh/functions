@@ -29,6 +29,8 @@ space() { yes '' | head "-n$(tput lines)"; }
 
 sum() { paste -sd+ infile | bc }
 
+http() { (cd "${1:-.}"; port=${port:-65353} bash -c 'nix-shell -p python3 --run "python3 -m http.server $port" &> /dev/null' http) & disown; }
+
 ## Wrappers
 
 ## String operations

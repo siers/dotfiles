@@ -252,9 +252,11 @@ lua <<EOF
                 },
                 importLens = { -- make import lists fully explicit
                   codeLensOn = true,
+                  codeActionsOn = true,
                 },
                 refineImports = { -- refine imports
                   codeLensOn = true,
+
                 },
                 tactics = { -- wingman
                   codeLensOn = false,
