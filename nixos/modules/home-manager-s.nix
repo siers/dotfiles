@@ -1,9 +1,9 @@
-{ conf, pkgs, lib, ... }:
+{ conf, pkgs, ... }:
 
 let
   linux = pkgs.stdenv.isLinux;
   mac = !pkgs.stdenv.isLinux;
-  packageSets = import ~/dotfiles/nixos/packages/package-sets.nix { inherit pkgs; };
+  packageSets = import ../packages/package-sets.nix { inherit pkgs; };
 in {
   home.stateVersion = "23.05";
 

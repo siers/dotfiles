@@ -31,10 +31,10 @@ rec {
 
   xfce-i3-backlight = {
     xserver = {
-      windowManager.default = "i3";
+      # windowManager.default = "i3";
       windowManager.i3.enable = true;
 
-      desktopManager.default = "xfce";
+      # desktopManager.default = "xfce";
       desktopManager.xfce.enable = true;
       desktopManager.xfce.noDesktop = true;
 

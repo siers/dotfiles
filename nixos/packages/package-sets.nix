@@ -220,14 +220,5 @@ let
 
     everything = simple ++ most ++ large;
   };
-
-  # It would be better if I had a total order on sets instead preorder.
-  derivationsPreorder = a: b:
-    let namePresort = builtins.sort (a: b: a.name > b.name);
-    in namePresort a == namePresort b;
-
 in
-  with derived; with sets;
-  #assert derivationsPreorder everything (builtins.concatLists (builtins.attrValues sets));
-
   sets // derived

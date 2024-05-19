@@ -57,7 +57,7 @@
         ./modules/home-manager.nix
         ./modules/services.nix
         ./modules/fonts.nix
-        #./modules/prometheus.nix
+        # ./modules/prometheus.nix
         inputs.secrets.nixosModules.default
       ];
     in {
