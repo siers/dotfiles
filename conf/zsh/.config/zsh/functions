@@ -87,13 +87,13 @@ gdmb() { git diff "$(gmb)" "$@"; }
 gdmbs() { git diff "$(gmb)" --stat "$@"; }
 gdmbm() { gdmb "$@" **/src/main; }
 grmb() { git reset "$(gmb)" "$@"; }
-gds() { gdmb --stat; }
+gds() { gdmb --stat=1000; }
 glmb() { git log HEAD..."$(gmb)" "$@"; }
 git-feat-edit() { feat="${1:-HEAD}"; git diff -z --name-only "$feat" "$(git merge-base "$feat" origin/master)" | xargs -r0 vim -np; }
 git-feat-diff() { feat="${1:-break}" && git checkout "$feat" && base="$(git merge-base "$feat" origin/master)" && git reset "$base" && git diff -z --name-only "$feat" "$base" | xargs -r0 vim -np; }
 
 grbi() { git log --format=oneline "$@" | fzf | awk '{print $1}' | xargs -r git rebase -i; }
-grbib() { git rebase -i "$(git merge-base HEAD "${base:-origin/master}")" "$@"; }
+grbib() { git rebase -i "$(git merge-base HEAD "${branch:-${gmainl}}")" "$@"; }
 grbm() { git rebase "$(gmain)"; }
 
 gbrd() { git branch -d "$2" && git push --delete "$1" "$2" }

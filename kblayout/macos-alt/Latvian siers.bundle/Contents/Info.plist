@@ -19,5 +19,16 @@
 		<key>TISIntendedLanguage</key>
 		<string>lv-LV</string>
 	</dict>
+	<key>KLInfo_Latvian siers copy</key>
+	<dict>
+		<key>TICapsLockLanguageSwitchCapable</key>
+		<false/>
+		<key>TISIconIsTemplate</key>
+		<false/>
+		<key>TISInputSourceID</key>
+		<string>org.sil.ukelele.keyboardlayout.latvianalt.latviansierscopy</string>
+		<key>TISIntendedLanguage</key>
+		<string>lv-LV</string>
+	</dict>
 </dict>
 </plist>

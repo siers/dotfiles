@@ -51,7 +51,8 @@ call plug#begin('~/.cache/vim-plug')
 Plug 'https://github.com/guns/jellyx.vim'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 Plug 'https://github.com/vim-airline/vim-airline'
-Plug 'https://github.com/Yggdroot/indentLine'
+Plug 'https://github.com/Yggdroot/indentLine' " this is what enables conceal and hides quotes in json
+" Plug 'https://github.com/elzr/vim-json'
 Plug 'https://github.com/sjl/gundo.vim' " Gi
 Plug 'https://github.com/tpope/vim-obsession' " Session files
 Plug 'https://github.com/mhinz/vim-signify' " Git diff signs.
@@ -79,6 +80,7 @@ Plug 'https://github.com/hrsh7th/cmp-path'
 Plug 'https://github.com/hrsh7th/cmp-cmdline'
 Plug 'https://github.com/scalameta/nvim-metals' ", {'commit': 'cc60a74b7bab2d545cf8f33980d3d84dea8a264d'}
 Plug 'https://github.com/nvim-lua/plenary.nvim'
+Plug 'https://github.com/nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
 Plug 'https://github.com/wbthomason/packer.nvim'
 Plug 'https://github.com/b0o/schemastore.nvim'
 " Plug 'https://github.com/L3MON4D3/LuaSnip', {'tag': 'v1*', 'do': 'make install_jsregexp'} " Replace <CurrentMajor> by the latest released major (first number of latest release)
@@ -113,7 +115,7 @@ Plug 'https://github.com/junegunn/fzf.vim'
 " Plug 'https://github.com/liuchengxu/vista.vim'
 " Plug 'https://github.com/hrsh7th/vim-vsnip-integ'
 Plug 'https://github.com/mrcjkb/haskell-tools.nvim'
-Plug 'https://github.com/simrat39/rust-tools.nvim'
+Plug 'https://github.com/mrcjkb/rustaceanvim'
 " Plug 'https://github.com/pmizio/typescript-tools.nvim'
 
 call plug#end()
@@ -274,28 +276,9 @@ lua <<EOF
   })
 
   local lspconfig = require('lspconfig')
+
   lspconfig.glslls.setup{}
   lspconfig.tsserver.setup {}
-
-  -- lspconfig.rust_analyzer.setup {
-  --   -- Server-specific settings. See `:help lspconfig-setup`
-  --   settings = {
-  --     ['rust-analyzer'] = {},
-  --   },
-  -- }
-
-  -- local rt = require("rust-tools")
-  -- rt.setup({
-  --   server = {
-  --     on_attach = function(_, bufnr)
-  --       -- Hover actions
-  --       vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-  --       -- Code action groups
-  --       vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-  --     end,
-  --   },
-  -- })
-
   lspconfig.jsonls.setup {
     settings = {
       json = {
@@ -341,6 +324,12 @@ let g:syntastic_mode_map = { "mode": "active",
 
 let g:ctrlp_user_command = ['.git/', 'ls .git/CTRLP-ALL 2> /dev/null && find -type f || (git --git-dir=%s/.git ls-files -oc --exclude-standard 2> /dev/null | uniq)']
 let g:ctrlp_map = ''
+
+augroup indentJsonQuotesDontConceal
+  autocmd!
+  autocmd FileType jsonc,json :IndentLinesDisable
+  autocmd BufLeave,BufUnload,BufDelete,BufHidden jsonc,json :IndentLinesEnable
+augroup END
 
 "xmap ga <Plug>(EasyAlign) | nmap ga <Plug>(EasyAlign)
 

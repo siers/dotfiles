@@ -20,5 +20,15 @@ end
 #   IO.popen(args, {:err => [:child, :out]}) do |io| io.read end
 # end
 
-args = ['play', "#{ ENV['HOME'] }/data/sounds/click.wav"] + ARGV
+
+sound =
+  if Gem::Platform.local.os == 'darwin'
+    '/System/Library/Sounds/Blow.aiff'
+  else
+    "#{ ENV['HOME'] }/data/sounds/click.wav"
+  end
+
+args = ['play', sound] + ARGV
 IO.popen(args, {:err => [:child, :out]}) do |io| io.read end
+
+# /nix/store/a4p7sj2kwr01s2zjwy6mxk6nkmycxai6-sound-theme-freedesktop-0.8/share/sounds/freedesktop/stereo/message.oga

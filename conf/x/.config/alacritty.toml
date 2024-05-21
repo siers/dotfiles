@@ -8,3 +8,58 @@ size = 11.0
 
 [font.normal]
 family = "Menlo"
+
+# # Colors (Solarized Dark)
+# # Default colors
+# [colors.primary]
+# background = '#002b36'
+# foreground = '#839496'
+# # Normal colors
+# [colors.normal]
+# black   = '#073642'
+# red     = '#dc322f'
+# green   = '#859900'
+# yellow  = '#b58900'
+# blue    = '#268bd2'
+# magenta = '#d33682'
+# cyan    = '#2aa198'
+# white   = '#eee8d5'
+# # Bright colors
+# [colors.bright]
+# black   = '#002b36'
+# red     = '#cb4b16'
+# green   = '#586e75'
+# yellow  = '#657b83'
+# blue    = '#839496'
+# magenta = '#6c71c4'
+# cyan    = '#93a1a1'
+# white   = '#fdf6e3'
+
+[colors.primary]
+# background = '#252525'
+foreground = '#cccccf'
+background = '#002b36'
+# Normal colors
+[colors.normal]
+# black   = '#222222'
+black   = '#073642'
+red     = '#cd5c5c'
+green   = '#17c227'
+# green   = '#859900'
+yellow  = '#ffd200'
+blue    = '#577db5'
+magenta = '#9933ff'
+cyan    = '#778798'
+white   = '#eeeeee'
+# Bright colors
+[colors.bright]
+black   = '#888888'
+red     = '#ee6363'
+green   = '#00c913'  # No specific bright green provided, using normal green
+# green   = '#586e75'
+# green   = '#859900'
+yellow  = '#ffcd30'
+blue    = '#6b7b8a'
+magenta = '#ff69fd'
+cyan    = '#7ab2ae'
+white   = '#cacaca'
