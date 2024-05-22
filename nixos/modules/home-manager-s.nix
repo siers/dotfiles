@@ -18,22 +18,24 @@ in {
 
   home.file.".zshrc".source = "${conf}/zsh/.zshrc";
   home.file.".config/zsh".source = "${conf}/zsh/.config/zsh";
-
-  home.file.".gitignore".source = "${conf}/git/.gitignore";
-
   home.file.".tmux.conf".source = "${conf}/tmux/.tmux.conf";
-  home.file.".ghci".source = "${conf}/ghci";
+  home.file.".gitignore".source = "${conf}/git/.gitignore";
 
   home.file.".config/i3/config".source = "${conf}/x/.config/i3/config";
   home.file.".config/dunst".source = "${conf}/x/.config/dunst";
   home.file.".config/mpv".source = "${conf}/x/.config/mpv";
-  # home.file.".config/xfce4".source = "${conf}/x/.config/mpv";
   home.file.".Xresources".source = "${conf}/x/.Xresources";
   home.file.".xprofile".source = "${conf}/x/.xprofile";
   home.file.".config/alacritty.toml".source = "${conf}/x/.config/alacritty.toml";
   home.file.".xbindkeysrc.scm".source = "${conf}/x/.xbindkeysrc.scm";
+  # home.file.".config/xfce4".source = "${conf}/x/.config/mpv";
+
+  home.file.".config/nix/nix.conf".source = "${conf}/nix/.config/nix/nix.conf";
+
   home.file.".sbt/1.0/build.sbt".source = "${conf}/scala/.sbt/1.0/build.sbt";
   home.file.".sbt/1.0/plugins/plugins.sbt".source = "${conf}/scala/.sbt/1.0/plugins/plugins.sbt";
+
+  home.file.".ghci".source = "${conf}/ghci";
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
