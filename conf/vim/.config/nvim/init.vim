@@ -117,6 +117,8 @@ Plug 'https://github.com/junegunn/fzf.vim'
 Plug 'https://github.com/mrcjkb/haskell-tools.nvim'
 Plug 'https://github.com/mrcjkb/rustaceanvim'
 " Plug 'https://github.com/pmizio/typescript-tools.nvim'
+Plug 'https://github.com/ldelossa/litee.nvim'
+Plug 'https://github.com/ldelossa/litee-calltree.nvim'
 
 call plug#end()
 "}}}
@@ -288,6 +290,39 @@ lua <<EOF
     },
   }
 
+  lspconfig.clangd.setup{}
+
+  lspconfig.lua_ls.setup {
+    on_init = function(client)
+      local path = client.workspace_folders[1].name
+      if vim.loop.fs_stat(path..'/.luarc.json') or vim.loop.fs_stat(path..'/.luarc.jsonc') then
+        return
+      end
+      client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+        runtime = {
+          -- Tell the language server which version of Lua you're using
+          -- (most likely LuaJIT in the case of Neovim)
+          version = 'LuaJIT'
+        },
+        -- Make the server aware of Neovim runtime files
+        workspace = {
+          checkThirdParty = false,
+          library = {
+            vim.env.VIMRUNTIME
+            -- Depending on the usage, you might want to add additional paths here.
+            -- "${3rd}/luv/library"
+            -- "${3rd}/busted/library",
+          }
+          -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
+          -- library = vim.api.nvim_get_runtime_file("", true)
+        }
+      })
+    end,
+    settings = {
+      Lua = {}
+    }
+  }
+
   require'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
     ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "scala", "glsl" },
@@ -309,6 +344,9 @@ lua <<EOF
       enable = true,
     },
   }
+
+  require('litee.lib').setup({})
+  require('litee.calltree').setup({})
 EOF
 
 " require("typescript-tools").setup{}

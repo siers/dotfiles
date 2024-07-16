@@ -7,6 +7,8 @@ f() {
         set title to system attribute \"title\"
         display notification body with title title
     "
+    echo "$@" >> /tmp/info
+    echo >> /tmp/info
   else
     click
     if [ -n "$DISPLAY" ]; then

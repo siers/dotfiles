@@ -48,7 +48,7 @@ nsz() { nix-shell "$@" --run zsh }
 
 ## Tmux
 
-tmx-sel() { tmx $(tmux ls -F '#{session_group}' | uniq | fzf); }
+tse() { tmx $(tmux ls -F '#{session_group}' | uniq | fzf); }
 tda() { tmux detach -a; }
 # tmux-term() { run urxvt -e term specific "$(tmux display-message -p '#S')" }
 

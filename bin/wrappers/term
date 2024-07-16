@@ -6,9 +6,13 @@ vt() {
 }
 
 tmux-env-dir() {
-    dir="$HOME/code/desktop/tmux-env"
-    hdir="$dir/$(hostname)"
-    [ -d "$hdir" ] && echo "$hdir" || echo "$dir"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+      dir="/dev/null"
+    else
+      dir="$HOME/code/desktop/tmux-env"
+      hdir="$dir/$(hostname)"
+      [ -d "$hdir" ] && echo "$hdir" || echo "$dir"
+    fi
 }
 
 tmux-session-exists() {
@@ -40,6 +44,9 @@ tag() {
         fi
     elif pgrep i3 > /dev/null; then
         i3-msg -t get_workspaces | jq -r '.[] | select(.focused == true).name'
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        echo 'single'
+        # tmux display-message -p '#S' | sed 's/-[^-]*$//g'
     else
         echo 'cannot detect wm' >&2
         return 1
@@ -74,7 +81,7 @@ if [ "$1" = "in-tag" ] || [ "$1" = "specific" ]; then
         fi
     done
 
-    exec vt -e ~/code/bin/wrappers/tmx "$name" "$@"
+    exec vt -e tmx "$name" "$@"
 fi
 
 if [ "$1" = "one" ]; then

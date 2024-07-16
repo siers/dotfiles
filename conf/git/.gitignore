@@ -41,3 +41,6 @@ project/metals.sbt
 # temporary
 /project/project
 .scalafmt.conf
+
+# clangd
+.cache
