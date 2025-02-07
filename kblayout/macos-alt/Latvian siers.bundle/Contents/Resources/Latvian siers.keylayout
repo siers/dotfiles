@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8"?>
 <!DOCTYPE keyboard SYSTEM "file://localhost/System/Library/DTDs/KeyboardLayout.dtd">
-<!--Last edited by Ukelele version 377 on 2024-04-22 at 13:55 (CEST)-->
-<keyboard group="126" id="-24755" name="Latvian siers" maxout="1">
+<!--Last edited by Ukelele version 377 on 2025-01-13 at 15:55 (GMT+1)-->
+<keyboard group="126" id="-12074" name="Latvian siers" maxout="1">
     <layouts>
         <layout first="0" last="0" mapSet="138" modifiers="30"/>
     </layouts>
@@ -391,7 +391,7 @@
             <key code="8" output="č"/>
             <key code="9" output="v"/>
             <key code="10" output="°"/>
-            <key code="11" output="h"/>
+            <key code="11" output="b"/>
             <key code="12" output="q"/>
             <key code="13" output="w"/>
             <key code="14" output="ē"/>
