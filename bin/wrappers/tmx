@@ -14,7 +14,9 @@ unset ZSH_NESTED
 export TERM=xterm-256color
 trim() { echo $1; }
 
-if [[ -z "$1" ]]; then
+base_session="${1:-$(tmux ls -F '#{session_group}' | uniq | fzf --print-query | tail -n1)}"
+
+if [[ -z "$base_session" ]]; then
     echo "Specify session name as the first argument"
     exit
 fi
@@ -25,19 +27,18 @@ if [[ "$1" == "ls" ]]; then
     exit
 fi
 
-base_session="$1"
 # This actually works without the trim() on all systems except OSX
 tmux_nb=$(trim `tmux ls | grep "^$base_session:" | wc -l`)
 if [[ "$tmux_nb" == "0" ]]; then
-    echo "Launching tmux base session $base_session ..."
+    # echo "Launching tmux base session $base_session ..."
     #tmux new-session -s $base_session -n vim vim
     tmux new-session -t "$base_session"
 else
     # Make sure we are not already in a tmux session
     if [[ -z "$TMUX" ]]; then
-        echo "Launching copy of base session $base_session ..."
+        # echo "Launching copy of base session $base_session ..."
         # Session id is date and time to prevent conflict
-        session_id="$(date "+%H%M%S-$(sed 's/-.*//' /proc/sys/kernel/random/uuid)")"
+        session_id="$(date "+%H%M%S-$(uuidgen 2> /dev/null || sed 's/-.*//' /proc/sys/kernel/random/uuid)")"
         # Create a new session (without attaching it) and link to base session
         # to share windows
         tmux new-session -d -t "$base_session" -s "$session_id"
