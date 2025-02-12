@@ -123,9 +123,9 @@ let
       stow
       units
       weechat
-      youtube-dl
+      # youtube-dl
 
-      neovimConfigured
+      # neovimConfigured
     ];
 
     termtoolsOptional = [

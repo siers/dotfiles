@@ -48,16 +48,16 @@ neovim.override {
           sha256 = "0mc478k4i0ajg4j48318nw14gac560cphk1k00qv99lqqlsxbclp";
         };
       };
-      nvim-agda = vimUtils.buildVimPlugin {
-        pname = "nvim-agda";
-        version = "2022-06-16";
-        src = fetchFromGitHub {
-          owner = "ashinkarov";
-          repo = "nvim-agda";
-          rev = "4b347ab08157614e5acb2a9d5103115521ffa447";
-          sha256 = "0s9xgka2747apskkk8ac9bhbg2w5hb52dv5glk3fsn588lb15lw9";
-        };
-      };
+      # nvim-agda = vimUtils.buildVimPlugin {
+      #   pname = "nvim-agda";
+      #   version = "2022-06-16";
+      #   src = fetchFromGitHub {
+      #     owner = "ashinkarov";
+      #     repo = "nvim-agda";
+      #     rev = "4b347ab08157614e5acb2a9d5103115521ffa447";
+      #     sha256 = "0s9xgka2747apskkk8ac9bhbg2w5hb52dv5glk3fsn588lb15lw9";
+      #   };
+      # };
       # coc-nvim = vimUtils.buildVimPluginFrom2Nix {
       #   pname = "coc.nvim";
       #   version = "2022-06-17";
@@ -108,7 +108,7 @@ neovim.override {
       vim-gnupg
       vim-terraform
       # agda-vim
-      nvim-agda
+      # nvim-agda
 
       # Random
       editorconfig-vim

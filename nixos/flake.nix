@@ -11,12 +11,12 @@
       # ref = "nixos-22.11";
     };
 
-    # nixpkgs-unstable = {
-    #   type = "github";
-    #   owner = "NixOS";
-    #   repo = "nixpkgs";
-    #   ref = "nixos-unstable";
-    # };
+    nixpkgs-prev = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "nixos-24.05";
+    };
 
     nixos-hardware = {
       type = "github";
@@ -32,20 +32,20 @@
       ref = "master";
     };
 
-    neovim = {
-      type = "github";
-      owner = "neovim";
-      repo = "neovim";
-      ref = "nightly";
-      dir = "contrib";
-    };
+    # neovim = {
+    #   type = "github";
+    #   owner = "neovim";
+    #   repo = "neovim";
+    #   ref = "nightly";
+    #   dir = "contrib";
+    # };
 
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    secrets.url = "path:/home/s/code/nix/secrets";
+    # secrets.url = "path:/home/s/code/nix/secrets";
   };
 
   outputs = { self, nixos-hardware, ... }@inputs:

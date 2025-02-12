@@ -90,7 +90,7 @@ in
     import ../packages/package-sets.nix {
       inherit pkgs;
       # inherit (pkgs.override { openjdk = inputs.nixpkgs.openjdk19; });
-      neovim-flake = inputs.neovim;
+      # neovim-flake = inputs.neovim;
     }
   ).everything ++ [
     # (pkgs.sbt.override { jre = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.jdk19; })
