@@ -7,16 +7,16 @@
       type = "github";
       owner = "NixOS";
       repo = "nixpkgs";
-      ref = "nixos-unstable";
+      ref = "nixos-25.05";
       # ref = "nixos-22.11";
     };
 
-    nixpkgs-prev = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "nixos-24.05";
-    };
+    # nixpkgs-prev = {
+      # type = "github";
+      # owner = "NixOS";
+      # repo = "nixpkgs";
+      # ref = "nixos-24.05";
+    # };
 
     nixos-hardware = {
       type = "github";
@@ -30,6 +30,7 @@
       owner = "nix-community";
       repo = "home-manager";
       ref = "master";
+      # follows = "nixpkgs";
     };
 
     # neovim = {
@@ -40,15 +41,15 @@
     #   dir = "contrib";
     # };
 
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nixos-generators = {
+      # url = "github:nix-community/nixos-generators";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     # secrets.url = "path:/home/s/code/nix/secrets";
   };
 
-  outputs = { self, nixos-hardware, ... }@inputs:
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, ... }@inputs:
     let
       commonModules = [
         inputs.home-manager.nixosModules.home-manager
@@ -86,5 +87,17 @@
           ];
         };
       };
+      # homeConfigurations.macos =
+        # home-manager.lib.homeManagerConfiguration {
+          # pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+          # modules = [
+            # # (inputs: (import ~/dotfiles/nixos/modules/home-manager-s.nix (inputs // { conf = ../conf; })))
+            # (inputs: (import ~/dotfiles/conf/nix/.config/home-manager/home.nix ({
+              # pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+              # lib = nixpkgs.legacyPackages.aarch64-darwin.lib;
+              # conf = ../conf;
+            # })))
+          # ];
+        # };
     };
 }

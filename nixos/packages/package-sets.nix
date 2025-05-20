@@ -4,12 +4,9 @@ with pkgs;
 
 let
   siers = import ./packages.nix pkgs;
-  neovimConfigured = siers.alias [(pkgs.callPackage ./neovim/default.nix {})] "nvim" "nv";
-
   sets = {
     aliases = [
       (siers.alias [systemd] "systemctl" "sc")
-      (siers.alias [neovim] "nvim" "vim")
     ];
 
     services = [
@@ -49,8 +46,6 @@ let
       k3b
       libreoffice
       tigervnc
-      imagemagick
-      ffmpeg-full
       #texlive.combined.scheme-full
     ];
 
@@ -79,7 +74,7 @@ let
       asciinema
       bc
       bind # for dig
-      coreutils
+      coreutils-full
       # dtrx
       file
       pijul
@@ -89,7 +84,8 @@ let
       htop
       inetutils
       ncdu
-      neovim
+      #neovim-unwrapped
+      lilypond-unstable
       p7zip
       pass
       pv
@@ -124,8 +120,6 @@ let
       units
       weechat
       # youtube-dl
-
-      # neovimConfigured
     ];
 
     termtoolsOptional = [
@@ -150,8 +144,7 @@ let
     ];
 
     dev = [ # also work
-      slack
-      tdesktop
+      # tdesktop
 
       cachix
       # gitAndTools.diff-so-fancy
@@ -169,19 +162,23 @@ let
       kubectl
 
       kcat
+
+      imagemagick
+      ffmpeg-full
+      libiconv
+      mediainfo
+      sox
     ];
 
     audio = [
       audacity
       frescobaldi
-      lilypond-unstable
       musescore
       pasystray
       sox
     ];
 
     darwin = [
-      coreutils
       findutils
       # musescore
       syncthing
@@ -190,10 +187,10 @@ let
       coursier
       just
       lua
-      neovim
       nodejs
       ripgrep
       sbt
+      bloop
       stow
       temurin-bin
       tree-sitter
@@ -203,7 +200,7 @@ let
 
   derived = with sets; rec {
     simple-cross = termtoolsEssential ++ termtoolsFancy;
-    simple-darwin = simple-cross ++ darwin;
+    simple-darwin = simple-cross ++ darwin ++ dev;
     simple = simple-cross ++ termtoolsLinux ++ aliases;
 
     most = builtins.concatLists [

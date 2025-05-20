@@ -280,7 +280,7 @@ lua <<EOF
   local lspconfig = require('lspconfig')
 
   lspconfig.glslls.setup{}
-  lspconfig.tsserver.setup {}
+  -- lspconfig.tsserver.setup {}
   lspconfig.jsonls.setup {
     settings = {
       json = {
@@ -382,11 +382,7 @@ vmap F <Plug>Sneak_F
 nmap <Plug>(Go_away_Sneak_s) <Plug>Sneak_s
 nmap <Plug>(Go_away_Sneak_S) <Plug>Sneak_S
 
-nnoremap <Backspace> :Vista!!<CR>
-
-" let g:vista_default_executive = 'coc'
-let g:vista_close_on_jump = 1
-let g:vista_sidebar_width = 60
+" nnoremap <Backspace> :Vista!!<CR>
 
 function! CtrlP()
   if (getcwd() == $HOME)
