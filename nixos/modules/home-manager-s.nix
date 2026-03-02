@@ -11,8 +11,7 @@ let
 in {
   home.stateVersion = "25.05";
 
-  home.packages = if linux then [] else ((packageSets.simple-darwin) ++ (with pkgs; [ neovim-unwrapped
-  ]));
+  home.packages = if linux then [] else ((packageSets.simple-darwin)); # ++ (with pkgs; [ neovim-unwrapped ]));
 
   home.file.".zshrc".source = "${conf}/zsh/.zshrc";
   home.file.".config/zsh".source = "${conf}/zsh/.config/zsh";

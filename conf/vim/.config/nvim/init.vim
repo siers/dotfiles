@@ -82,7 +82,7 @@ Plug 'https://github.com/scalameta/nvim-metals' ", {'commit': 'cc60a74b7bab2d545
 Plug 'https://github.com/nvim-lua/plenary.nvim'
 Plug 'https://github.com/nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
 Plug 'https://github.com/wbthomason/packer.nvim'
-Plug 'https://github.com/b0o/schemastore.nvim'
+" Plug 'https://github.com/b0o/schemastore/nvim'
 " Plug 'https://github.com/L3MON4D3/LuaSnip', {'tag': 'v1*', 'do': 'make install_jsregexp'} " Replace <CurrentMajor> by the latest released major (first number of latest release)
 Plug 'https://github.com/hrsh7th/vim-vsnip'
 
@@ -119,6 +119,10 @@ Plug 'https://github.com/mrcjkb/rustaceanvim'
 " Plug 'https://github.com/pmizio/typescript-tools.nvim'
 Plug 'https://github.com/ldelossa/litee.nvim'
 Plug 'https://github.com/ldelossa/litee-calltree.nvim'
+Plug 'https://github.com/AndrewRadev/undoquit.vim'
+Plug 'https://github.com/pmizio/typescript-tools.nvim'
+
+" Plug 'aadv1k/gdoc.vim', {'do': './install.py'}
 
 call plug#end()
 "}}}
@@ -145,7 +149,7 @@ lua <<EOF
   map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
   map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
   map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-  map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
+  map("n", "gr", "<cmd>Telescope lsp_references<CR>")
   -- map("n", "gds", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
   map("n", "gws", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>")
   map("n", "<leader>cl", [[<cmd>lua vim.lsp.codelens.run()<CR>]])
@@ -218,6 +222,9 @@ lua <<EOF
     showImplicitArguments = true,
     showImplicitConversionsAndClasses = true,
     excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+    serverProperties = {
+      ["metals.loglevel"] = "debug",
+    },
   }
 
   -- *READ THIS*
@@ -277,22 +284,11 @@ lua <<EOF
     group = nvim_haskell_group,
   })
 
-  local lspconfig = require('lspconfig')
+  require("typescript-tools").setup {}
 
-  lspconfig.glslls.setup{}
-  -- lspconfig.tsserver.setup {}
-  lspconfig.jsonls.setup {
-    settings = {
-      json = {
-        schemas = require('schemastore').json.schemas(),
-        validate = { enable = true },
-      },
-    },
-  }
+  vim.lsp.config('clangd', {})
 
-  lspconfig.clangd.setup{}
-
-  lspconfig.lua_ls.setup {
+  vim.lsp.config('lua_ls', {
     on_init = function(client)
       local path = client.workspace_folders[1].name
       if vim.loop.fs_stat(path..'/.luarc.json') or vim.loop.fs_stat(path..'/.luarc.jsonc') then
@@ -321,7 +317,20 @@ lua <<EOF
     settings = {
       Lua = {}
     }
-  }
+  })
+
+  vim.lsp.config('rust_analyzer', {
+    -- Server-specific settings. See `:help lsp-quickstart`
+    settings = {
+      ['rust-analyzer'] = {},
+    },
+  })
+
+  vim.lsp.config('tsserver', {
+    filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+    cmd = { "typescript-language-server", "--stdio" }
+  })
+
 
   require'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all" (the five listed parsers should always be installed)

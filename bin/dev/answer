@@ -1,0 +1,12 @@
+#! /usr/bin/env sh
+
+initprompt="answer as shortly as possible
+
+examples:
+1. what's the capital of France? => Paris
+2. say a three times => a a a
+
+ok, now here's the prompt:
+"
+
+llm -m Llama-3 "$(echo -n "$initprompt\n$*")"

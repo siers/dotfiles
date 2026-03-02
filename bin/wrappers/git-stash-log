@@ -13,6 +13,7 @@ commits() {
 }
 
 for s in $(commits "$@"); do
+    echo "==> $s"
     git log -1 --format=short "$s" | cat
     echo
     git stash show -u "$s" | cat

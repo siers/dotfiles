@@ -4,7 +4,7 @@ tetris() {
   if [ -n "$vitetris" ]; then
     command -v vitetris || ls /run/current-system/sw/bin/tetris
   else
-    find $(ls -d ~/.cache/tetris ~/code/haskell/tetris 2> /dev/null) -follow -type f -name tetris -perm -+x
+    (find $(ls -d ~/.cache/tetris ~/code/haskell/tetris 2> /dev/null) -follow -type f -name tetris -perm -+x | head -n1)
     echo --preview-chars=oo
   fi
 }
