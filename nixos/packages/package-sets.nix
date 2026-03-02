@@ -84,7 +84,7 @@ let
       htop
       inetutils
       ncdu
-      #neovim-unwrapped
+      neovim-unwrapped
       lilypond-unstable
       p7zip
       pass
@@ -94,7 +94,7 @@ let
       socat
       tmux
       unzip
-      utillinux
+      util-linux
       # vitetris # essential — ha!
       watch
       wget

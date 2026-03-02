@@ -8,7 +8,7 @@ in
     {
       home = {
         username = "raitisveinbahs";
-        stateVersion = "25.05";
+        stateVersion = "26.05";
         homeDirectory = "/Users/raitisveinbahs";
         file.".hammerspoon/init.lua".source = "${conf}/hammerspoon/.hammerspoon/init.lua";
         file.abc.source = "${pkgs.neovim-unwrapped}";
